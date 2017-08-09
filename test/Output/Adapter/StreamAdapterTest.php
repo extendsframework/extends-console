@@ -12,7 +12,7 @@ class StreamAdapterTest extends TestCase
      * @covers \ExtendsFramework\Console\Output\Adapter\Stream\StreamAdapter::__construct()
      * @covers \ExtendsFramework\Console\Output\Adapter\Stream\StreamAdapter::write()
      */
-    public function testCanWriteTextToStream()
+    public function testCanWriteTextToStream(): void
     {
         $stream = fopen('php://memory', 'r+');
         $adapter = new StreamAdapter($stream);
