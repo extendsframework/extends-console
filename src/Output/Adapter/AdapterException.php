@@ -5,6 +5,6 @@ namespace ExtendsFramework\Console\Output\Adapter;
 
 use ExtendsFramework\Console\Output\OutputException;
 
-class AdapterException extends OutputException
+interface AdapterException extends OutputException
 {
 }

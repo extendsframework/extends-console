@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Output\Adapter\Stream\Exception;
 
+use Exception;
 use ExtendsFramework\Console\Output\Adapter\AdapterException;
 
-class StreamWriteFailed extends AdapterException
+class StreamWriteFailed extends Exception implements AdapterException
 {
     /**
      * When writing $text to stream failed with $error.

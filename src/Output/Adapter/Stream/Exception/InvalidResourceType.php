@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Output\Adapter\Stream\Exception;
 
+use Exception;
 use ExtendsFramework\Console\Output\Adapter\AdapterException;
 
-class InvalidResourceType extends AdapterException
+class InvalidResourceType extends Exception implements AdapterException
 {
     /**
      * When $resource is not a resource.

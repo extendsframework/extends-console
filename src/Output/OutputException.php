@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Output;
 
-use Exception;
+use Throwable;
 
-class OutputException extends Exception
+interface OutputException extends Throwable
 {
 }
