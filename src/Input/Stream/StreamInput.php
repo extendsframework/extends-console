@@ -10,11 +10,15 @@ use ExtendsFramework\Console\Input\Stream\Exception\StreamReadFailed;
 class StreamInput implements InputInterface
 {
     /**
+     * Resource to read from.
+     *
      * @var resource
      */
     protected $stream;
 
     /**
+     * Create new input stream with $resource.
+     *
      * @param resource $resource
      * @throws InvalidStreamType
      */
