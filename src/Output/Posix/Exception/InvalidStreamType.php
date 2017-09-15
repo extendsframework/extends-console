@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace ExtendsFramework\Console\Input\Stream\Exception;
+namespace ExtendsFramework\Console\Output\Posix\Exception;
 
 use Exception;
-use ExtendsFramework\Console\Input\InputException;
+use ExtendsFramework\Console\Output\OutputException;
 
-class InvalidStreamType extends Exception implements InputException
+class InvalidStreamType extends Exception implements OutputException
 {
     /**
      * When $resource is not a resource of type stream.

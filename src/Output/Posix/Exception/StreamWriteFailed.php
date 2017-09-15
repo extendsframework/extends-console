@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ExtendsFramework\Console\Output\Stream\Exception;
+namespace ExtendsFramework\Console\Output\Posix\Exception;
 
 use Exception;
 use ExtendsFramework\Console\Output\OutputException;

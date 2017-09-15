@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace ExtendsFramework\Console\Input\Stream;
+namespace ExtendsFramework\Console\Input\Posix;
 
 use ExtendsFramework\Console\Input\InputInterface;
-use ExtendsFramework\Console\Input\Stream\Exception\InvalidStreamType;
-use ExtendsFramework\Console\Input\Stream\Exception\StreamReadFailed;
+use ExtendsFramework\Console\Input\Posix\Exception\InvalidStreamType;
+use ExtendsFramework\Console\Input\Posix\Exception\StreamReadFailed;
 
-class StreamInput implements InputInterface
+class PosixInput implements InputInterface
 {
     /**
      * Resource to read from.

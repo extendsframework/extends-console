@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace ExtendsFramework\Console\Output\Stream;
+namespace ExtendsFramework\Console\Output\Posix;
 
 use ExtendsFramework\Console\Output\OutputInterface;
-use ExtendsFramework\Console\Output\Stream\Exception\InvalidStreamType;
-use ExtendsFramework\Console\Output\Stream\Exception\StreamWriteFailed;
+use ExtendsFramework\Console\Output\Posix\Exception\InvalidStreamType;
+use ExtendsFramework\Console\Output\Posix\Exception\StreamWriteFailed;
 
-class StreamOutput implements OutputInterface
+class PosixOutput implements OutputInterface
 {
     /**
      * Resource to write to.
