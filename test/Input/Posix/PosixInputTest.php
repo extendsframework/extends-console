@@ -39,6 +39,21 @@ class PosixInputTest extends TestCase
 
     /**
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::__construct()
+     * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::line()
+     */
+    public function testWillReturnNullOnEmptyLine(): void
+    {
+        $stream = fopen('php://memory', 'w+');
+        fwrite($stream, "\n\r");
+
+        $input = new PosixInput($stream);
+        $character = $input->line();
+
+        static::assertNull($character);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::__construct()
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::character()
      */
     public function testCanReadCharacterFromStream(): void
@@ -59,12 +74,29 @@ class PosixInputTest extends TestCase
     public function testCanReadCharacterFromStreamWithAllowed(): void
     {
         $stream = fopen('php://memory', 'w+');
-        fwrite($stream, 'bac');
+        fwrite($stream, 'ab');
 
         $input = new PosixInput($stream);
-        $character = $input->character('a');
+        $first = $input->character('b');
+        $second = $input->character('a');
 
-        static::assertEquals('a', $character);
+        static::assertNull($first);
+        static::assertEquals('a', $second);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::__construct()
+     * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::character()
+     */
+    public function testWillReturnNullOnEmptyCharacter(): void
+    {
+        $stream = fopen('php://memory', 'w+');
+        fwrite($stream, "\n\r");
+
+        $input = new PosixInput($stream);
+        $character = $input->character();
+
+        static::assertNull($character);
     }
 
     /**
@@ -85,10 +117,24 @@ class PosixInputTest extends TestCase
      * @expectedException        \ExtendsFramework\Console\Input\Posix\Exception\StreamReadFailed
      * @expectedExceptionMessage Failed to read from stream.
      */
-    public function testCanNotReadFromEmptyStream(): void
+    public function testCanNotReadLineFromEmptyStream(): void
     {
         $stream = fopen('php://memory', 'w+');
         $input = new PosixInput($stream);
         $input->line(13);
+    }
+
+    /**
+     * @covers                   \ExtendsFramework\Console\Input\Posix\PosixInput::__construct()
+     * @covers                   \ExtendsFramework\Console\Input\Posix\PosixInput::character()
+     * @covers                   \ExtendsFramework\Console\Input\Posix\Exception\StreamReadFailed::__construct()
+     * @expectedException        \ExtendsFramework\Console\Input\Posix\Exception\StreamReadFailed
+     * @expectedExceptionMessage Failed to read from stream.
+     */
+    public function testCanNotReadCharacterFromEmptyStream(): void
+    {
+        $stream = fopen('php://memory', 'w+');
+        $input = new PosixInput($stream);
+        $input->character();
     }
 }

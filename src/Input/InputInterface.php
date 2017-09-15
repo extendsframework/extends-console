@@ -11,10 +11,10 @@ interface InputInterface
      * Reading will stop when $length or end of line is reached.
      *
      * @param int|null $length
-     * @return string
+     * @return null|string
      * @throws InputException
      */
-    public function line(int $length = null): string;
+    public function line(int $length = null): ?string;
 
     /**
      * Read a character from the input.
@@ -22,8 +22,8 @@ interface InputInterface
      * Characters in $allowed are allowed, else every character is allowed.
      *
      * @param string|null $allowed
-     * @return string
+     * @return null|string
      * @throws InputException
      */
-    public function character(string $allowed = null): string;
+    public function character(string $allowed = null): ?string;
 }

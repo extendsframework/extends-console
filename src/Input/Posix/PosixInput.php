@@ -34,7 +34,7 @@ class PosixInput implements InputInterface
     /**
      * @inheritDoc
      */
-    public function line(int $length = null): string
+    public function line(int $length = null): ?string
     {
         rewind($this->stream);
 
@@ -43,21 +43,25 @@ class PosixInput implements InputInterface
             throw new StreamReadFailed();
         }
 
-        return rtrim($line, "\n\r");
+        return rtrim($line, "\n\r") ?: null;
     }
 
     /**
      * @inheritDoc
      */
-    public function character(string $allowed = null): string
+    public function character(string $allowed = null): ?string
     {
         rewind($this->stream);
 
-        do {
-            $character = fgetc($this->stream);
-            $character = trim($character);
-        } while ($character === '' || ($allowed && strpos($allowed, $character) === false));
+        $character = fgetc($this->stream);
+        if ($character === false) {
+            throw new StreamReadFailed();
+        }
 
-        return $character;
+        if ($allowed && strpos($allowed, $character) === false) {
+            $character = '';
+        }
+
+        return rtrim($character, "\n\r") ?: null;
     }
 }
