@@ -3,14 +3,11 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Prompt\MultipleChoice;
 
-use ExtendsFramework\Console\Input\InputException;
 use ExtendsFramework\Console\Input\InputInterface;
-use ExtendsFramework\Console\Output\OutputException;
 use ExtendsFramework\Console\Output\OutputInterface;
-use ExtendsFramework\Console\Prompt\AbstractPrompt;
-use ExtendsFramework\Console\Prompt\MultipleChoice\Exception\MultipleChoicePromptFailed;
+use ExtendsFramework\Console\Prompt\PromptInterface;
 
-class MultipleChoicePrompt extends AbstractPrompt
+class MultipleChoicePrompt implements PromptInterface
 {
     /**
      * Question to get option for.
@@ -27,28 +24,32 @@ class MultipleChoicePrompt extends AbstractPrompt
     protected $options;
 
     /**
+     * If an answer is required.
+     *
+     * @var bool
+     */
+    protected $required;
+
+    /**
      * Create new multiple choice prompt.
      *
      * When $required is true, a valid option must be chosen. Default value is true.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     * @param string          $question
-     * @param array           $options
-     * @param bool|null       $required
+     * @param string    $question
+     * @param array     $options
+     * @param bool|null $required
      */
-    public function __construct(InputInterface $input, OutputInterface $output, string $question, array $options, bool $required = null)
+    public function __construct(string $question, array $options, bool $required = null)
     {
-        parent::__construct($input, $output, $required);
-
         $this->question = $question;
         $this->options = $options;
+        $this->required = $required ?? true;
     }
 
     /**
      * @inheritDoc
      */
-    public function prompt(): ?string
+    public function prompt(InputInterface $input, OutputInterface $output): ?string
     {
         do {
             $question = sprintf(
@@ -57,12 +58,8 @@ class MultipleChoicePrompt extends AbstractPrompt
                 implode(',', $this->options)
             );
 
-            try {
-                $this->output->text($question);
-                $option = $this->input->character();
-            } catch (InputException | OutputException $exception) {
-                throw new MultipleChoicePromptFailed('Failed to prompt multiple choice question.', 0, $exception);
-            }
+            $output->text($question);
+            $option = $input->character();
         } while ($this->isValidOption($option) === false);
 
         return $option;
