@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Arguments\Definition;
 
-use Throwable;
+use ExtendsFramework\Console\Arguments\ArgumentsException;
 
-interface DefinitionException extends Throwable
+interface DefinitionException extends ArgumentsException
 {
 }
