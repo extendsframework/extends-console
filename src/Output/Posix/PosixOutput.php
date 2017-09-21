@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Output\Posix;
 
+use ExtendsFramework\Console\Output\OutputException;
 use ExtendsFramework\Console\Output\OutputInterface;
 use ExtendsFramework\Console\Output\Posix\Exception\InvalidStreamType;
 use ExtendsFramework\Console\Output\Posix\Exception\StreamWriteFailed;
@@ -20,7 +21,7 @@ class PosixOutput implements OutputInterface
      * Create new output stream with $resource.
      *
      * @param resource $resource
-     * @throws InvalidStreamType
+     * @throws OutputException
      */
     public function __construct($resource)
     {
