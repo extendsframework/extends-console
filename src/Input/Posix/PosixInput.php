@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Input\Posix;
 
+use ExtendsFramework\Console\Input\InputException;
 use ExtendsFramework\Console\Input\InputInterface;
 use ExtendsFramework\Console\Input\Posix\Exception\InvalidStreamType;
 use ExtendsFramework\Console\Input\Posix\Exception\StreamReadFailed;
@@ -20,7 +21,7 @@ class PosixInput implements InputInterface
      * Create new input stream with $resource.
      *
      * @param resource $resource
-     * @throws InvalidStreamType
+     * @throws InputException
      */
     public function __construct($resource)
     {
