@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Arguments\Definition;
 
-use ExtendsFramework\Console\Arguments\Definition\Exception\OperandNotFound;
-use ExtendsFramework\Console\Arguments\Definition\Exception\OptionNotFound;
 use ExtendsFramework\Console\Arguments\Definition\Operand\OperandInterface;
 use ExtendsFramework\Console\Arguments\Definition\Option\OptionInterface;
 
@@ -32,7 +30,7 @@ interface DefinitionInterface
      * @param string    $name
      * @param bool|null $long
      * @return OptionInterface
-     * @throws OptionNotFound
+     * @throws DefinitionException
      */
     public function getOption(string $name, bool $long = null): OptionInterface;
 
@@ -43,7 +41,7 @@ interface DefinitionInterface
      *
      * @param int $position
      * @return OperandInterface
-     * @throws OperandNotFound
+     * @throws DefinitionException
      */
     public function getOperand(int $position): OperandInterface;
 }
