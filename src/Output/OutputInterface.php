@@ -15,11 +15,12 @@ interface OutputInterface
     public function text(string $text): OutputInterface;
 
     /**
-     * Send $line to output.
+     * Send $lines to output.
      *
-     * @param string $line
+     * Ech line will be followed by a new line character.
+     *
+     * @param string[] ...$lines
      * @return OutputInterface
-     * @throws OutputException
      */
-    public function line(string $line): OutputInterface;
+    public function line(string ...$lines): OutputInterface;
 }

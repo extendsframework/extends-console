@@ -41,6 +41,23 @@ class PosixOutputTest extends TestCase
     }
 
     /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
+     */
+    public function testCanWriteMultipleLinesToOutput(): void
+    {
+        $stream = fopen('php://memory', 'x+');
+
+        $output = new PosixOutput($stream);
+        $output->line('Foo', 'Bar', 'Baz');
+
+
+        $text = stream_get_contents($stream, 1024, 0);
+
+        static::assertEquals('Foo' . "\n\r" . 'Bar' . "\n\r" . 'Baz' . "\n\r", $text);
+    }
+
+    /**
      * @covers                   \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers                   \ExtendsFramework\Console\Output\Posix\Exception\InvalidStreamType::__construct()
      * @expectedException        \ExtendsFramework\Console\Output\Posix\Exception\InvalidStreamType

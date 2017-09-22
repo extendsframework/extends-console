@@ -48,8 +48,12 @@ class PosixOutput implements OutputInterface
     /**
      * @inheritDoc
      */
-    public function line(string $line): OutputInterface
+    public function line(string ...$lines): OutputInterface
     {
-        return $this->text($line . "\n\r");
+        foreach ($lines as $line) {
+            $this->text($line . "\n\r");
+        }
+
+        return $this;
     }
 }
