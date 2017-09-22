@@ -7,7 +7,7 @@ use Exception;
 use ExtendsFramework\Console\Arguments\Definition\Option\OptionInterface;
 use ExtendsFramework\Console\Arguments\Parser\ParserException;
 
-class RequiredOptionWithoutArgument extends Exception implements ParserException
+class MissingArgument extends Exception implements ParserException
 {
     /**
      * Required option has no argument.

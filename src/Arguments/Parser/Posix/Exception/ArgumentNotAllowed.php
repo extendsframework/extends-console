@@ -7,7 +7,7 @@ use Exception;
 use ExtendsFramework\Console\Arguments\Definition\Option\OptionInterface;
 use ExtendsFramework\Console\Arguments\Parser\ParserException;
 
-class FlagOptionWithArgument extends Exception implements ParserException
+class ArgumentNotAllowed extends Exception implements ParserException
 {
     /**
      * Flag option has an argument.

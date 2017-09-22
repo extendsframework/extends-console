@@ -4,10 +4,13 @@ declare(strict_types=1);
 namespace ExtendsFramework\Console\Arguments\Parser\Posix;
 
 use ExtendsFramework\Console\Arguments\ArgumentsInterface;
+use ExtendsFramework\Console\Arguments\Definition\DefinitionException;
 use ExtendsFramework\Console\Arguments\Definition\DefinitionInterface;
+use ExtendsFramework\Console\Arguments\Parser\ParserException;
 use ExtendsFramework\Console\Arguments\Parser\ParserInterface;
-use ExtendsFramework\Console\Arguments\Parser\Posix\Exception\FlagOptionWithArgument;
-use ExtendsFramework\Console\Arguments\Parser\Posix\Exception\RequiredOptionWithoutArgument;
+use ExtendsFramework\Console\Arguments\Parser\Posix\Exception\ArgumentNotAllowed;
+use ExtendsFramework\Console\Arguments\Parser\Posix\Exception\MissingArgument;
+use ExtendsFramework\Console\Arguments\Parser\Posix\Exception\MissingOperand;
 use ExtendsFramework\Container\Container;
 use ExtendsFramework\Container\ContainerInterface;
 
@@ -17,6 +20,30 @@ class PosixParser implements ParserInterface
      * @inheritDoc
      */
     public function parse(DefinitionInterface $definition, ArgumentsInterface $arguments): ContainerInterface
+    {
+        $parsed = new Container(
+            $this->parseArguments($definition, $arguments)
+        );
+
+        foreach ($definition->getOperands() as $operand) {
+            $name = $operand->getName();
+            if ($parsed->has($name) === false) {
+                throw new MissingOperand($name);
+            }
+        }
+
+        return $parsed;
+    }
+
+    /**
+     * Parse $arguments against $definition.
+     *
+     * @param DefinitionInterface $definition
+     * @param ArgumentsInterface  $arguments
+     * @return array
+     * @throws ParserException|DefinitionException
+     */
+    protected function parseArguments(DefinitionInterface $definition, ArgumentsInterface $arguments): array
     {
         $operandPosition = 0;
         $terminated = false;
@@ -39,7 +66,7 @@ class PosixParser implements ParserInterface
                 $name = $option->getName();
                 if ($option->isFlag()) {
                     if ($hasArgument) {
-                        throw new FlagOptionWithArgument($option, true);
+                        throw new ArgumentNotAllowed($option, true);
                     }
 
                     $parsed[$name] = true;
@@ -50,7 +77,7 @@ class PosixParser implements ParserInterface
                     if ($arguments->valid()) {
                         $parsed[$name] = $arguments->current();
                     } elseif ($option->isRequired()) {
-                        throw new RequiredOptionWithoutArgument($option, true);
+                        throw new MissingArgument($option, true);
                     }
                 }
             } elseif (strpos($argument, '-') === 0) {
@@ -77,7 +104,7 @@ class PosixParser implements ParserInterface
                         if ($arguments->valid()) {
                             $parsed[$name] = $arguments->current();
                         } elseif ($option->isRequired()) {
-                            throw new RequiredOptionWithoutArgument($option);
+                            throw new MissingArgument($option);
                         }
                     }
                 }
@@ -87,6 +114,6 @@ class PosixParser implements ParserInterface
             }
         }
 
-        return new Container($parsed);
+        return $parsed;
     }
 }
