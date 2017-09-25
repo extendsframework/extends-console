@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Output\Posix;
 
+use ExtendsFramework\Console\Formatter\FormatterInterface;
 use PHPUnit\Framework\TestCase;
 
 class PosixOutputTest extends TestCase
@@ -25,7 +26,25 @@ class PosixOutputTest extends TestCase
 
     /**
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
+     */
+    public function testCanWriteFormattedTextToOutput(): void
+    {
+        $stream = fopen('php://memory', 'x+');
+
+        $output = new PosixOutput($stream);
+        $output->text('1234567890', $output->getFormatter()->setFixedWidth(5));
+
+        $text = stream_get_contents($stream, 1024, 0);
+
+        static::assertContains('12345', $text);
+        static::assertNotContains('67890', $text);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      */
     public function testCanWriteLineToOutput(): void
     {
@@ -34,7 +53,6 @@ class PosixOutputTest extends TestCase
         $output = new PosixOutput($stream);
         $output->line('Hello world!');
 
-
         $text = stream_get_contents($stream, 1024, 0);
 
         static::assertEquals('Hello world!' . "\n\r", $text);
@@ -42,7 +60,24 @@ class PosixOutputTest extends TestCase
 
     /**
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
+     */
+    public function testCanWriteNewLineToOutput(): void
+    {
+        $stream = fopen('php://memory', 'x+');
+
+        $output = new PosixOutput($stream);
+        $output->newLine();
+
+        $text = stream_get_contents($stream, 1024, 0);
+
+        static::assertEquals("\n\r", $text);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      */
     public function testCanWriteMultipleLinesToOutput(): void
     {
@@ -51,10 +86,23 @@ class PosixOutputTest extends TestCase
         $output = new PosixOutput($stream);
         $output->line('Foo', 'Bar', 'Baz');
 
-
         $text = stream_get_contents($stream, 1024, 0);
 
         static::assertEquals('Foo' . "\n\r" . 'Bar' . "\n\r" . 'Baz' . "\n\r", $text);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
+     */
+    public function testCanGetFormatter(): void
+    {
+        $stream = fopen('php://memory', 'x+');
+
+        $output = new PosixOutput($stream);
+        $formatter = $output->getFormatter();
+
+        static::assertInstanceOf(FormatterInterface::class, $formatter);
     }
 
     /**

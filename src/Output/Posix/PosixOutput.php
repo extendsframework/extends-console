@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Output\Posix;
 
+use ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter;
+use ExtendsFramework\Console\Formatter\FormatterInterface;
 use ExtendsFramework\Console\Output\OutputException;
 use ExtendsFramework\Console\Output\OutputInterface;
 use ExtendsFramework\Console\Output\Posix\Exception\InvalidStreamType;
@@ -16,6 +18,13 @@ class PosixOutput implements OutputInterface
      * @var resource
      */
     protected $stream;
+
+    /**
+     * Text formatter.
+     *
+     * @var FormatterInterface
+     */
+    protected $formatter;
 
     /**
      * Create new output stream with $resource.
@@ -35,8 +44,12 @@ class PosixOutput implements OutputInterface
     /**
      * @inheritDoc
      */
-    public function text(string $text): OutputInterface
+    public function text(string $text, FormatterInterface $formatter = null): OutputInterface
     {
+        if ($formatter) {
+            $text = $formatter->create($text);
+        }
+
         $bytes = @fwrite($this->stream, $text);
         if ($bytes === false) {
             throw new StreamWriteFailed();
@@ -51,9 +64,31 @@ class PosixOutput implements OutputInterface
     public function line(string ...$lines): OutputInterface
     {
         foreach ($lines as $line) {
-            $this->text($line . "\n\r");
+            $this
+                ->text($line)
+                ->newLine();
         }
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function newLine(): OutputInterface
+    {
+        return $this->text("\n\r");
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFormatter(): FormatterInterface
+    {
+        if ($this->formatter === null) {
+            $this->formatter = new AnsiFormatter();
+        }
+
+        return $this->formatter;
     }
 }
