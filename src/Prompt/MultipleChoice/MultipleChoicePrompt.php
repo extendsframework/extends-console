@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Prompt\MultipleChoice;
 
+use ExtendsFramework\Console\Formatter\Color\Yellow\Yellow;
 use ExtendsFramework\Console\Input\InputInterface;
 use ExtendsFramework\Console\Output\OutputInterface;
 use ExtendsFramework\Console\Prompt\PromptInterface;
@@ -52,13 +53,16 @@ class MultipleChoicePrompt implements PromptInterface
     public function prompt(InputInterface $input, OutputInterface $output): ?string
     {
         do {
-            $question = sprintf(
-                '%s [%s]: ',
-                $this->question,
-                implode(',', $this->options)
-            );
+            $output
+                ->text($this->question . ' ')
+                ->text(
+                    sprintf('[%s]', implode(',', $this->options)),
+                    $output
+                        ->getFormatter()
+                        ->setForeground(new Yellow())
+                )
+                ->text(': ');
 
-            $output->text($question);
             $option = $input->character();
         } while ($this->isValidOption($option) === false);
 
