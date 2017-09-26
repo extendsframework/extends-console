@@ -3,7 +3,11 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Formatter\Ansi;
 
-use ExtendsFramework\Console\Formatter\FormatterInterface;
+use ExtendsFramework\Console\Formatter\Color\ColorInterface;
+use ExtendsFramework\Console\Formatter\Color\Red\Red;
+use ExtendsFramework\Console\Formatter\Format\Bold\Bold;
+use ExtendsFramework\Console\Formatter\Format\Dim\Dim;
+use ExtendsFramework\Console\Formatter\Format\FormatInterface;
 use PHPUnit\Framework\TestCase;
 
 class AnsiFormatterTest extends TestCase
@@ -12,14 +16,14 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setForeground()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColorCode()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setColor()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
     public function testCanSetForegroundColor(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
-            ->setForeground(FormatterInterface::COLOR_RED)
+            ->setForeground(new Red())
             ->create('Hello world!');
 
         self::assertSame("\e[0;31;49mHello world!\e[0m", $text);
@@ -29,14 +33,14 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setBackground()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColorCode()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setColor()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
     public function testCanSetBackgroundColor(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
-            ->setBackground(FormatterInterface::COLOR_RED)
+            ->setBackground(new Red())
             ->create('Hello world!');
 
         self::assertSame("\e[0;39;41mHello world!\e[0m", $text);
@@ -45,15 +49,15 @@ class AnsiFormatterTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setBold()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testCanSetBoldFormat(): void
+    public function testCanAddFormat(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
-            ->setBold()
+            ->addFormat(new Bold())
             ->create('Hello world!');
 
         self::assertSame("\e[1;39;49mHello world!\e[0m", $text);
@@ -62,86 +66,38 @@ class AnsiFormatterTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setDim()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::removeFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testCanSetDimFormat(): void
+    public function testCanRemoveFormat(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
-            ->setDim()
+            ->addFormat(new Bold())
+            ->removeFormat(new Bold())
             ->create('Hello world!');
 
-        self::assertSame("\e[2;39;49mHello world!\e[0m", $text);
+        self::assertSame("\e[0;39;49mHello world!\e[0m", $text);
     }
 
     /**
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setUnderline()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testCanSetUnderlineFormat(): void
+    public function testCanAddMultipleFormats(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
-            ->setUnderline()
+            ->addFormat(new Bold())
+            ->addFormat(new Dim())
             ->create('Hello world!');
 
-        self::assertSame("\e[4;39;49mHello world!\e[0m", $text);
-    }
-
-    /**
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setBlink()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
-     */
-    public function testCanSetBlinkFormat(): void
-    {
-        $formatter = new AnsiFormatter();
-        $text = $formatter
-            ->setBlink()
-            ->create('Hello world!');
-
-        self::assertSame("\e[5;39;49mHello world!\e[0m", $text);
-    }
-
-    /**
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setReverse()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
-     */
-    public function testCanSetReverseFormat(): void
-    {
-        $formatter = new AnsiFormatter();
-        $text = $formatter
-            ->setReverse()
-            ->create('Hello world!');
-
-        self::assertSame("\e[7;39;49mHello world!\e[0m", $text);
-    }
-
-    /**
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setHidden()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
-     */
-    public function testCanSetHiddenFormat(): void
-    {
-        $formatter = new AnsiFormatter();
-        $text = $formatter
-            ->setHidden()
-            ->create('Hello world!');
-
-        self::assertSame("\e[8;39;49mHello world!\e[0m", $text);
+        self::assertSame("\e[1;2;39;49mHello world!\e[0m", $text);
     }
 
     /**
@@ -168,47 +124,8 @@ class AnsiFormatterTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setBold()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setDim()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
-     */
-    public function testCanSetMultipleFormats(): void
-    {
-        $formatter = new AnsiFormatter();
-        $text = $formatter
-            ->setBold()
-            ->setDim()
-            ->create('Hello world!');
-
-        self::assertSame("\e[1;2;39;49mHello world!\e[0m", $text);
-    }
-
-    /**
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setBold()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setDim()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
-     */
-    public function testCanUnsetFormat(): void
-    {
-        $formatter = new AnsiFormatter();
-        $text = $formatter
-            ->setBold()
-            ->setDim()
-            ->setBold(false)
-            ->create('Hello world!');
-
-        self::assertSame("\e[2;39;49mHello world!\e[0m", $text);
-    }
-
-    /**
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setForeground()
-     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setBold()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
@@ -216,8 +133,8 @@ class AnsiFormatterTest extends TestCase
     {
         $formatter = new AnsiFormatter();
         $formatted = $formatter
-            ->setForeground(FormatterInterface::COLOR_RED)
-            ->setBold()
+            ->setForeground(new Red())
+            ->addFormat(new Bold())
             ->create('Hello world!');
 
         $default = $formatter->create('Hello world!');
@@ -230,14 +147,51 @@ class AnsiFormatterTest extends TestCase
      * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setForeground()
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColorCode()
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\Exception\InvalidColorName::__construct()
-     * @expectedException        \ExtendsFramework\Console\Formatter\Ansi\Exception\InvalidColorName
-     * @expectedExceptionMessage No color found for name "orange".
+     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setColor()
+     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\Exception\ColorNotSupported::__construct()
+     * @expectedException        \ExtendsFramework\Console\Formatter\Ansi\Exception\ColorNotSupported
+     * @expectedExceptionMessage Color "Brown" is not supported.
      */
     public function testCanNotGetColorCodeForUnknownColor(): void
     {
+        $color = new class implements ColorInterface
+        {
+            /**
+             * @inheritDoc
+             */
+            public function getName(): string
+            {
+                return 'Brown';
+            }
+        };
+
         $formatter = new AnsiFormatter();
-        $formatter->setForeground('orange');
+        $formatter->setForeground($color);
+    }
+
+    /**
+     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
+     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
+     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
+     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
+     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\Exception\FormatNotSupported::__construct()
+     * @expectedException        \ExtendsFramework\Console\Formatter\Ansi\Exception\FormatNotSupported
+     * @expectedExceptionMessage Format "StrikeThrough" is not supported.
+     */
+    public function testCanNotGetColorCodeForUnknownFormat(): void
+    {
+        $format = new class implements FormatInterface
+        {
+            /**
+             * @inheritDoc
+             */
+            public function getName(): string
+            {
+                return 'StrikeThrough';
+            }
+        };
+
+        $formatter = new AnsiFormatter();
+        $formatter->addFormat($format);
     }
 }
