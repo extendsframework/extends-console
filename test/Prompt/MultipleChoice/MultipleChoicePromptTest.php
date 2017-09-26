@@ -24,9 +24,13 @@ class MultipleChoicePromptTest extends TestCase
 
         $output = $this->createMock(OutputInterface::class);
         $output
-            ->expects($this->once())
+            ->expects($this->exactly(3))
             ->method('text')
-            ->with('Continue? [y,n]: ')
+            ->withConsecutive(
+                ['Continue? '],
+                ['[y,n]'],
+                [': ']
+            )
             ->willReturnSelf();
 
         /**
@@ -54,9 +58,16 @@ class MultipleChoicePromptTest extends TestCase
 
         $output = $this->createMock(OutputInterface::class);
         $output
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(6))
             ->method('text')
-            ->withConsecutive(['Continue? [y,n]: '], ['Continue? [y,n]: '])
+            ->withConsecutive(
+                ['Continue? '],
+                ['[y,n]'],
+                [': '],
+                ['Continue? '],
+                ['[y,n]'],
+                [': ']
+            )
             ->willReturnSelf();
 
         /**
@@ -84,9 +95,13 @@ class MultipleChoicePromptTest extends TestCase
 
         $output = $this->createMock(OutputInterface::class);
         $output
-            ->expects($this->once())
+            ->expects($this->exactly(3))
             ->method('text')
-            ->with('Continue? [y,n]: ')
+            ->withConsecutive(
+                ['Continue? '],
+                ['[y,n]'],
+                [': ']
+            )
             ->willReturnSelf();
 
         /**
