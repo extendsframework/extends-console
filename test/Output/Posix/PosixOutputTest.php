@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Output\Posix;
 
+use ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter;
 use ExtendsFramework\Console\Formatter\FormatterInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -95,14 +96,32 @@ class PosixOutputTest extends TestCase
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
      */
-    public function testCanGetFormatter(): void
+    public function testCanGetDefaultFormatter(): void
     {
         $stream = fopen('php://memory', 'x+');
 
         $output = new PosixOutput($stream);
         $formatter = $output->getFormatter();
 
-        static::assertInstanceOf(FormatterInterface::class, $formatter);
+        static::assertInstanceOf(AnsiFormatter::class, $formatter);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
+     */
+    public function testCanGetCustomFormatter(): void
+    {
+        $formatter = $this->createMock(FormatterInterface::class);
+
+        $stream = fopen('php://memory', 'x+');
+
+        /**
+         * @var FormatterInterface $formatter
+         */
+        $output = new PosixOutput($stream, $formatter);
+
+        static::assertSame($formatter, $output->getFormatter());
     }
 
     /**
