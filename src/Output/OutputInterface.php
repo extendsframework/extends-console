@@ -34,6 +34,13 @@ interface OutputInterface
     public function newLine(): OutputInterface;
 
     /**
+     * Clear output and home cursor.
+     *
+     * @return OutputInterface
+     */
+    public function clear(): OutputInterface;
+
+    /**
      * Get the number or columns.
      *
      * @return int

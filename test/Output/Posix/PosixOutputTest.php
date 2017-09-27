@@ -5,6 +5,7 @@ namespace ExtendsFramework\Console\Output\Posix;
 
 use ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter;
 use ExtendsFramework\Console\Formatter\FormatterInterface;
+use ExtendsFramework\Console\Output\OutputInterface;
 use PHPUnit\Framework\TestCase;
 
 class PosixOutputTest extends TestCase
@@ -94,6 +95,20 @@ class PosixOutputTest extends TestCase
 
     /**
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::clear()
+     */
+    public function testCanClearOutput()
+    {
+        Buffer::reset();
+
+        $output = new PosixOutput();
+        $instance = $output->clear();
+
+        static::assertInstanceOf(OutputInterface::class, $instance);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getColumns()
      */
     public function testCanGetColumns(): void
@@ -179,4 +194,8 @@ function fwrite(): void
 function exec(): string
 {
     return Buffer::get();
+}
+
+function system(): void
+{
 }

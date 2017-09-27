@@ -67,6 +67,16 @@ class PosixOutput implements OutputInterface
     /**
      * @inheritDoc
      */
+    public function clear(): OutputInterface
+    {
+        system('tput clear');
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getColumns(): int
     {
         return (int)exec('tput cols');
