@@ -12,6 +12,7 @@ class PosixOutputTest extends TestCase
 {
     /**
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      */
     public function testCanWriteTextToOutput(): void
     {
@@ -26,7 +27,44 @@ class PosixOutputTest extends TestCase
     }
 
     /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setVerbosity()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
+     */
+    public function testCanWriteTextToOutputWithSameOrHigherVerbosity(): void
+    {
+        Buffer::reset();
+
+        $output = new PosixOutput();
+        $output
+            ->setVerbosity(2)
+            ->text('Hello world!');
+
+        $text = Buffer::get();
+
+        static::assertEquals('Hello world!', $text);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setVerbosity()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
+     */
+    public function testCanNotWriteTextToOutputWithLowerVerbosity(): void
+    {
+        Buffer::reset();
+
+        $output = new PosixOutput();
+        $output->text('Hello world!', null, 2);
+
+        $text = Buffer::get();
+
+        static::assertNull($text);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      */
     public function testCanWriteFormattedTextToOutput(): void
     {
@@ -43,6 +81,8 @@ class PosixOutputTest extends TestCase
 
     /**
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      */
     public function testCanWriteLineToOutput(): void
@@ -59,6 +99,8 @@ class PosixOutputTest extends TestCase
 
     /**
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      */
     public function testCanWriteNewLineToOutput(): void
     {
@@ -70,22 +112,6 @@ class PosixOutputTest extends TestCase
         $text = Buffer::get();
 
         static::assertEquals("\n\r", $text);
-    }
-
-    /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
-     */
-    public function testCanWriteMultipleLinesToOutput(): void
-    {
-        Buffer::reset();
-
-        $output = new PosixOutput();
-        $output->line('Foo', 'Bar', 'Baz');
-
-        $text = Buffer::get();
-
-        static::assertEquals('Foo' . "\n\r" . 'Bar' . "\n\r" . 'Baz' . "\n\r", $text);
     }
 
     /**
@@ -162,7 +188,7 @@ class Buffer
 {
     protected static $value;
 
-    public static function get(): string
+    public static function get(): ?string
     {
         return static::$value;
     }

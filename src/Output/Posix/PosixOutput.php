@@ -17,30 +17,26 @@ class PosixOutput implements OutputInterface
     protected $formatter;
 
     /**
-     * @inheritDoc
+     * Output verbosity.
+     *
+     * @var int
      */
-    public function text(string $text, FormatterInterface $formatter = null): OutputInterface
-    {
-        if ($formatter) {
-            $text = $formatter->create($text);
-        }
-
-        $handle = fopen('php://stdout', 'wb');
-        fwrite($handle, $text);
-        fclose($handle);
-
-        return $this;
-    }
+    protected $verbosity;
 
     /**
      * @inheritDoc
      */
-    public function line(string ...$lines): OutputInterface
+    public function text(string $text, FormatterInterface $formatter = null, int $verbosity = null): OutputInterface
     {
-        foreach ($lines as $line) {
-            $this
-                ->text($line)
-                ->newLine();
+        $verbosity = $verbosity ?? 1;
+        if ($verbosity <= $this->getVerbosity()) {
+            if ($formatter) {
+                $text = $formatter->create($text);
+            }
+
+            $handle = fopen('php://stdout', 'wb');
+            fwrite($handle, $text);
+            fclose($handle);
         }
 
         return $this;
@@ -49,9 +45,19 @@ class PosixOutput implements OutputInterface
     /**
      * @inheritDoc
      */
-    public function newLine(): OutputInterface
+    public function line(string $text, FormatterInterface $formatter = null, int $verbosity = null): OutputInterface
     {
-        return $this->text("\n\r");
+        return $this
+            ->text($text, $formatter, $verbosity)
+            ->newLine($verbosity);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function newLine(int $verbosity = null): OutputInterface
+    {
+        return $this->text("\n\r", null, $verbosity);
     }
 
     /**
@@ -93,6 +99,16 @@ class PosixOutput implements OutputInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function setVerbosity(int $verbosity): OutputInterface
+    {
+        $this->verbosity = $verbosity;
+
+        return $this;
+    }
+
+    /**
      * Set formatter.
      *
      * @param FormatterInterface $formatter
@@ -103,5 +119,19 @@ class PosixOutput implements OutputInterface
         $this->formatter = $formatter;
 
         return $this;
+    }
+
+    /**
+     * Get verbosity.
+     *
+     * @return int
+     */
+    protected function getVerbosity(): int
+    {
+        if ($this->verbosity === null) {
+            $this->verbosity = 1;
+        }
+
+        return $this->verbosity;
     }
 }

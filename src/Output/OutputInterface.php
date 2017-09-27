@@ -12,26 +12,30 @@ interface OutputInterface
      *
      * @param string                  $text
      * @param FormatterInterface|null $formatter
+     * @param int|null                $verbosity
      * @return OutputInterface
      */
-    public function text(string $text, FormatterInterface $formatter = null): OutputInterface;
+    public function text(string $text, FormatterInterface $formatter = null, int $verbosity = null): OutputInterface;
 
     /**
      * Send $lines to output.
      *
      * Ech line will be followed by a new line character.
      *
-     * @param string[] ...$lines
+     * @param string                  $text
+     * @param FormatterInterface|null $formatter
+     * @param int|null                $verbosity
      * @return OutputInterface
      */
-    public function line(string ...$lines): OutputInterface;
+    public function line(string $text, FormatterInterface $formatter = null, int $verbosity = null): OutputInterface;
 
     /**
      * Send new line to output.
      *
+     * @param int|null $verbosity
      * @return OutputInterface
      */
-    public function newLine(): OutputInterface;
+    public function newLine(int $verbosity = null): OutputInterface;
 
     /**
      * Clear output and home cursor.
@@ -60,4 +64,14 @@ interface OutputInterface
      * @return FormatterInterface
      */
     public function getFormatter(): FormatterInterface;
+
+    /**
+     * Set verbosity.
+     *
+     * With a higher $verbosity, output will be more verbose.
+     *
+     * @param int $verbosity
+     * @return OutputInterface
+     */
+    public function setVerbosity(int $verbosity): OutputInterface;
 }
