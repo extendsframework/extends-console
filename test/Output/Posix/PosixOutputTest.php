@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 class PosixOutputTest extends TestCase
 {
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      */
     public function testCanWriteTextToOutput(): void
@@ -27,7 +26,6 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      */
     public function testCanWriteFormattedTextToOutput(): void
@@ -44,7 +42,6 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      */
@@ -61,7 +58,6 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      */
     public function testCanWriteNewLineToOutput(): void
@@ -77,7 +73,6 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      */
@@ -94,7 +89,6 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::clear()
      */
     public function testCanClearOutput()
@@ -108,7 +102,6 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getColumns()
      */
     public function testCanGetColumns(): void
@@ -123,7 +116,6 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getLines()
      */
     public function testCanGetLines(): void
@@ -138,7 +130,6 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
      */
     public function testCanGetDefaultFormatter(): void
@@ -150,7 +141,6 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
      */
     public function testCanGetCustomFormatter(): void
@@ -160,7 +150,8 @@ class PosixOutputTest extends TestCase
         /**
          * @var FormatterInterface $formatter
          */
-        $output = new PosixOutput($formatter);
+        $output = new PosixOutput();
+        $output->setFormatter($formatter);
 
         static::assertSame($formatter, $output->getFormatter());
     }

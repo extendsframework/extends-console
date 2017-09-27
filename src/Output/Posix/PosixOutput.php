@@ -17,16 +17,6 @@ class PosixOutput implements OutputInterface
     protected $formatter;
 
     /**
-     * Create new output stream with $resource.
-     *
-     * @param FormatterInterface|null $formatter
-     */
-    public function __construct(FormatterInterface $formatter = null)
-    {
-        $this->formatter = $formatter ?: new AnsiFormatter();
-    }
-
-    /**
      * @inheritDoc
      */
     public function text(string $text, FormatterInterface $formatter = null): OutputInterface
@@ -95,6 +85,23 @@ class PosixOutput implements OutputInterface
      */
     public function getFormatter(): FormatterInterface
     {
+        if ($this->formatter === null) {
+            $this->formatter = new AnsiFormatter();
+        }
+
         return $this->formatter;
+    }
+
+    /**
+     * Set formatter.
+     *
+     * @param FormatterInterface $formatter
+     * @return PosixOutput
+     */
+    public function setFormatter(FormatterInterface $formatter): PosixOutput
+    {
+        $this->formatter = $formatter;
+
+        return $this;
     }
 }
