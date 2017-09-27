@@ -18,7 +18,8 @@ interface ParserInterface
      * @param DefinitionInterface $definition
      * @param ArgumentsInterface  $arguments
      * @return ContainerInterface
-     * @throws ParserException|DefinitionException
+     * @throws ParserException
+     * @throws DefinitionException
      */
     public function parse(DefinitionInterface $definition, ArgumentsInterface $arguments): ContainerInterface;
 }
