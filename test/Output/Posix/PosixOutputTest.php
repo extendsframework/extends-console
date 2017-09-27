@@ -94,6 +94,36 @@ class PosixOutputTest extends TestCase
 
     /**
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getColumns()
+     */
+    public function testCanGetColumns(): void
+    {
+        Buffer::reset();
+        Buffer::set('80');
+
+        $output = new PosixOutput();
+        $columns = $output->getColumns();
+
+        static::assertSame(80, $columns);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getLines()
+     */
+    public function testCanGetLines(): void
+    {
+        Buffer::reset();
+        Buffer::set('120');
+
+        $output = new PosixOutput();
+        $lines = $output->getLines();
+
+        static::assertSame(120, $lines);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
      */
     public function testCanGetDefaultFormatter(): void
@@ -144,4 +174,9 @@ class Buffer
 function fwrite(): void
 {
     Buffer::set(func_get_arg(1));
+}
+
+function exec(): string
+{
+    return Buffer::get();
 }

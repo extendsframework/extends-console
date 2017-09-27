@@ -67,6 +67,22 @@ class PosixOutput implements OutputInterface
     /**
      * @inheritDoc
      */
+    public function getColumns(): int
+    {
+        return (int)exec('tput cols');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLines(): int
+    {
+        return (int)exec('tput lines');
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getFormatter(): FormatterInterface
     {
         return $this->formatter;

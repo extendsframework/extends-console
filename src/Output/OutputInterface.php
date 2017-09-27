@@ -34,6 +34,20 @@ interface OutputInterface
     public function newLine(): OutputInterface;
 
     /**
+     * Get the number or columns.
+     *
+     * @return int
+     */
+    public function getColumns(): int;
+
+    /**
+     * Get the number of lines.
+     *
+     * @return int
+     */
+    public function getLines(): int;
+
+    /**
      * Get new builder to format text.
      *
      * @return FormatterInterface
