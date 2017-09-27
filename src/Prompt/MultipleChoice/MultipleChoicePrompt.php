@@ -90,6 +90,6 @@ class MultipleChoicePrompt implements PromptInterface
      */
     protected function isValidOption(?string $option): bool
     {
-        return in_array($option, $this->options, true) === true || ($this->required === false || $option === null);
+        return in_array($option, $this->options, true) === true || ($this->required === false && $option === null);
     }
 }

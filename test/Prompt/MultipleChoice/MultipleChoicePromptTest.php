@@ -56,7 +56,7 @@ class MultipleChoicePromptTest extends TestCase
         $input
             ->expects($this->exactly(2))
             ->method('character')
-            ->willReturnOnConsecutiveCalls('a', 'y');
+            ->willReturnOnConsecutiveCalls(null, 'y');
 
         $output = $this->createMock(OutputInterface::class);
         $output
