@@ -34,17 +34,15 @@ class MultipleChoicePrompt implements PromptInterface
     /**
      * Create new multiple choice prompt.
      *
-     * When $required is true, a valid option must be chosen. Default value is true.
-     *
-     * @param string    $question
-     * @param array     $options
-     * @param bool|null $required
+     * @param string $question
+     * @param array  $options
      */
-    public function __construct(string $question, array $options, bool $required = null)
+    public function __construct(string $question, array $options)
     {
         $this->question = $question;
         $this->options = $options;
-        $this->required = $required ?? true;
+
+        $this->setRequired();
     }
 
     /**
@@ -67,6 +65,21 @@ class MultipleChoicePrompt implements PromptInterface
         } while ($this->isValidOption($option) === false);
 
         return $option;
+    }
+
+    /**
+     * Set required flag.
+     *
+     * When $required is true, a valid option must be chosen. Default value is true.
+     *
+     * @param bool|null $flag
+     * @return MultipleChoicePrompt
+     */
+    public function setRequired(bool $flag = null): MultipleChoicePrompt
+    {
+        $this->required = $flag ?? true;
+
+        return $this;
     }
 
     /**

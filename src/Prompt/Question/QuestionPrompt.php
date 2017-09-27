@@ -26,15 +26,13 @@ class QuestionPrompt implements PromptInterface
     /**
      * Create new question prompt.
      *
-     * When $required is true, the question must be answered. Default value is true.
-     *
-     * @param string    $question
-     * @param bool|null $required
+     * @param string $question
      */
-    public function __construct(string $question, bool $required = null)
+    public function __construct(string $question)
     {
         $this->question = $question;
-        $this->required = $required ?? true;
+
+        $this->setRequired();
     }
 
     /**
@@ -48,5 +46,20 @@ class QuestionPrompt implements PromptInterface
         } while ($this->required === true && $answer === null);
 
         return $answer;
+    }
+
+    /**
+     * Set required flag.
+     *
+     * When $required is true, the question must be answered. Default value is true.
+     *
+     * @param bool|null $flag
+     * @return QuestionPrompt
+     */
+    public function setRequired(bool $flag = null): QuestionPrompt
+    {
+        $this->required = $flag ?? true;
+
+        return $this;
     }
 }

@@ -11,6 +11,7 @@ class QuestionPromptTest extends TestCase
 {
     /**
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
+     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
      */
     public function testCanPromptQuestion(): void
@@ -40,6 +41,7 @@ class QuestionPromptTest extends TestCase
 
     /**
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
+     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
      */
     public function testWillPromptQuestionUntilValidAnswer(): void
@@ -69,6 +71,7 @@ class QuestionPromptTest extends TestCase
 
     /**
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
+     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
      */
     public function testCanReturnEmptyAnswerWhenNotRequired(): void
@@ -90,8 +93,10 @@ class QuestionPromptTest extends TestCase
          * @var InputInterface  $input
          * @var OutputInterface $output
          */
-        $question = new QuestionPrompt('How are you doing?', false);
-        $answer = $question->prompt($input, $output);
+        $question = new QuestionPrompt('How are you doing?');
+        $answer = $question
+            ->setRequired(false)
+            ->prompt($input, $output);
 
         static::assertNull($answer);
     }
