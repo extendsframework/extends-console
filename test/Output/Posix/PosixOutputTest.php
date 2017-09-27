@@ -142,6 +142,7 @@ class PosixOutputTest extends TestCase
 
     /**
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setFormatter()
      */
     public function testCanGetCustomFormatter(): void
     {
