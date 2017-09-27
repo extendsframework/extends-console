@@ -6,18 +6,9 @@ namespace ExtendsFramework\Console\Output\Posix;
 use ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter;
 use ExtendsFramework\Console\Formatter\FormatterInterface;
 use ExtendsFramework\Console\Output\OutputInterface;
-use ExtendsFramework\Console\Output\Posix\Exception\InvalidStreamType;
-use ExtendsFramework\Console\Output\Posix\Exception\StreamWriteFailed;
 
 class PosixOutput implements OutputInterface
 {
-    /**
-     * Resource to write to.
-     *
-     * @var resource
-     */
-    protected $stream;
-
     /**
      * Text formatter.
      *
@@ -28,17 +19,10 @@ class PosixOutput implements OutputInterface
     /**
      * Create new output stream with $resource.
      *
-     * @param resource                $resource
      * @param FormatterInterface|null $formatter
-     * @throws InvalidStreamType
      */
-    public function __construct($resource, FormatterInterface $formatter = null)
+    public function __construct(FormatterInterface $formatter = null)
     {
-        if (is_resource($resource) === false || get_resource_type($resource) !== 'stream') {
-            throw new InvalidStreamType($resource);
-        }
-
-        $this->stream = $resource;
         $this->formatter = $formatter ?: new AnsiFormatter();
     }
 
@@ -51,10 +35,9 @@ class PosixOutput implements OutputInterface
             $text = $formatter->create($text);
         }
 
-        $bytes = @fwrite($this->stream, $text);
-        if ($bytes === false) {
-            throw new StreamWriteFailed();
-        }
+        $handle = fopen('php://stdout', 'wb');
+        fwrite($handle, $text);
+        fclose($handle);
 
         return $this;
     }

@@ -15,12 +15,12 @@ class PosixOutputTest extends TestCase
      */
     public function testCanWriteTextToOutput(): void
     {
-        $stream = fopen('php://memory', 'x+');
+        Buffer::reset();
 
-        $output = new PosixOutput($stream);
+        $output = new PosixOutput();
         $output->text('Hello world!');
 
-        $text = stream_get_contents($stream, 1024, 0);
+        $text = Buffer::get();
 
         static::assertEquals('Hello world!', $text);
     }
@@ -31,12 +31,12 @@ class PosixOutputTest extends TestCase
      */
     public function testCanWriteFormattedTextToOutput(): void
     {
-        $stream = fopen('php://memory', 'x+');
+        Buffer::reset();
 
-        $output = new PosixOutput($stream);
+        $output = new PosixOutput();
         $output->text('1234567890', $output->getFormatter()->setFixedWidth(5));
 
-        $text = stream_get_contents($stream, 1024, 0);
+        $text = Buffer::get();
 
         static::assertContains('12345', $text);
         static::assertNotContains('67890', $text);
@@ -49,12 +49,12 @@ class PosixOutputTest extends TestCase
      */
     public function testCanWriteLineToOutput(): void
     {
-        $stream = fopen('php://memory', 'x+');
+        Buffer::reset();
 
-        $output = new PosixOutput($stream);
+        $output = new PosixOutput();
         $output->line('Hello world!');
 
-        $text = stream_get_contents($stream, 1024, 0);
+        $text = Buffer::get();
 
         static::assertEquals('Hello world!' . "\n\r", $text);
     }
@@ -65,12 +65,12 @@ class PosixOutputTest extends TestCase
      */
     public function testCanWriteNewLineToOutput(): void
     {
-        $stream = fopen('php://memory', 'x+');
+        Buffer::reset();
 
-        $output = new PosixOutput($stream);
+        $output = new PosixOutput();
         $output->newLine();
 
-        $text = stream_get_contents($stream, 1024, 0);
+        $text = Buffer::get();
 
         static::assertEquals("\n\r", $text);
     }
@@ -82,12 +82,12 @@ class PosixOutputTest extends TestCase
      */
     public function testCanWriteMultipleLinesToOutput(): void
     {
-        $stream = fopen('php://memory', 'x+');
+        Buffer::reset();
 
-        $output = new PosixOutput($stream);
+        $output = new PosixOutput();
         $output->line('Foo', 'Bar', 'Baz');
 
-        $text = stream_get_contents($stream, 1024, 0);
+        $text = Buffer::get();
 
         static::assertEquals('Foo' . "\n\r" . 'Bar' . "\n\r" . 'Baz' . "\n\r", $text);
     }
@@ -98,9 +98,7 @@ class PosixOutputTest extends TestCase
      */
     public function testCanGetDefaultFormatter(): void
     {
-        $stream = fopen('php://memory', 'x+');
-
-        $output = new PosixOutput($stream);
+        $output = new PosixOutput();
         $formatter = $output->getFormatter();
 
         static::assertInstanceOf(AnsiFormatter::class, $formatter);
@@ -114,40 +112,36 @@ class PosixOutputTest extends TestCase
     {
         $formatter = $this->createMock(FormatterInterface::class);
 
-        $stream = fopen('php://memory', 'x+');
-
         /**
          * @var FormatterInterface $formatter
          */
-        $output = new PosixOutput($stream, $formatter);
+        $output = new PosixOutput($formatter);
 
         static::assertSame($formatter, $output->getFormatter());
     }
+}
 
-    /**
-     * @covers                   \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
-     * @covers                   \ExtendsFramework\Console\Output\Posix\Exception\InvalidStreamType::__construct()
-     * @expectedException        \ExtendsFramework\Console\Output\Posix\Exception\InvalidStreamType
-     * @expectedExceptionMessage Resource must be of type stream, got "curl".
-     */
-    public function testCanNotConstructWithInvalidResource(): void
+class Buffer
+{
+    protected static $value;
+
+    public static function get(): string
     {
-        new PosixOutput(curl_init());
+        return static::$value;
     }
 
-    /**
-     * @covers                   \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
-     * @covers                   \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
-     * @expectedException        \ExtendsFramework\Console\Output\Posix\Exception\StreamWriteFailed
-     * @covers                   \ExtendsFramework\Console\Output\Posix\Exception\StreamWriteFailed::__construct()
-     * @expectedExceptionMessage Failed to write to stream.
-     */
-    public function testCanNotWriteToClosedStream(): void
+    public static function set(string $value): void
     {
-        $stream = fopen('php://memory', 'w+');
-        $output = new PosixOutput($stream);
-        fclose($stream);
-
-        $output->text('Hello world!');
+        static::$value .= $value;
     }
+
+    public static function reset(): void
+    {
+        static::$value = null;
+    }
+}
+
+function fwrite(): void
+{
+    Buffer::set(func_get_arg(1));
 }

@@ -12,7 +12,6 @@ interface InputInterface
      *
      * @param int|null $length
      * @return null|string
-     * @throws InputException
      */
     public function line(int $length = null): ?string;
 
@@ -23,7 +22,6 @@ interface InputInterface
      *
      * @param string|null $allowed
      * @return null|string
-     * @throws InputException
      */
     public function character(string $allowed = null): ?string;
 }

@@ -23,7 +23,6 @@ interface OutputInterface
      *
      * @param string[] ...$lines
      * @return OutputInterface
-     * @throws OutputException
      */
     public function line(string ...$lines): OutputInterface;
 
