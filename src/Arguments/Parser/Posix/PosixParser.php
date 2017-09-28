@@ -69,7 +69,11 @@ class PosixParser implements ParserInterface
                         throw new ArgumentNotAllowed($option, true);
                     }
 
-                    $parsed[$name] = true;
+                    if ($option->isMultiple()) {
+                        $parsed[$name] = ($parsed[$name] ?? 0) + 1;
+                    } else {
+                        $parsed[$name] = true;
+                    }
                 } elseif ($hasArgument) {
                     $parsed[$name] = $argument[1];
                 } else {
@@ -89,7 +93,11 @@ class PosixParser implements ParserInterface
                     $name = $option->getName();
 
                     if ($option->isFlag()) {
-                        $parsed[$name] = true;
+                        if ($option->isMultiple()) {
+                            $parsed[$name] = ($parsed[$name] ?? 0) + 1;
+                        } else {
+                            $parsed[$name] = true;
+                        }
                     } elseif (count($parts) > ($index + 1)) {
                         $value = implode(array_slice($parts, $index + 1));
                         if (strpos($value, '=') === 0) {

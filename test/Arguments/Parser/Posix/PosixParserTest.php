@@ -187,6 +187,73 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * @covers \ExtendsFramework\Console\Arguments\Parser\Posix\PosixParser::parse()
+     * @covers \ExtendsFramework\Console\Arguments\Parser\Posix\PosixParser::parseArguments()
+     */
+    public function testCanParseShortOptionFlagAsMultiple(): void
+    {
+        $option = $this->createMock(OptionInterface::class);
+        $option
+            ->expects($this->exactly(3))
+            ->method('getName')
+            ->willReturnOnConsecutiveCalls(
+                'verbose',
+                'verbose',
+                'verbose'
+            );
+
+        $option
+            ->expects($this->exactly(3))
+            ->method('isFlag')
+            ->willReturn(true);
+
+        $option
+            ->expects($this->exactly(3))
+            ->method('isMultiple')
+            ->willReturn(true);
+
+        $definition = $this->createMock(DefinitionInterface::class);
+        $definition
+            ->expects($this->exactly(3))
+            ->method('getOption')
+            ->withConsecutive(
+                ['v'],
+                ['v'],
+                ['v']
+            )
+            ->willReturn($option);
+
+        $arguments = $this->createMock(ArgumentsInterface::class);
+        $arguments
+            ->method('valid')
+            ->willReturnOnConsecutiveCalls(
+                true,
+                true,
+                true
+            );
+
+        $arguments
+            ->method('current')
+            ->willReturnOnConsecutiveCalls(
+                '-v',
+                '-v',
+                '-v'
+            );
+
+        /**
+         * @var DefinitionInterface $definition
+         * @var ArgumentsInterface  $arguments
+         */
+        $parser = new PosixParser();
+        $match = $parser->parse($definition, $arguments);
+
+        $this->assertInstanceOf(ContainerInterface::class, $match);
+        $this->assertSame([
+            'verbose' => 3,
+        ], $match->extract());
+    }
+
+    /**
      * @covers                   \ExtendsFramework\Console\Arguments\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Arguments\Parser\Posix\PosixParser::parseArguments()
      * @covers                   \ExtendsFramework\Console\Arguments\Parser\Posix\Exception\MissingArgument::__construct()
@@ -456,6 +523,60 @@ class PosixParserTest extends TestCase
         $this->assertInstanceOf(ContainerInterface::class, $match);
         $this->assertSame([
             'force' => true,
+        ], $match->extract());
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Arguments\Parser\Posix\PosixParser::parse()
+     * @covers \ExtendsFramework\Console\Arguments\Parser\Posix\PosixParser::parseArguments()
+     */
+    public function testCanParseLongOptionFlagAsMultiple(): void
+    {
+        $option = $this->createMock(OptionInterface::class);
+        $option
+            ->expects($this->exactly(2))
+            ->method('getName')
+            ->willReturn('verbose');
+
+        $option
+            ->expects($this->exactly(2))
+            ->method('isFlag')
+            ->willReturn(true);
+
+        $option
+            ->expects($this->exactly(2))
+            ->method('isMultiple')
+            ->willReturn(true);
+
+        $definition = $this->createMock(DefinitionInterface::class);
+        $definition
+            ->expects($this->exactly(2))
+            ->method('getOption')
+            ->with('verbose', true)
+            ->willReturn($option);
+
+        $arguments = $this->createMock(ArgumentsInterface::class);
+        $arguments
+            ->method('valid')
+            ->willReturnOnConsecutiveCalls(
+                true,
+                true
+            );
+
+        $arguments
+            ->method('current')
+            ->willReturnOnConsecutiveCalls('--verbose', '--verbose');
+
+        /**
+         * @var DefinitionInterface $definition
+         * @var ArgumentsInterface  $arguments
+         */
+        $parser = new PosixParser();
+        $match = $parser->parse($definition, $arguments);
+
+        $this->assertInstanceOf(ContainerInterface::class, $match);
+        $this->assertSame([
+            'verbose' => 2,
         ], $match->extract());
     }
 
