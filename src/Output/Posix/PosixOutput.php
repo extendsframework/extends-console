@@ -34,9 +34,7 @@ class PosixOutput implements OutputInterface
                 $text = $formatter->create($text);
             }
 
-            $handle = fopen('php://stdout', 'wb');
-            fwrite($handle, $text);
-            fclose($handle);
+            fwrite(STDOUT, $text);
         }
 
         return $this;

@@ -12,10 +12,7 @@ class PosixInput implements InputInterface
      */
     public function line(int $length = null): ?string
     {
-        $handle = fopen('php://stdin', 'rb');
-        $line = fgets($handle, $length ?? 4096);
-
-        fclose($handle);
+        $line = fgets(STDIN, $length ?? 4096);
 
         return rtrim($line, "\n\r") ?: null;
     }
@@ -25,14 +22,11 @@ class PosixInput implements InputInterface
      */
     public function character(string $allowed = null): ?string
     {
-        $handle = fopen('php://stdin', 'rb');
-        $character = fgetc($handle);
+        $character = fgetc(STDIN);
 
         if ($allowed && strpos($allowed, $character) === false) {
             $character = '';
         }
-
-        fclose($handle);
 
         return rtrim($character, "\n\r") ?: null;
     }
