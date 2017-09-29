@@ -40,7 +40,7 @@ class PosixParser implements ParserInterface
     }
 
     /**
-     * Parse $arguments against $definition.
+     * Parse $arguments against $definition in $strict mode.
      *
      * @param DefinitionInterface $definition
      * @param array               $arguments
@@ -143,6 +143,8 @@ class PosixParser implements ParserInterface
     /**
      * Get operand at $position from $definition.
      *
+     * When $strict is true, an exception will be (re)thrown when operand doesn't exist.
+     *
      * @param DefinitionInterface $definition
      * @param int                 $position
      * @param bool                $strict
@@ -164,6 +166,8 @@ class PosixParser implements ParserInterface
 
     /**
      * Get option $name from $definition.
+     *
+     * When $strict is true, an exception will be (re)thrown when option doesn't exist.
      *
      * @param DefinitionInterface $definition
      * @param string              $name

@@ -12,7 +12,7 @@ interface ParserInterface
     /**
      * Parse $arguments against command $definition.
      *
-     * When $strict mode is disabled, only operands and options that can be matched will be returned. Not exceptions
+     * When $strict mode is disabled, only operands and options that can be matched will be returned. No exception
      * will be thrown.
      *
      * @param DefinitionInterface $definition
