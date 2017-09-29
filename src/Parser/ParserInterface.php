@@ -12,13 +12,15 @@ interface ParserInterface
     /**
      * Parse $arguments against command $definition.
      *
-     * When parsing fails, an exception will be thrown.
+     * When $strict mode is disabled, only operands and options that can be matched will be returned. Not exceptions
+     * will be thrown.
      *
      * @param DefinitionInterface $definition
      * @param array               $arguments
+     * @param bool|null           $strict
      * @return ContainerInterface
      * @throws ParserException
      * @throws DefinitionException
      */
-    public function parse(DefinitionInterface $definition, array $arguments): ContainerInterface;
+    public function parse(DefinitionInterface $definition, array $arguments, bool $strict = null): ContainerInterface;
 }

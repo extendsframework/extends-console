@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace ExtendsFramework\Console\Parser\Posix;
 
 use ExtendsFramework\Console\Definition\DefinitionInterface;
+use ExtendsFramework\Console\Definition\Exception\OperandNotFound;
+use ExtendsFramework\Console\Definition\Exception\OptionNotFound;
 use ExtendsFramework\Console\Definition\Operand\OperandInterface;
 use ExtendsFramework\Console\Definition\Option\OptionInterface;
 use ExtendsFramework\Container\ContainerInterface;
@@ -14,6 +16,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
     public function testCanParseShortOptionWithCombinedArgument(): void
     {
@@ -60,6 +63,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
     public function testCanParseShortOptionWithSeparateArgument(): void
     {
@@ -99,6 +103,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
     public function testCanParseShortOptionFlag(): void
     {
@@ -148,6 +153,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
     public function testCanParseShortOptionFlagAsMultiple(): void
     {
@@ -201,6 +207,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\Exception\MissingArgument::__construct()
      * @expectedException        \ExtendsFramework\Console\Parser\Posix\Exception\MissingArgument
      * @expectedExceptionMessage Short option "-f" requires an argument, non given.
@@ -247,6 +254,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
     public function testCanParseCombinedShortOptions(): void
     {
@@ -300,6 +308,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
     public function testCanParseLongOptionWithCombinedArgument(): void
     {
@@ -338,6 +347,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
     public function testCanParseLongOptionWithSeparateArgument(): void
     {
@@ -377,6 +387,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
     public function testCanParseLongOptionFlag(): void
     {
@@ -415,6 +426,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
     public function testCanParseLongOptionFlagAsMultiple(): void
     {
@@ -459,6 +471,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\Exception\ArgumentNotAllowed::__construct()
      * @expectedException        \ExtendsFramework\Console\Parser\Posix\Exception\ArgumentNotAllowed
      * @expectedExceptionMessage Long option argument is not allowed for flag "--name".
@@ -495,6 +508,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\Exception\MissingArgument::__construct()
      * @expectedException        \ExtendsFramework\Console\Parser\Posix\Exception\MissingArgument
      * @expectedExceptionMessage Long option "--name" requires an argument, non given.
@@ -536,6 +550,7 @@ class PosixParserTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOperand()
      */
     public function testCanParseOperand(): void
     {
@@ -574,8 +589,103 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOperand()
+     */
+    public function testCanParseInNonStrictMode(): void
+    {
+        /**
+         * @var OptionNotFound  $optionNotFound
+         * @var OperandNotFound $operandNotFound
+         */
+        $optionNotFound = $this->createMock(OptionNotFound::class);
+        $operandNotFound = $this->createMock(OperandNotFound::class);
+
+        $definition = $this->createMock(DefinitionInterface::class);
+
+        $option = $this->createMock(OptionInterface::class);
+        $option
+            ->expects($this->exactly(2))
+            ->method('getName')
+            ->willReturnOnConsecutiveCalls(
+                'force',
+                'quite'
+            );
+
+        $option
+            ->expects($this->exactly(2))
+            ->method('isFlag')
+            ->willReturn(true);
+
+        $option
+            ->expects($this->exactly(2))
+            ->method('isMultiple')
+            ->willReturnOnConsecutiveCalls(
+                true,
+                false
+            );
+
+        $definition
+            ->expects($this->exactly(4))
+            ->method('getOption')
+            ->withConsecutive(
+                ['x'],
+                ['f'],
+                ['help', true],
+                ['quite', true]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $this->throwException($optionNotFound),
+                $option,
+                $this->throwException($optionNotFound),
+                $option
+            );
+
+        $operand = $this->createMock(OperandInterface::class);
+        $operand
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn('name');
+
+        $definition
+            ->expects($this->exactly(2))
+            ->method('getOperand')
+            ->withConsecutive(
+                [0],
+                [1]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $operand,
+                $this->throwException($operandNotFound)
+            );
+
+        /**
+         * @var DefinitionInterface $definition
+         */
+        $parser = new PosixParser();
+        $match = $parser->parse($definition, [
+            '-x',
+            '-f',
+            'John Doe',
+            '--help',
+            '--quite',
+            'Jane Doe',
+        ], false);
+
+        $this->assertInstanceOf(ContainerInterface::class, $match);
+        $this->assertSame([
+            'force' => 1,
+            'name' => 'John Doe',
+            'quite' => true,
+        ], $match->extract());
+    }
+
+    /**
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::getOperand()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\Exception\MissingOperand::__construct()
      * @expectedException        \ExtendsFramework\Console\Parser\Posix\Exception\MissingOperand
      * @expectedExceptionMessage Operand "name.first" is required.
@@ -604,8 +714,67 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
+     * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::getOperand()
+     * @expectedException \ExtendsFramework\Console\Definition\Exception\OperandNotFound
+     */
+    public function testCanNotParseUnknownOperand(): void
+    {
+        /**
+         * @var OperandNotFound $exception
+         */
+        $exception = $this->createMock(OperandNotFound::class);
+
+        $definition = $this->createMock(DefinitionInterface::class);
+        $definition
+            ->expects($this->once())
+            ->method('getOperand')
+            ->with(0)
+            ->willThrowException($exception);
+
+        /**
+         * @var DefinitionInterface $definition
+         */
+        $parser = new PosixParser();
+        $parser->parse($definition, [
+            'John Doe',
+        ]);
+    }
+
+    /**
+     * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
+     * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
+     * @expectedException \ExtendsFramework\Console\Definition\Exception\OptionNotFound
+     */
+    public function testCanNotParseUnknownOption(): void
+    {
+        /**
+         * @var OptionNotFound $exception
+         */
+        $exception = $this->createMock(OptionNotFound::class);
+
+        $definition = $this->createMock(DefinitionInterface::class);
+        $definition
+            ->expects($this->once())
+            ->method('getOption')
+            ->with('x')
+            ->willThrowException($exception);
+
+        /**
+         * @var DefinitionInterface $definition
+         */
+        $parser = new PosixParser();
+        $parser->parse($definition, [
+            '-x',
+        ]);
+    }
+
+    /**
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
+     * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOperand()
      */
     public function testCanTerminatedFurtherOptionsToOperands(): void
     {
