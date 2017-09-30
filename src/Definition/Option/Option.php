@@ -53,14 +53,14 @@ class Option implements OptionInterface
      * Create new option.
      *
      * @param string      $name
-     * @param null|string $short
-     * @param null|string $long
-     * @param bool        $isFlag
-     * @param bool        $isMultiple
-     * @param bool        $isRequired
-     * @throws OptionException
+     * @param string|null $short
+     * @param string|null $long
+     * @param bool|null   $isFlag
+     * @param bool|null   $isMultiple
+     * @param bool|null   $isRequired
+     * @throws NoShortAndLongName
      */
-    public function __construct(string $name, string $short = null, string $long = null, bool $isFlag, bool $isMultiple, bool $isRequired)
+    public function __construct(string $name, string $short = null, string $long = null, bool $isFlag = null, bool $isMultiple = null, bool $isRequired = null)
     {
         if ($short === null && $long === null) {
             throw new NoShortAndLongName($name);
@@ -69,9 +69,9 @@ class Option implements OptionInterface
         $this->name = $name;
         $this->short = $short;
         $this->long = $long;
-        $this->isFlag = $isFlag;
-        $this->isRequired = $isRequired;
-        $this->isMultiple = $isMultiple;
+        $this->isFlag = $isFlag ?? true;
+        $this->isMultiple = $isMultiple ?? false;
+        $this->isRequired = $isRequired ?? false;
     }
 
     /**
