@@ -63,6 +63,14 @@ interface FormatterInterface
     public function setFixedWidth(int $length = null): FormatterInterface;
 
     /**
+     * Set text indent to $length.
+     *
+     * @param int|null $length
+     * @return FormatterInterface
+     */
+    public function setTextIndent(int $length = null): FormatterInterface;
+
+    /**
      * Add format to $text.
      *
      * Formatted text will be returned.

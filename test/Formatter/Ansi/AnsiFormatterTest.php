@@ -124,6 +124,22 @@ class AnsiFormatterTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setTextIndent()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
+     */
+    public function testCanSetTextIndent(): void
+    {
+        $formatter = new AnsiFormatter();
+        $text = $formatter
+            ->setTextIndent(4)
+            ->create('Hello world!');
+
+        self::assertSame("\e[0;39;49m    Hello world!\e[0m", $text);
+    }
+
+    /**
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setForeground()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()

@@ -62,6 +62,13 @@ class AnsiFormatter implements FormatterInterface
     protected $width;
 
     /**
+     * Text indent.
+     *
+     * @var int
+     */
+    protected $indent;
+
+    /**
      * Color mapping.
      *
      * @var int[]
@@ -152,6 +159,16 @@ class AnsiFormatter implements FormatterInterface
     /**
      * @inheritDoc
      */
+    public function setTextIndent(int $length = null): FormatterInterface
+    {
+        $this->indent = $length;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function create(string $text): string
     {
         $format = 0;
@@ -162,6 +179,10 @@ class AnsiFormatter implements FormatterInterface
         if (is_int($this->width) === true) {
             $text = str_pad(substr($text, 0, $this->width), $this->width);
         }
+
+        if (is_int($this->indent) === true) {
+        $text = str_repeat(' ', $this->indent) . $text;
+    }
 
         $formatted = sprintf(
             "\e[%s;%d;%dm%s\e[0m",
