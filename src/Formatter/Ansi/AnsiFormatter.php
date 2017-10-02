@@ -181,8 +181,8 @@ class AnsiFormatter implements FormatterInterface
         }
 
         if (is_int($this->indent) === true) {
-        $text = str_repeat(' ', $this->indent) . $text;
-    }
+            $text = str_repeat(' ', $this->indent) . $text;
+        }
 
         $formatted = sprintf(
             "\e[%s;%d;%dm%s\e[0m",
