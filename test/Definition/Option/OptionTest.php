@@ -10,6 +10,7 @@ class OptionTest extends TestCase
     /**
      * @covers \ExtendsFramework\Console\Definition\Option\Option::__construct()
      * @covers \ExtendsFramework\Console\Definition\Option\Option::getName()
+     * @covers \ExtendsFramework\Console\Definition\Option\Option::getDescription()
      * @covers \ExtendsFramework\Console\Definition\Option\Option::getShort()
      * @covers \ExtendsFramework\Console\Definition\Option\Option::getLong()
      * @covers \ExtendsFramework\Console\Definition\Option\Option::isFlag()
@@ -17,13 +18,14 @@ class OptionTest extends TestCase
      */
     public function testCanConstructAndGetParameters(): void
     {
-        $option = new Option('fooBar', 'f', 'foo-bar', true, true);
+        $option = new Option('fooBar', 'Some description.', 'f', 'foo-bar', true, true);
 
-        $this->assertSame('fooBar', $option->getName());
-        $this->assertSame('f', $option->getShort());
-        $this->assertSame('foo-bar', $option->getLong());
-        $this->assertSame(true, $option->isFlag());
-        $this->assertSame(true, $option->isMultiple());
+        static::assertSame('fooBar', $option->getName());
+        static::assertSame('Some description.', $option->getDescription());
+        static::assertSame('f', $option->getShort());
+        static::assertSame('foo-bar', $option->getLong());
+        static::assertSame(true, $option->isFlag());
+        static::assertSame(true, $option->isMultiple());
     }
 
     /**
@@ -34,6 +36,6 @@ class OptionTest extends TestCase
      */
     public function testCanNotConstructWithoutShortAndLong(): void
     {
-        new Option('fooBar', null, null, true, true);
+        new Option('fooBar', 'Some description.', null, null, true, true);
     }
 }

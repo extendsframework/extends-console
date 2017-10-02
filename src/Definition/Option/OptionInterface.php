@@ -13,6 +13,13 @@ interface OptionInterface
     public function getName(): string;
 
     /**
+     * Get option description.
+     *
+     * @return string
+     */
+    public function getDescription(): string;
+
+    /**
      * Get short name.
      *
      * If empty, long name will be available.

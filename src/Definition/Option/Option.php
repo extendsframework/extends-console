@@ -15,6 +15,13 @@ class Option implements OptionInterface
     protected $name;
 
     /**
+     * Option description.
+     *
+     * @var string
+     */
+    protected $description;
+
+    /**
      * Short name.
      *
      * @var null|string
@@ -53,19 +60,21 @@ class Option implements OptionInterface
      * Create new option.
      *
      * @param string      $name
+     * @param string      $description
      * @param string|null $short
      * @param string|null $long
      * @param bool|null   $isFlag
      * @param bool|null   $isMultiple
      * @throws NoShortAndLongName
      */
-    public function __construct(string $name, string $short = null, string $long = null, bool $isFlag = null, bool $isMultiple = null)
+    public function __construct(string $name, string $description, string $short = null, string $long = null, bool $isFlag = null, bool $isMultiple = null)
     {
         if ($short === null && $long === null) {
             throw new NoShortAndLongName($name);
         }
 
         $this->name = $name;
+        $this->description = $description;
         $this->short = $short;
         $this->long = $long;
         $this->isFlag = $isFlag ?? true;
@@ -78,6 +87,14 @@ class Option implements OptionInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 
     /**
