@@ -60,7 +60,7 @@ class PosixParser implements ParserInterface
         foreach ($iterator as $argument) {
             $argument = trim($argument);
 
-            if ($terminated) {
+            if ($terminated === true) {
                 $operand = $this->getOperand($definition, $operandPosition++, $strict);
                 if ($operand instanceof OperandInterface) {
                     $parsed[$operand->getName()] = $argument;
@@ -75,23 +75,23 @@ class PosixParser implements ParserInterface
                 $option = $this->getOption($definition, $argument[0], true, $strict);
                 if ($option instanceof OptionInterface) {
                     $name = $option->getName();
-                    if ($option->isFlag()) {
-                        if ($hasArgument) {
+                    if ($option->isFlag() === true) {
+                        if ($hasArgument === true) {
                             throw new ArgumentNotAllowed($option, true);
                         }
 
-                        if ($option->isMultiple()) {
+                        if ($option->isMultiple() === true) {
                             $parsed[$name] = ($parsed[$name] ?? 0) + 1;
                         } else {
                             $parsed[$name] = true;
                         }
-                    } elseif ($hasArgument) {
+                    } elseif ($hasArgument === true) {
                         $parsed[$name] = $argument[1];
                     } else {
                         $iterator->next();
-                        if ($iterator->valid()) {
+                        if ($iterator->valid() === true) {
                             $parsed[$name] = $iterator->current();
-                        } elseif ($option->isRequired()) {
+                        } elseif ($option->isFlag() === false) {
                             throw new MissingArgument($option, true);
                         }
                     }
@@ -104,8 +104,8 @@ class PosixParser implements ParserInterface
                     $option = $this->getOption($definition, $part, false, $strict);
                     if ($option instanceof OptionInterface) {
                         $name = $option->getName();
-                        if ($option->isFlag()) {
-                            if ($option->isMultiple()) {
+                        if ($option->isFlag() === true) {
+                            if ($option->isMultiple() === true) {
                                 $parsed[$name] = ($parsed[$name] ?? 0) + 1;
                             } else {
                                 $parsed[$name] = true;
@@ -121,9 +121,9 @@ class PosixParser implements ParserInterface
                             break;
                         } else {
                             $iterator->next();
-                            if ($iterator->valid()) {
+                            if ($iterator->valid() === true) {
                                 $parsed[$name] = $iterator->current();
-                            } elseif ($option->isRequired()) {
+                            } elseif ($option->isFlag() === false) {
                                 throw new MissingArgument($option);
                             }
                         }

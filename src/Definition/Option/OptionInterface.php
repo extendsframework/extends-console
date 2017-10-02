@@ -43,11 +43,4 @@ interface OptionInterface
      * @return bool
      */
     public function isMultiple(): bool;
-
-    /**
-     * Get if this options is required.
-     *
-     * @return bool
-     */
-    public function isRequired(): bool;
 }

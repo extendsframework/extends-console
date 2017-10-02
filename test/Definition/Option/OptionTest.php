@@ -14,17 +14,15 @@ class OptionTest extends TestCase
      * @covers \ExtendsFramework\Console\Definition\Option\Option::getLong()
      * @covers \ExtendsFramework\Console\Definition\Option\Option::isFlag()
      * @covers \ExtendsFramework\Console\Definition\Option\Option::isMultiple()
-     * @covers \ExtendsFramework\Console\Definition\Option\Option::isRequired()
      */
     public function testCanConstructAndGetParameters(): void
     {
-        $option = new Option('fooBar', 'f', 'foo-bar', true, true, true);
+        $option = new Option('fooBar', 'f', 'foo-bar', true, true);
 
         $this->assertSame('fooBar', $option->getName());
         $this->assertSame('f', $option->getShort());
         $this->assertSame('foo-bar', $option->getLong());
         $this->assertSame(true, $option->isFlag());
-        $this->assertSame(true, $option->isRequired());
         $this->assertSame(true, $option->isMultiple());
     }
 
@@ -36,6 +34,6 @@ class OptionTest extends TestCase
      */
     public function testCanNotConstructWithoutShortAndLong(): void
     {
-        new Option('fooBar', null, null, true, true, true);
+        new Option('fooBar', null, null, true, true);
     }
 }
