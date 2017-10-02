@@ -206,6 +206,7 @@ class AnsiFormatter implements FormatterInterface
         $this->background = 49;
         $this->format = [];
         $this->width = null;
+        $this->indent = null;
     }
 
     /**
