@@ -221,14 +221,9 @@ class PosixParserTest extends TestCase
             ->willReturn('foo');
 
         $option
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('isFlag')
             ->willReturn(false);
-
-        $option
-            ->expects($this->once())
-            ->method('isRequired')
-            ->willReturn(true);
 
         $option
             ->expects($this->once())
@@ -517,14 +512,9 @@ class PosixParserTest extends TestCase
     {
         $option = $this->createMock(OptionInterface::class);
         $option
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('isFlag')
             ->willReturn(false);
-
-        $option
-            ->expects($this->once())
-            ->method('isRequired')
-            ->willReturn(true);
 
         $option
             ->expects($this->once())
@@ -628,17 +618,19 @@ class PosixParserTest extends TestCase
             );
 
         $definition
-            ->expects($this->exactly(4))
+            ->expects($this->exactly(5))
             ->method('getOption')
             ->withConsecutive(
                 ['x'],
                 ['f'],
+                ['a'],
                 ['help', true],
                 ['quite', true]
             )
             ->willReturnOnConsecutiveCalls(
                 $this->throwException($optionNotFound),
                 $option,
+                $this->throwException($optionNotFound),
                 $this->throwException($optionNotFound),
                 $option
             );
@@ -666,13 +658,13 @@ class PosixParserTest extends TestCase
          */
         $parser = new PosixParser();
         $match = $parser->parse($definition, [
-            '-x',
-            '-f',
+            '-xf',
+            '-fab',
             'John Doe',
             '--help',
             '--quite',
             'Jane Doe',
-        ], false);
+        ], false, $remaining);
 
         $this->assertInstanceOf(ContainerInterface::class, $match);
         $this->assertSame([
@@ -680,6 +672,12 @@ class PosixParserTest extends TestCase
             'name' => 'John Doe',
             'quite' => true,
         ], $match->extract());
+        $this->assertSame([
+            '-xf',
+            '-ab',
+            '--help',
+            'Jane Doe',
+        ], $remaining);
     }
 
     /**

@@ -20,13 +20,12 @@ class PosixParser implements ParserInterface
     /**
      * @inheritDoc
      */
-    public function parse(DefinitionInterface $definition, array $arguments, bool $strict = null): ContainerInterface
+    public function parse(DefinitionInterface $definition, array $arguments, bool $strict = null, array &$remaining = null): ContainerInterface
     {
+        $remaining = $remaining ?: [];
         $strict = $strict ?? true;
-        $parsed = new Container(
-            $this->parseArguments($definition, $arguments, $strict)
-        );
 
+        $parsed = new Container($this->parseArguments($definition, $arguments, $strict, $remaining));
         if ($strict === true) {
             foreach ($definition->getOperands() as $operand) {
                 $name = $operand->getName();
@@ -44,13 +43,14 @@ class PosixParser implements ParserInterface
      *
      * @param DefinitionInterface $definition
      * @param array               $arguments
-     * @param bool|null           $strict
+     * @param bool                $strict
+     * @param array               $remaining
      * @return array
      * @throws ArgumentNotAllowed
      * @throws DefinitionException
      * @throws MissingArgument
      */
-    protected function parseArguments(DefinitionInterface $definition, array $arguments, bool $strict): array
+    protected function parseArguments(DefinitionInterface $definition, array &$arguments, bool $strict, array &$remaining): array
     {
         $operandPosition = 0;
         $terminated = false;
@@ -64,15 +64,17 @@ class PosixParser implements ParserInterface
                 $operand = $this->getOperand($definition, $operandPosition++, $strict);
                 if ($operand instanceof OperandInterface) {
                     $parsed[$operand->getName()] = $argument;
+                } else {
+                    $remaining[] = $argument;
                 }
             } elseif ($argument === '--') {
                 $terminated = true;
             } elseif (strpos($argument, '--') === 0) {
-                $argument = substr($argument, 2);
-                $argument = explode('=', $argument, 2);
-                $hasArgument = isset($argument[1]);
+                $long = substr($argument, 2);
+                $long = explode('=', $long, 2);
+                $hasArgument = isset($long[1]);
 
-                $option = $this->getOption($definition, $argument[0], true, $strict);
+                $option = $this->getOption($definition, $long[0], true, $strict);
                 if ($option instanceof OptionInterface) {
                     $name = $option->getName();
                     if ($option->isFlag() === true) {
@@ -86,7 +88,7 @@ class PosixParser implements ParserInterface
                             $parsed[$name] = true;
                         }
                     } elseif ($hasArgument === true) {
-                        $parsed[$name] = $argument[1];
+                        $parsed[$name] = $long[1];
                     } else {
                         $iterator->next();
                         if ($iterator->valid() === true) {
@@ -95,11 +97,13 @@ class PosixParser implements ParserInterface
                             throw new MissingArgument($option, true);
                         }
                     }
+                } else {
+                    $remaining[] = $argument;
                 }
             } elseif (strpos($argument, '-') === 0) {
-                $argument = substr($argument, 1);
+                $short = substr($argument, 1);
 
-                $parts = str_split($argument);
+                $parts = str_split($short);
                 foreach ($parts as $index => $part) {
                     $option = $this->getOption($definition, $part, false, $strict);
                     if ($option instanceof OptionInterface) {
@@ -127,12 +131,18 @@ class PosixParser implements ParserInterface
                                 throw new MissingArgument($option);
                             }
                         }
+                    } else {
+                        $remaining[] = '-' . implode('', array_slice($parts, $index));
+
+                        break;
                     }
                 }
             } else {
                 $operand = $this->getOperand($definition, $operandPosition++, $strict);
                 if ($operand instanceof OperandInterface) {
                     $parsed[$operand->getName()] = $argument;
+                } else {
+                    $remaining[] = $argument;
                 }
             }
         }
