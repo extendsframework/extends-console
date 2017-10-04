@@ -8,34 +8,34 @@ use ExtendsFramework\Console\Definition\DefinitionException;
 use ExtendsFramework\Console\Definition\DefinitionInterface;
 use ExtendsFramework\Console\Definition\Operand\OperandInterface;
 use ExtendsFramework\Console\Definition\Option\OptionInterface;
+use ExtendsFramework\Console\Parser\ParseResult;
+use ExtendsFramework\Console\Parser\ParseResultInterface;
 use ExtendsFramework\Console\Parser\ParserInterface;
 use ExtendsFramework\Console\Parser\Posix\Exception\ArgumentNotAllowed;
 use ExtendsFramework\Console\Parser\Posix\Exception\MissingArgument;
 use ExtendsFramework\Console\Parser\Posix\Exception\MissingOperand;
 use ExtendsFramework\Container\Container;
-use ExtendsFramework\Container\ContainerInterface;
 
 class PosixParser implements ParserInterface
 {
     /**
      * @inheritDoc
      */
-    public function parse(DefinitionInterface $definition, array $arguments, bool $strict = null, array &$remaining = null): ContainerInterface
+    public function parse(DefinitionInterface $definition, array $arguments, bool $strict = null): ParseResultInterface
     {
-        $remaining = $remaining ?: [];
         $strict = $strict ?? true;
 
-        $parsed = new Container($this->parseArguments($definition, $arguments, $strict, $remaining));
+        $result = $this->parseArguments($definition, $arguments, $strict);
         if ($strict === true) {
             foreach ($definition->getOperands() as $operand) {
                 $name = $operand->getName();
-                if ($parsed->has($name) === false) {
+                if ($result->getParsed()->has($name) === false) {
                     throw new MissingOperand($name);
                 }
             }
         }
 
-        return $parsed;
+        return $result;
     }
 
     /**
@@ -44,16 +44,16 @@ class PosixParser implements ParserInterface
      * @param DefinitionInterface $definition
      * @param array               $arguments
      * @param bool                $strict
-     * @param array               $remaining
-     * @return array
+     * @return ParseResultInterface
      * @throws ArgumentNotAllowed
      * @throws DefinitionException
      * @throws MissingArgument
      */
-    protected function parseArguments(DefinitionInterface $definition, array &$arguments, bool $strict, array &$remaining): array
+    protected function parseArguments(DefinitionInterface $definition, array &$arguments, bool $strict): ParseResultInterface
     {
         $operandPosition = 0;
         $terminated = false;
+        $remaining = [];
         $parsed = [];
 
         $iterator = new ArrayIterator($arguments);
@@ -147,7 +147,11 @@ class PosixParser implements ParserInterface
             }
         }
 
-        return $parsed;
+        return new ParseResult(
+            new Container($parsed),
+            new Container($remaining),
+            $strict
+        );
     }
 
     /**

@@ -5,7 +5,6 @@ namespace ExtendsFramework\Console\Parser;
 
 use ExtendsFramework\Console\Definition\DefinitionException;
 use ExtendsFramework\Console\Definition\DefinitionInterface;
-use ExtendsFramework\Container\ContainerInterface;
 
 interface ParserInterface
 {
@@ -18,10 +17,9 @@ interface ParserInterface
      * @param DefinitionInterface $definition
      * @param array               $arguments
      * @param bool|null           $strict
-     * @param array|null          $remaining
-     * @return ContainerInterface
+     * @return ParseResultInterface
      * @throws ParserException
      * @throws DefinitionException
      */
-    public function parse(DefinitionInterface $definition, array $arguments, bool $strict = null, array &$remaining = null): ContainerInterface;
+    public function parse(DefinitionInterface $definition, array $arguments, bool $strict = null): ParseResultInterface;
 }

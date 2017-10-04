@@ -8,7 +8,7 @@ use ExtendsFramework\Console\Definition\Exception\OperandNotFound;
 use ExtendsFramework\Console\Definition\Exception\OptionNotFound;
 use ExtendsFramework\Console\Definition\Operand\OperandInterface;
 use ExtendsFramework\Console\Definition\Option\OptionInterface;
-use ExtendsFramework\Container\ContainerInterface;
+use ExtendsFramework\Console\Parser\ParseResultInterface;
 use PHPUnit\Framework\TestCase;
 
 class PosixParserTest extends TestCase
@@ -48,16 +48,18 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '-fJohn',
             '-l=Doe',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'first' => 'John',
-            'last' => 'Doe',
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'first' => 'John',
+                'last' => 'Doe',
+            ], $result->getParsed()->extract());
+        }
     }
 
     /**
@@ -89,15 +91,17 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '-n',
             'John Doe',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'name' => 'John Doe',
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'name' => 'John Doe',
+            ], $result->getParsed()->extract());
+        }
     }
 
     /**
@@ -137,17 +141,19 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '-f',
             '-b',
             '-b',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'foo' => true,
-            'bar' => true,
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'foo' => true,
+                'bar' => true,
+            ], $result->getParsed()->extract());
+        }
     }
 
     /**
@@ -192,16 +198,18 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '-v',
             '-v',
             '-v',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'verbose' => 3,
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'verbose' => 3,
+            ], $result->getParsed()->extract());
+        }
     }
 
     /**
@@ -287,17 +295,19 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '-fbq',
             'quux',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'foo' => true,
-            'bar' => true,
-            'qux' => 'quux',
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'foo' => true,
+                'bar' => true,
+                'qux' => 'quux',
+            ], $result->getParsed()->extract());
+        }
     }
 
     /**
@@ -329,14 +339,16 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '--name=John Doe',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'name' => 'John Doe',
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'name' => 'John Doe',
+            ], $result->getParsed()->extract());
+        }
     }
 
     /**
@@ -368,15 +380,17 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '--name',
             'John Doe',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'name' => 'John Doe',
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'name' => 'John Doe',
+            ], $result->getParsed()->extract());
+        }
     }
 
     /**
@@ -408,14 +422,16 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '--force',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'force' => true,
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'force' => true,
+            ], $result->getParsed()->extract());
+        }
     }
 
     /**
@@ -452,15 +468,17 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '--verbose',
             '--verbose',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'verbose' => 2,
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'verbose' => 2,
+            ], $result->getParsed()->extract());
+        }
     }
 
     /**
@@ -568,14 +586,16 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             'John Doe',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'name.first' => 'John Doe',
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'name.first' => 'John Doe',
+            ], $result->getParsed()->extract());
+        }
     }
 
     /**
@@ -657,27 +677,30 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '-xf',
             '-fab',
             'John Doe',
             '--help',
             '--quite',
             'Jane Doe',
-        ], false, $remaining);
+        ], false);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'force' => 1,
-            'name' => 'John Doe',
-            'quite' => true,
-        ], $match->extract());
-        $this->assertSame([
-            '-xf',
-            '-ab',
-            '--help',
-            'Jane Doe',
-        ], $remaining);
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'force' => 1,
+                'name' => 'John Doe',
+                'quite' => true,
+            ], $result->getParsed()->extract());
+
+            $this->assertSame([
+                '-xf',
+                '-ab',
+                '--help',
+                'Jane Doe',
+            ], $result->getRemaining()->extract());
+        }
     }
 
     /**
@@ -805,16 +828,18 @@ class PosixParserTest extends TestCase
          * @var DefinitionInterface $definition
          */
         $parser = new PosixParser();
-        $match = $parser->parse($definition, [
+        $result = $parser->parse($definition, [
             '--',
             '-John',
             '--Doe',
         ]);
 
-        $this->assertInstanceOf(ContainerInterface::class, $match);
-        $this->assertSame([
-            'first' => '-John',
-            'last' => '--Doe',
-        ], $match->extract());
+        $this->assertInstanceOf(ParseResultInterface::class, $result);
+        if ($result instanceof ParseResultInterface) {
+            $this->assertSame([
+                'first' => '-John',
+                'last' => '--Doe',
+            ], $result->getParsed()->extract());
+        }
     }
 }
