@@ -23,8 +23,8 @@ class CommandTest extends TestCase
          */
         $command = new Command('do.task', 'Some fancy task!', $definition);
 
-        static::assertSame('do.task', $command->getName());
-        static::assertSame('Some fancy task!', $command->getDescription());
-        static::assertSame($definition, $command->getDefinition());
+        $this->assertSame('do.task', $command->getName());
+        $this->assertSame('Some fancy task!', $command->getDescription());
+        $this->assertSame($definition, $command->getDefinition());
     }
 }
