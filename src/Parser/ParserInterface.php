@@ -9,7 +9,7 @@ use ExtendsFramework\Console\Definition\DefinitionInterface;
 interface ParserInterface
 {
     /**
-     * Parse $arguments against command $definition.
+     * Parse $arguments against $definition.
      *
      * When $strict mode is disabled, only operands and options that can be matched will be returned, no exception
      * will be thrown. Arguments that can not be parsed will be added to $remaining for later usage.
