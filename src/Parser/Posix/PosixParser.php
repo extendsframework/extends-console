@@ -49,6 +49,7 @@ class PosixParser implements ParserInterface
      * @throws ArgumentNotAllowed
      * @throws DefinitionException
      * @throws MissingArgument
+     * @see http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html
      */
     protected function parseArguments(DefinitionInterface $definition, array &$arguments, bool $strict): ParseResultInterface
     {
