@@ -12,10 +12,14 @@ use PHPUnit\Framework\TestCase;
 class DefinitionFactoryTest extends TestCase
 {
     /**
+     * Create.
+     *
+     * Test that a definition interface can be created from an array.
+     *
      * @covers \ExtendsFramework\Console\Definition\DefinitionFactory::__construct()
      * @covers \ExtendsFramework\Console\Definition\DefinitionFactory::create()
      */
-    public function testCanCreateDefinitionFromArguments(): void
+    public function testCreate(): void
     {
         $option = $this->createMock(OptionInterface::class);
 

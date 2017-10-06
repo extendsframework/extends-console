@@ -8,6 +8,10 @@ use PHPUnit\Framework\TestCase;
 class OptionTest extends TestCase
 {
     /**
+     * Get parameters.
+     *
+     * Test if all the get parameters return the given construct values.
+     *
      * @covers \ExtendsFramework\Console\Definition\Option\Option::__construct()
      * @covers \ExtendsFramework\Console\Definition\Option\Option::getName()
      * @covers \ExtendsFramework\Console\Definition\Option\Option::getDescription()
@@ -16,7 +20,7 @@ class OptionTest extends TestCase
      * @covers \ExtendsFramework\Console\Definition\Option\Option::isFlag()
      * @covers \ExtendsFramework\Console\Definition\Option\Option::isMultiple()
      */
-    public function testCanConstructAndGetParameters(): void
+    public function testGetParameters(): void
     {
         $option = new Option('fooBar', 'Some description.', 'f', 'foo-bar', true, true);
 
@@ -29,12 +33,16 @@ class OptionTest extends TestCase
     }
 
     /**
+     * Short nor long.
+     *
+     * Test that an exception will be thrown when both short and long arguments are missing.
+     *
      * @covers                   \ExtendsFramework\Console\Definition\Option\Option::__construct()
      * @covers                   \ExtendsFramework\Console\Definition\Option\Exception\NoShortAndLongName::__construct
      * @expectedException        \ExtendsFramework\Console\Definition\Option\Exception\NoShortAndLongName
      * @expectedExceptionMessage Option "fooBar" requires at least a short or long name, both not given.
      */
-    public function testCanNotConstructWithoutShortAndLong(): void
+    public function testShortNorLong(): void
     {
         new Option('fooBar', 'Some description.', null, null, true, true);
     }

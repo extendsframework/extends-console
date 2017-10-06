@@ -10,6 +10,10 @@ use PHPUnit\Framework\TestCase;
 class DefinitionTest extends TestCase
 {
     /**
+     * Add and get.
+     *
+     * Test that options and operands can be added and received.
+     *
      * @covers \ExtendsFramework\Console\Definition\Definition::addOption()
      * @covers \ExtendsFramework\Console\Definition\Definition::addOperand()
      * @covers \ExtendsFramework\Console\Definition\Definition::getOption()
@@ -17,7 +21,7 @@ class DefinitionTest extends TestCase
      * @covers \ExtendsFramework\Console\Definition\Definition::getOptions()
      * @covers \ExtendsFramework\Console\Definition\Definition::getOperands()
      */
-    public function testCanAddAndGetArgument(): void
+    public function testAddAndGet(): void
     {
         $short = $this->createMock(OptionInterface::class);
         $short
@@ -60,18 +64,26 @@ class DefinitionTest extends TestCase
     }
 
     /**
+     * Short option not found.
+     *
+     * Test that short option (f) can not be found and an exception will be thrown.
+     *
      * @covers                   \ExtendsFramework\Console\Definition\Definition::getOption()
      * @covers                   \ExtendsFramework\Console\Definition\Exception\OptionNotFound::__construct()
      * @expectedException        \ExtendsFramework\Console\Definition\Exception\OptionNotFound
      * @expectedExceptionMessage No short option found for name "-f".
      */
-    public function testCanNotGetShortOption(): void
+    public function testOptionNotFound(): void
     {
         $definition = new Definition();
         $definition->getOption('f');
     }
 
     /**
+     * Long option not found.
+     *
+     * Test that long option (force) can not be found and an exception will be thrown.
+     *
      * @covers                   \ExtendsFramework\Console\Definition\Definition::getOption()
      * @covers                   \ExtendsFramework\Console\Definition\Exception\OptionNotFound::__construct()
      * @expectedException        \ExtendsFramework\Console\Definition\Exception\OptionNotFound
@@ -84,6 +96,10 @@ class DefinitionTest extends TestCase
     }
 
     /**
+     * Operand not found.
+     *
+     * Test that long option for position (0) can not be found and an exception will be thrown.
+     *
      * @covers                   \ExtendsFramework\Console\Definition\Definition::getOperand()
      * @covers                   \ExtendsFramework\Console\Definition\Exception\OperandNotFound::__construct()
      * @expectedException        \ExtendsFramework\Console\Definition\Exception\OperandNotFound
