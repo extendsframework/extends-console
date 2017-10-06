@@ -8,9 +8,13 @@ use PHPUnit\Framework\TestCase;
 class DimTest extends TestCase
 {
     /**
+     * Get parameters.
+     *
+     * Test if all the get parameters return the given construct values.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Format\Dim\Dim::getName()
      */
-    public function testCanGetName(): void
+    public function testGetParameters(): void
     {
         $format = new Dim();
         $name = $format->getName();

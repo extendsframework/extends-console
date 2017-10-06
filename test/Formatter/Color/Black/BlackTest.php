@@ -8,9 +8,13 @@ use PHPUnit\Framework\TestCase;
 class BlackTest extends TestCase
 {
     /**
+     * Get parameters.
+     *
+     * Test if all the get parameters return the given construct values.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Color\Black\Black::getName()
      */
-    public function testCanGetName(): void
+    public function testGetParameters(): void
     {
         $format = new Black();
         $name = $format->getName();

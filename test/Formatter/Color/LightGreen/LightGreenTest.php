@@ -8,9 +8,13 @@ use PHPUnit\Framework\TestCase;
 class LightGreenTest extends TestCase
 {
     /**
+     * Get parameters.
+     *
+     * Test if all the get parameters return the given construct values.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Color\LightGreen\LightGreen::getName()
      */
-    public function testCanGetName(): void
+    public function testGetParameters(): void
     {
         $format = new LightGreen();
         $name = $format->getName();

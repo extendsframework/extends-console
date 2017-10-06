@@ -13,13 +13,17 @@ use PHPUnit\Framework\TestCase;
 class AnsiFormatterTest extends TestCase
 {
     /**
+     * Foreground color.
+     *
+     * Test that foreground color can be set and used to create text.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setForeground()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setColor()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testCanSetForegroundColor(): void
+    public function testForegroundColor(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
@@ -30,13 +34,17 @@ class AnsiFormatterTest extends TestCase
     }
 
     /**
+     * Background color.
+     *
+     * Test that background color can be set and used to create text.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setBackground()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setColor()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testCanSetBackgroundColor(): void
+    public function testBackgroundColor(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
@@ -47,13 +55,17 @@ class AnsiFormatterTest extends TestCase
     }
 
     /**
+     * Add format.
+     *
+     * Test that format can be added and used to create text.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testCanAddFormat(): void
+    public function testAddFormat(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
@@ -64,6 +76,10 @@ class AnsiFormatterTest extends TestCase
     }
 
     /**
+     * Remove format.
+     *
+     * Test that format can be removed and is not used to create text.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
@@ -71,7 +87,7 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testCanRemoveFormat(): void
+    public function testRemoveFormat(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
@@ -83,13 +99,17 @@ class AnsiFormatterTest extends TestCase
     }
 
     /**
+     * Add multiple formats.
+     *
+     * Test that multiple formats can be added and used to create text.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testCanAddMultipleFormats(): void
+    public function testAddMultipleFormats(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
@@ -101,12 +121,17 @@ class AnsiFormatterTest extends TestCase
     }
 
     /**
+     * Fixed width.
+     *
+     * Test that texts fill be fixed to a length of 20 and 5. When text is longer then the fixed with, the text must be
+     * truncated.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFixedWidth()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testCanSetFixedWidth(): void
+    public function testFixedWidth(): void
     {
         $formatter = new AnsiFormatter();
         $long = $formatter
@@ -122,12 +147,16 @@ class AnsiFormatterTest extends TestCase
     }
 
     /**
+     * Text indent.
+     *
+     * Test that text can be indented with a length of 4.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setTextIndent()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testCanSetTextIndent(): void
+    public function testTextIndent(): void
     {
         $formatter = new AnsiFormatter();
         $text = $formatter
@@ -138,6 +167,10 @@ class AnsiFormatterTest extends TestCase
     }
 
     /**
+     * Reset.
+     *
+     * Test that builder will be reset with default values after method create is called.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setForeground()
@@ -145,7 +178,7 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
      */
-    public function testWillResetBuilderAfterCreation(): void
+    public function testReset(): void
     {
         $formatter = new AnsiFormatter();
         $formatted = $formatter
@@ -160,6 +193,10 @@ class AnsiFormatterTest extends TestCase
     }
 
     /**
+     * Unknown color.
+     *
+     * Test that an exception will be thrown when a unknown color is given.
+     *
      * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setForeground()
@@ -168,7 +205,7 @@ class AnsiFormatterTest extends TestCase
      * @expectedException        \ExtendsFramework\Console\Formatter\Ansi\Exception\ColorNotSupported
      * @expectedExceptionMessage Color "Brown" is not supported.
      */
-    public function testCanNotGetColorCodeForUnknownColor(): void
+    public function testUnknownColor(): void
     {
         $color = new class implements ColorInterface
         {
@@ -186,6 +223,10 @@ class AnsiFormatterTest extends TestCase
     }
 
     /**
+     * Unknown format.
+     *
+     * Test that an exception will be thrown when a unknown format is given.
+     *
      * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
      * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
@@ -194,7 +235,7 @@ class AnsiFormatterTest extends TestCase
      * @expectedException        \ExtendsFramework\Console\Formatter\Ansi\Exception\FormatNotSupported
      * @expectedExceptionMessage Format "StrikeThrough" is not supported.
      */
-    public function testCanNotGetColorCodeForUnknownFormat(): void
+    public function testUnknownFormat(): void
     {
         $format = new class implements FormatInterface
         {

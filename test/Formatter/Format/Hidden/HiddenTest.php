@@ -8,9 +8,13 @@ use PHPUnit\Framework\TestCase;
 class HiddenTest extends TestCase
 {
     /**
+     * Get parameters.
+     *
+     * Test if all the get parameters return the given construct values.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Format\Hidden\Hidden::getName()
      */
-    public function testCanGetName(): void
+    public function testGetParameters(): void
     {
         $format = new Hidden();
         $name = $format->getName();

@@ -8,9 +8,13 @@ use PHPUnit\Framework\TestCase;
 class UnderlinedTest extends TestCase
 {
     /**
+     * Get parameters.
+     *
+     * Test if all the get parameters return the given construct values.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Format\Underlined\Underlined::getName()
      */
-    public function testCanGetName(): void
+    public function testGetParameters(): void
     {
         $format = new Underlined();
         $name = $format->getName();

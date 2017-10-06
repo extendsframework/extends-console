@@ -8,9 +8,13 @@ use PHPUnit\Framework\TestCase;
 class ReverseTest extends TestCase
 {
     /**
+     * Get parameters.
+     *
+     * Test if all the get parameters return the given construct values.
+     *
      * @covers \ExtendsFramework\Console\Formatter\Format\Reverse\Reverse::getName()
      */
-    public function testCanGetName(): void
+    public function testGetParameters(): void
     {
         $format = new Reverse();
         $name = $format->getName();
