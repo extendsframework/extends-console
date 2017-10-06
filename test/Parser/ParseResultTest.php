@@ -8,12 +8,16 @@ use PHPUnit\Framework\TestCase;
 class ParseResultTest extends TestCase
 {
     /**
+     * Get parameters.
+     *
+     * Test if all the get parameters return the given construct values.
+     *
      * @covers \ExtendsFramework\Console\Parser\ParseResult::__construct()
      * @covers \ExtendsFramework\Console\Parser\ParseResult::getParsed()
      * @covers \ExtendsFramework\Console\Parser\ParseResult::getRemaining()
      * @covers \ExtendsFramework\Console\Parser\ParseResult::isStrict()
      */
-    public function testCanGetParameters(): void
+    public function testGetParameters(): void
     {
         $parsed = ['foo' => 'bar'];
 

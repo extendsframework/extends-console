@@ -14,11 +14,15 @@ use PHPUnit\Framework\TestCase;
 class PosixParserTest extends TestCase
 {
     /**
+     * Short option with combined argument.
+     *
+     * Test that short options with combined arguments (-fJohn and -l=Doe) will be parsed.
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
-    public function testCanParseShortOptionWithCombinedArgument(): void
+    public function testShortOptionWithCombinedArgument(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -63,11 +67,15 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Short option with separate argument.
+     *
+     * Test that short option with separate (-n "John Doe") argument will be parsed.
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
-    public function testCanParseShortOptionWithSeparateArgument(): void
+    public function testShortOptionWithSeparateArgument(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -105,11 +113,16 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Short option flag.
+     *
+     * Test that short options (-f, -b and -b) will be parsed as flags and will contain true value. If a flag exists
+     * more then once, it still must be true.
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
-    public function testCanParseShortOptionFlag(): void
+    public function testShortOptionFlag(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -157,11 +170,16 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Short option multiple flag.
+     *
+     * Test that short option (-v, -v and -v) will be parsed as multiple flag and will contain the amount (3) of given
+     * flags as value.
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
-    public function testCanParseShortOptionFlagAsMultiple(): void
+    public function testShortOptionMultipleFlag(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -213,6 +231,10 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Required short option without argument.
+     *
+     * Test that an exception is thrown when the argument for a required short option is missing.
+     *
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
@@ -220,7 +242,7 @@ class PosixParserTest extends TestCase
      * @expectedException        \ExtendsFramework\Console\Parser\Posix\Exception\MissingArgument
      * @expectedExceptionMessage Short option "-f" requires an argument, non given.
      */
-    public function testCanNotParseRequiredShortOptionWithoutArgument(): void
+    public function testRequiredShortOptionWithoutArgument(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -255,11 +277,16 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Combined short options.
+     *
+     * Test that combined options (-fpq) will be parsed a separate options. Options -f and -b must be true. Option -q
+     * must contain the next argument as value (quux).
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
-    public function testCanParseCombinedShortOptions(): void
+    public function testCombinedShortOptions(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -311,11 +338,15 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Long option with combined argument.
+     *
+     * Test that long option (--name="John Doe") will be be parsed.
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
-    public function testCanParseLongOptionWithCombinedArgument(): void
+    public function testLongOptionWithCombinedArgument(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -352,11 +383,15 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Long option with separate argument.
+     *
+     * Test that long option (--name) will be parsed and contain the next argument (John Doe).
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
-    public function testCanParseLongOptionWithSeparateArgument(): void
+    public function testLongOptionWithSeparateArgument(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -394,11 +429,15 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Long option flag.
+     *
+     * Test that long option flag (--force) will be parsed and will contain true.
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
-    public function testCanParseLongOptionFlag(): void
+    public function testLongOptionFlag(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -435,11 +474,16 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Long option multiple flag.
+     *
+     * Test that long option (--verbose and --verbose) will be parsed as multiple flag and will contain the amount (2)
+     * of given flags as value.
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      */
-    public function testCanParseLongOptionFlagAsMultiple(): void
+    public function testLongOptionMultipleFlag(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -482,6 +526,10 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Long option flag with argument.
+     *
+     * Test that long option flag (--name="John Doe") can not be parsed and an exception will be thrown.
+     *
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
@@ -489,7 +537,7 @@ class PosixParserTest extends TestCase
      * @expectedException        \ExtendsFramework\Console\Parser\Posix\Exception\ArgumentNotAllowed
      * @expectedExceptionMessage Long option argument is not allowed for flag "--name".
      */
-    public function testCanNotParseLongOptionFlagWithArgument(): void
+    public function testLongOptionFlagWithArgument(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -519,6 +567,10 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Long option without argument.
+     *
+     * Test that long option (--name) without required argument will throw an exception.
+     *
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
@@ -526,7 +578,7 @@ class PosixParserTest extends TestCase
      * @expectedException        \ExtendsFramework\Console\Parser\Posix\Exception\MissingArgument
      * @expectedExceptionMessage Long option "--name" requires an argument, non given.
      */
-    public function testCanNotParseRequiredLongOptionWithoutArgument(): void
+    public function testLongOptionWithoutArgument(): void
     {
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -556,11 +608,15 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Operand.
+     *
+     * Test that operand (name.first) will contain the given value (John Doe).
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOperand()
      */
-    public function testCanParseOperand(): void
+    public function testOperand(): void
     {
         $operand = $this->createMock(OperandInterface::class);
         $operand
@@ -599,12 +655,17 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Non strict mode.
+     *
+     * Test that parsing in non strict mode will only return options (-f and --quite) and operand ("John Doe") from
+     * definition. Other options (-xf, -ab and --help) and operand ("Jane Doe") must remain.
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOperand()
      */
-    public function testCanParseInNonStrictMode(): void
+    public function testNonStrictMode(): void
     {
         /**
          * @var OptionNotFound  $optionNotFound
@@ -704,6 +765,10 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Missing operand.
+     *
+     * Test that missing operand can not be parsed and an exception will be thrown.
+     *
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::getOperand()
@@ -711,7 +776,7 @@ class PosixParserTest extends TestCase
      * @expectedException        \ExtendsFramework\Console\Parser\Posix\Exception\MissingOperand
      * @expectedExceptionMessage Operand "name.first" is required.
      */
-    public function testCanNotParseMissingOperand(): void
+    public function testMissingOperand(): void
     {
         $operand = $this->createMock(OperandInterface::class);
         $operand
@@ -735,12 +800,16 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Unknown operand.
+     *
+     * Test that an unknown operand can not be parsed and an exception will be thrown.
+     *
      * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::getOperand()
      * @expectedException \ExtendsFramework\Console\Definition\Exception\OperandNotFound
      */
-    public function testCanNotParseUnknownOperand(): void
+    public function testUnknownOperand(): void
     {
         /**
          * @var OperandNotFound $exception
@@ -764,12 +833,16 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Unknown option.
+     *
+     * Test that an unknown option can not be parsed and will throw an exception.
+     *
      * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers            \ExtendsFramework\Console\Parser\Posix\PosixParser::getOption()
      * @expectedException \ExtendsFramework\Console\Definition\Exception\OptionNotFound
      */
-    public function testCanNotParseUnknownOption(): void
+    public function testUnknownOption(): void
     {
         /**
          * @var OptionNotFound $exception
@@ -793,11 +866,15 @@ class PosixParserTest extends TestCase
     }
 
     /**
+     * Terminator.
+     *
+     * Test that the terminator (--) will terminate further parsing and return everything as an operand.
+     *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::getOperand()
      */
-    public function testCanTerminatedFurtherOptionsToOperands(): void
+    public function testTerminator(): void
     {
         $operand1 = $this->createMock(OperandInterface::class);
         $operand1
