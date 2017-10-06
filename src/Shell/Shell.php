@@ -86,6 +86,8 @@ class Shell implements ShellInterface
         $remaining = $defaults->getRemaining();
         $parsed = $defaults->getParsed();
 
+        $this->descriptor->setVerbosity($parsed['verbose'] ?? 1);
+
         $name = array_shift($remaining);
         if ($name === null) {
             $this->descriptor->shell($definition, $this->commands);
@@ -171,6 +173,7 @@ class Shell implements ShellInterface
     {
         if ($this->definition === null) {
             $this->definition = (new Definition())
+                ->addOption(new Option('verbose', 'Be more verbose.', 'v', 'verbose', true, true))
                 ->addOption(new Option('help', 'Show help about shell or command.', 'h', 'help'));
         }
 

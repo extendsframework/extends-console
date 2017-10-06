@@ -268,6 +268,16 @@ class Descriptor implements DescriptorInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function setVerbosity(int $verbosity): DescriptorInterface
+    {
+        $this->output->setVerbosity($verbosity);
+
+        return $this;
+    }
+
+    /**
      * Get option notation.
      *
      * @param OptionInterface $option

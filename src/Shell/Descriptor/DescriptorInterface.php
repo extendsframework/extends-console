@@ -43,4 +43,14 @@ interface DescriptorInterface
      * @return DescriptorInterface
      */
     public function exception(Throwable $exception): DescriptorInterface;
+
+    /**
+     * Set verbosity.
+     *
+     * With a higher $verbosity, output will be more verbose.
+     *
+     * @param int $verbosity
+     * @return DescriptorInterface
+     */
+    public function setVerbosity(int $verbosity): DescriptorInterface;
 }

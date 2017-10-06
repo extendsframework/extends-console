@@ -525,4 +525,31 @@ class DescriptorTest extends TestCase
 
         $this->assertSame($descriptor, $instance);
     }
+
+    /**
+     * Verbosity.
+     *
+     * Set verbosity for output to 3.
+     *
+     * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::__construct()
+     * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::setVerbosity()
+     */
+    public function testVerbosity(): void
+    {
+        $output = $this->createMock(OutputInterface::class);
+        $output
+            ->expects($this->once())
+            ->method('setVerbosity')
+            ->with(3)
+            ->willReturnSelf();
+
+        /**
+         * @var OutputInterface     $output
+         * @var DefinitionInterface $definition
+         */
+        $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
+        $instance = $descriptor->setVerbosity(3);
+
+        $this->assertSame($descriptor, $instance);
+    }
 }

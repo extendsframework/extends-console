@@ -113,6 +113,60 @@ class ShellTest extends TestCase
     }
 
     /**
+     * Verbosity.
+     *
+     * Test that verbosity will be set to 3.
+     *
+     * @covers \ExtendsFramework\Console\Shell\Shell::__construct()
+     * @covers \ExtendsFramework\Console\Shell\Shell::process()
+     * @covers \ExtendsFramework\Console\Shell\Shell::getDefinition()
+     */
+    public function testVerbosity(): void
+    {
+        $suggester = $this->createMock(SuggesterInterface::class);
+
+        $descriptor = $this->createMock(DescriptorInterface::class);
+        $descriptor
+            ->expects($this->once())
+            ->method('setVerbosity')
+            ->with(3)
+            ->willReturnSelf();
+
+        $result = $this->createMock(ParseResultInterface::class);
+        $result
+            ->expects($this->once())
+            ->method('getParsed')
+            ->willReturn([
+                'verbose' => 3,
+            ]);
+
+        $result
+            ->expects($this->once())
+            ->method('getRemaining')
+            ->willReturn([]);
+
+        $parser = $this->createMock(ParserInterface::class);
+        $parser
+            ->expects($this->once())
+            ->method('parse')
+            ->willReturn($result);
+
+        /**
+         * @var DescriptorInterface $descriptor
+         * @var SuggesterInterface  $suggester
+         * @var ParserInterface     $parser
+         */
+        $shell = new Shell($descriptor, $suggester, $parser);
+        $result = $shell->process(...[
+            '-v',
+            '-v',
+            '-v',
+        ]);
+
+        $this->assertNull($result);
+    }
+
+    /**
      * Command not found.
      *
      * Test if the descriptor is called to describe an exception and shell when no command can be found.
