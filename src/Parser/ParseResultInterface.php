@@ -3,23 +3,21 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Parser;
 
-use ExtendsFramework\Container\ContainerInterface;
-
 interface ParseResultInterface
 {
     /**
      * Get parsed data.
      *
-     * @return ContainerInterface
+     * @return array
      */
-    public function getParsed(): ContainerInterface;
+    public function getParsed(): array;
 
     /**
      * Get remaining data when not in strict mode.
      *
-     * @return ContainerInterface
+     * @return array
      */
-    public function getRemaining(): ContainerInterface;
+    public function getRemaining(): array;
 
     /**
      * If parsing was done in strict mode.

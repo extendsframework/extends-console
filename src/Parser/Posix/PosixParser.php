@@ -14,7 +14,6 @@ use ExtendsFramework\Console\Parser\ParserInterface;
 use ExtendsFramework\Console\Parser\Posix\Exception\ArgumentNotAllowed;
 use ExtendsFramework\Console\Parser\Posix\Exception\MissingArgument;
 use ExtendsFramework\Console\Parser\Posix\Exception\MissingOperand;
-use ExtendsFramework\Container\Container;
 
 class PosixParser implements ParserInterface
 {
@@ -27,9 +26,11 @@ class PosixParser implements ParserInterface
 
         $result = $this->parseArguments($definition, $arguments, $strict);
         if ($strict === true) {
+            $parsed = $result->getParsed();
+
             foreach ($definition->getOperands() as $operand) {
                 $name = $operand->getName();
-                if ($result->getParsed()->has($name) === false) {
+                if (array_key_exists($name, $parsed) === false) {
                     throw new MissingOperand($name);
                 }
             }
@@ -147,11 +148,7 @@ class PosixParser implements ParserInterface
             }
         }
 
-        return new ParseResult(
-            new Container($parsed),
-            new Container($remaining),
-            $strict
-        );
+        return new ParseResult($parsed, $remaining, $strict);
     }
 
     /**

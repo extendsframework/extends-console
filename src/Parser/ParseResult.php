@@ -3,21 +3,19 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Parser;
 
-use ExtendsFramework\Container\ContainerInterface;
-
 class ParseResult implements ParseResultInterface
 {
     /**
      * Parsed data.
      *
-     * @var ContainerInterface
+     * @var array
      */
     protected $parsed;
 
     /**
      * Remaining data when not in strict mode.
      *
-     * @var ContainerInterface
+     * @var array
      */
     protected $remaining;
 
@@ -31,11 +29,11 @@ class ParseResult implements ParseResultInterface
     /**
      * Create new parse result.
      *
-     * @param ContainerInterface $parsed
-     * @param ContainerInterface $remaining
-     * @param bool               $strict
+     * @param array $parsed
+     * @param array $remaining
+     * @param bool  $strict
      */
-    public function __construct(ContainerInterface $parsed, ContainerInterface $remaining, bool $strict)
+    public function __construct(array $parsed, array $remaining, bool $strict)
     {
         $this->parsed = $parsed;
         $this->remaining = $remaining;
@@ -45,7 +43,7 @@ class ParseResult implements ParseResultInterface
     /**
      * @inheritDoc
      */
-    public function getParsed(): ContainerInterface
+    public function getParsed(): array
     {
         return $this->parsed;
     }
@@ -53,7 +51,7 @@ class ParseResult implements ParseResultInterface
     /**
      * @inheritDoc
      */
-    public function getRemaining(): ContainerInterface
+    public function getRemaining(): array
     {
         return $this->remaining;
     }

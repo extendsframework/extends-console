@@ -58,7 +58,7 @@ class PosixParserTest extends TestCase
             $this->assertSame([
                 'first' => 'John',
                 'last' => 'Doe',
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 
@@ -100,7 +100,7 @@ class PosixParserTest extends TestCase
         if ($result instanceof ParseResultInterface) {
             $this->assertSame([
                 'name' => 'John Doe',
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 
@@ -152,7 +152,7 @@ class PosixParserTest extends TestCase
             $this->assertSame([
                 'foo' => true,
                 'bar' => true,
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 
@@ -208,7 +208,7 @@ class PosixParserTest extends TestCase
         if ($result instanceof ParseResultInterface) {
             $this->assertSame([
                 'verbose' => 3,
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 
@@ -306,7 +306,7 @@ class PosixParserTest extends TestCase
                 'foo' => true,
                 'bar' => true,
                 'qux' => 'quux',
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 
@@ -347,7 +347,7 @@ class PosixParserTest extends TestCase
         if ($result instanceof ParseResultInterface) {
             $this->assertSame([
                 'name' => 'John Doe',
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 
@@ -389,7 +389,7 @@ class PosixParserTest extends TestCase
         if ($result instanceof ParseResultInterface) {
             $this->assertSame([
                 'name' => 'John Doe',
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 
@@ -430,7 +430,7 @@ class PosixParserTest extends TestCase
         if ($result instanceof ParseResultInterface) {
             $this->assertSame([
                 'force' => true,
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 
@@ -477,7 +477,7 @@ class PosixParserTest extends TestCase
         if ($result instanceof ParseResultInterface) {
             $this->assertSame([
                 'verbose' => 2,
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 
@@ -594,7 +594,7 @@ class PosixParserTest extends TestCase
         if ($result instanceof ParseResultInterface) {
             $this->assertSame([
                 'name.first' => 'John Doe',
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 
@@ -692,14 +692,14 @@ class PosixParserTest extends TestCase
                 'force' => 1,
                 'name' => 'John Doe',
                 'quite' => true,
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
 
             $this->assertSame([
                 '-xf',
                 '-ab',
                 '--help',
                 'Jane Doe',
-            ], $result->getRemaining()->extract());
+            ], $result->getRemaining());
         }
     }
 
@@ -839,7 +839,7 @@ class PosixParserTest extends TestCase
             $this->assertSame([
                 'first' => '-John',
                 'last' => '--Doe',
-            ], $result->getParsed()->extract());
+            ], $result->getParsed());
         }
     }
 }

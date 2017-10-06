@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Parser;
 
-use ExtendsFramework\Container\ContainerInterface;
 use PHPUnit\Framework\TestCase;
 
 class ParseResultTest extends TestCase
@@ -16,14 +15,10 @@ class ParseResultTest extends TestCase
      */
     public function testCanGetParameters(): void
     {
-        $parsed = $this->createMock(ContainerInterface::class);
+        $parsed = ['foo' => 'bar'];
 
-        $remaining = $this->createMock(ContainerInterface::class);
+        $remaining = ['qux' => 'quux'];
 
-        /**
-         * @var ContainerInterface $parsed
-         * @var ContainerInterface $remaining
-         */
         $result = new ParseResult($parsed, $remaining, true);
 
         $this->assertSame($parsed, $result->getParsed());
