@@ -8,9 +8,9 @@ use ExtendsFramework\Console\Parser\ParseResultInterface;
 use ExtendsFramework\Console\Parser\ParserInterface;
 use ExtendsFramework\Console\Parser\Posix\Exception\ArgumentNotAllowed;
 use ExtendsFramework\Console\Shell\Command\CommandInterface;
-use ExtendsFramework\Console\Shell\Command\Suggester\SuggesterInterface;
 use ExtendsFramework\Console\Shell\Descriptor\DescriptorInterface;
 use ExtendsFramework\Console\Shell\Exception\CommandNotFound;
+use ExtendsFramework\Console\Shell\Suggester\SuggesterInterface;
 use PHPUnit\Framework\TestCase;
 
 class ShellTest extends TestCase

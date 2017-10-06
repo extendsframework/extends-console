@@ -10,9 +10,9 @@ use ExtendsFramework\Console\Definition\Option\Option;
 use ExtendsFramework\Console\Parser\ParserException;
 use ExtendsFramework\Console\Parser\ParserInterface;
 use ExtendsFramework\Console\Shell\Command\CommandInterface;
-use ExtendsFramework\Console\Shell\Command\Suggester\SuggesterInterface;
 use ExtendsFramework\Console\Shell\Descriptor\DescriptorInterface;
 use ExtendsFramework\Console\Shell\Exception\CommandNotFound;
+use ExtendsFramework\Console\Shell\Suggester\SuggesterInterface;
 
 class Shell implements ShellInterface
 {
