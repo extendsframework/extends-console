@@ -11,10 +11,14 @@ use PHPUnit\Framework\TestCase;
 class PosixOutputTest extends TestCase
 {
     /**
+     * Text.
+     *
+     * Test that text (Hello world!) will be sent to output.
+     *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      */
-    public function testCanWriteTextToOutput(): void
+    public function testText(): void
     {
         Buffer::reset();
 
@@ -27,46 +31,14 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setVerbosity()
+     * Formatted text.
+     *
+     * Text that text (1234567890) with format (fixed with of 5) will be sent to output (12345).
+     *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      */
-    public function testCanWriteTextToOutputWithSameOrHigherVerbosity(): void
-    {
-        Buffer::reset();
-
-        $output = new PosixOutput();
-        $output
-            ->setVerbosity(2)
-            ->text('Hello world!');
-
-        $text = Buffer::get();
-
-        static::assertEquals('Hello world!', $text);
-    }
-
-    /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setVerbosity()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
-     */
-    public function testCanNotWriteTextToOutputWithLowerVerbosity(): void
-    {
-        Buffer::reset();
-
-        $output = new PosixOutput();
-        $output->text('Hello world!', null, 2);
-
-        $text = Buffer::get();
-
-        static::assertNull($text);
-    }
-
-    /**
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
-     */
-    public function testCanWriteFormattedTextToOutput(): void
+    public function testFormattedText(): void
     {
         Buffer::reset();
 
@@ -80,12 +52,16 @@ class PosixOutputTest extends TestCase
     }
 
     /**
+     * Line.
+     *
+     * Test that text (Hello world!) will be sent to output with newline character.
+     *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      */
-    public function testCanWriteLineToOutput(): void
+    public function testLine(): void
     {
         Buffer::reset();
 
@@ -98,6 +74,10 @@ class PosixOutputTest extends TestCase
     }
 
     /**
+     * New line.
+     *
+     * Test that new line (\n\r) will be sent to output.
+     *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
@@ -115,9 +95,13 @@ class PosixOutputTest extends TestCase
     }
 
     /**
+     * Clear output.
+     *
+     * Test that output can be cleared.
+     *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::clear()
      */
-    public function testCanClearOutput()
+    public function testClearOutput()
     {
         Buffer::reset();
 
@@ -128,9 +112,13 @@ class PosixOutputTest extends TestCase
     }
 
     /**
+     * Get columns.
+     *
+     * Test that columns (80) will be returned.
+     *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getColumns()
      */
-    public function testCanGetColumns(): void
+    public function testGetColumns(): void
     {
         Buffer::reset();
         Buffer::set('80');
@@ -142,9 +130,13 @@ class PosixOutputTest extends TestCase
     }
 
     /**
+     * Get lines.
+     *
+     * Test that lines (120) will be returned.
+     *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getLines()
      */
-    public function testCanGetLines(): void
+    public function testGetLines(): void
     {
         Buffer::reset();
         Buffer::set('120');
@@ -156,9 +148,13 @@ class PosixOutputTest extends TestCase
     }
 
     /**
+     * Get formatter.
+     *
+     * Test that the default formatter (AnsiFormatter) will be returned.
+     *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
      */
-    public function testCanGetDefaultFormatter(): void
+    public function testGetFormatter(): void
     {
         $output = new PosixOutput();
         $formatter = $output->getFormatter();
@@ -167,10 +163,14 @@ class PosixOutputTest extends TestCase
     }
 
     /**
+     * Set formatter.
+     *
+     * Test that a custom formatter can be set and get.
+     *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setFormatter()
      */
-    public function testCanGetCustomFormatter(): void
+    public function testSetFormatter(): void
     {
         $formatter = $this->createMock(FormatterInterface::class);
 
@@ -181,6 +181,52 @@ class PosixOutputTest extends TestCase
         $output->setFormatter($formatter);
 
         static::assertSame($formatter, $output->getFormatter());
+    }
+
+    /**
+     * Higher verbosity.
+     *
+     * Test that verbosity (3) can be set and still output text with lower verbosity (2).
+     *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setVerbosity()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
+     */
+    public function testHigherVerbosity(): void
+    {
+        Buffer::reset();
+
+        $output = new PosixOutput();
+        $output
+            ->setVerbosity(3)
+            ->text('Hello world!', null, 2);
+
+        $text = Buffer::get();
+
+        static::assertEquals('Hello world!', $text);
+    }
+
+    /**
+     * Higher verbosity.
+     *
+     * Test that verbosity (2) can be set and don't output text with higher verbosity (3).
+     *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setVerbosity()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
+     */
+    public function testLowerVerbosity(): void
+    {
+        Buffer::reset();
+
+        $output = new PosixOutput();
+        $output
+            ->setVerbosity(2)
+            ->text('Hello world!', null, 3);
+
+        $text = Buffer::get();
+
+        static::assertNull($text);
     }
 }
 
