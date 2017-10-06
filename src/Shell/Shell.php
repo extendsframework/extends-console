@@ -69,7 +69,7 @@ class Shell implements ShellInterface
     /**
      * @inheritDoc
      */
-    public function process(string ...$arguments): ?array
+    public function process(array $arguments): ?array
     {
         $definition = $this->getDefinition();
 

@@ -10,8 +10,8 @@ interface ShellInterface
      *
      * When $arguments can not be matched, null will be returned.
      *
-     * @param string[] $arguments
+     * @param array $arguments
      * @return array|null
      */
-    public function process(string ...$arguments): ?array;
+    public function process(array $arguments): ?array;
 }

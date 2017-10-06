@@ -57,7 +57,7 @@ class ShellTest extends TestCase
          * @var ParserInterface     $parser
          */
         $shell = new Shell($descriptor, $suggester, $parser);
-        $result = $shell->process(...[
+        $result = $shell->process([
             '--help=true',
         ]);
 
@@ -105,7 +105,7 @@ class ShellTest extends TestCase
          * @var ParserInterface     $parser
          */
         $shell = new Shell($descriptor, $suggester, $parser);
-        $result = $shell->process(...[
+        $result = $shell->process([
             '--help',
         ]);
 
@@ -157,7 +157,7 @@ class ShellTest extends TestCase
          * @var ParserInterface     $parser
          */
         $shell = new Shell($descriptor, $suggester, $parser);
-        $result = $shell->process(...[
+        $result = $shell->process([
             '-v',
             '-v',
             '-v',
@@ -226,7 +226,7 @@ class ShellTest extends TestCase
          * @var ParserInterface     $parser
          */
         $shell = new Shell($descriptor, $suggester, $parser);
-        $result = $shell->process(...[
+        $result = $shell->process([
             'do.task',
         ]);
 
@@ -291,7 +291,7 @@ class ShellTest extends TestCase
         $shell = new Shell($descriptor, $suggester, $parser);
         $result = $shell
             ->addCommand($command)
-            ->process(...[
+            ->process([
                 'do.task',
                 '--help',
             ]);
@@ -383,7 +383,7 @@ class ShellTest extends TestCase
         $shell = new Shell($descriptor, $suggester, $parser);
         $result = $shell
             ->addCommand($command)
-            ->process(...[
+            ->process([
                 'do.task',
                 'John Doe',
             ]);
@@ -485,7 +485,7 @@ class ShellTest extends TestCase
         $shell = new Shell($descriptor, $suggester, $parser);
         $result = $shell
             ->addCommand($command)
-            ->process(...[
+            ->process([
                 'do.task',
                 'John Doe',
             ]);
