@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Shell;
 
-use ExtendsFramework\Container\ContainerInterface;
-
 interface ShellInterface
 {
     /**
@@ -13,7 +11,7 @@ interface ShellInterface
      * When $arguments can not be matched, null will be returned.
      *
      * @param string[] $arguments
-     * @return ContainerInterface|null
+     * @return array|null
      */
-    public function process(string ...$arguments): ?ContainerInterface;
+    public function process(string ...$arguments): ?array;
 }

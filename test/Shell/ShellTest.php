@@ -3,51 +3,439 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Shell;
 
+use ExtendsFramework\Console\Definition\DefinitionInterface;
+use ExtendsFramework\Console\Parser\ParseResultInterface;
+use ExtendsFramework\Console\Parser\ParserInterface;
+use ExtendsFramework\Console\Parser\Posix\Exception\ArgumentNotAllowed;
+use ExtendsFramework\Console\Shell\Command\CommandInterface;
+use ExtendsFramework\Console\Shell\Command\Suggester\SuggesterInterface;
+use ExtendsFramework\Console\Shell\Descriptor\DescriptorInterface;
+use ExtendsFramework\Console\Shell\Exception\CommandNotFound;
 use PHPUnit\Framework\TestCase;
 
 class ShellTest extends TestCase
 {
     /**
+     * Invalid default parameter.
+     *
+     * Test if the descriptor will be called to describe an exception and the shell when a default parameter
+     * ('--help=true') is invalid.
+     *
      * @covers \ExtendsFramework\Console\Shell\Shell::__construct()
-     * @covers \ExtendsFramework\Console\Shell\Shell::addCommand()
      * @covers \ExtendsFramework\Console\Shell\Shell::process()
-     * @covers \ExtendsFramework\Console\Shell\Shell::getDescriptor()
      * @covers \ExtendsFramework\Console\Shell\Shell::getDefinition()
      */
-    public function testCanParseArgumentsAndReturnContainer(): void
+    public function testInvalidDefaultParameter(): void
     {
+        $suggester = $this->createMock(SuggesterInterface::class);
+        $exception = $this->createMock(ArgumentNotAllowed::class);
+
+        $descriptor = $this->createMock(DescriptorInterface::class);
+        $descriptor
+            ->expects($this->once())
+            ->method('exception')
+            ->with($exception)
+            ->willReturnSelf();
+
+        $descriptor
+            ->expects($this->once())
+            ->method('shell')
+            ->willReturnSelf();
+
+        /**
+         * @var ArgumentNotAllowed $exception
+         */
+        $parser = $this->createMock(ParserInterface::class);
+        $parser
+            ->expects($this->once())
+            ->method('parse')
+            ->willThrowException($exception);
+
+        /**
+         * @var DescriptorInterface $descriptor
+         * @var SuggesterInterface  $suggester
+         * @var ParserInterface     $parser
+         */
+        $shell = new Shell($descriptor, $suggester, $parser);
+        $result = $shell->process(...[
+            '--help=true',
+        ]);
+
+        $this->assertNull($result);
     }
 
     /**
+     * No remaining arguments.
+     *
+     * Test if the descriptor is called to describe the shell when no remaining arguments left.
+     *
      * @covers \ExtendsFramework\Console\Shell\Shell::__construct()
-     * @covers \ExtendsFramework\Console\Shell\Shell::addCommand()
      * @covers \ExtendsFramework\Console\Shell\Shell::process()
-     * @covers \ExtendsFramework\Console\Shell\Shell::getDescriptor()
      * @covers \ExtendsFramework\Console\Shell\Shell::getDefinition()
      */
-    public function testCanMatchCommandAndDescribeCommand(): void
+    public function testNoRemainingArguments(): void
     {
+        $suggester = $this->createMock(SuggesterInterface::class);
+
+        $descriptor = $this->createMock(DescriptorInterface::class);
+        $descriptor
+            ->expects($this->once())
+            ->method('shell')
+            ->with(
+                $this->isInstanceOf(DefinitionInterface::class),
+                []
+            )
+            ->willReturnSelf();
+
+        $result = $this->createMock(ParseResultInterface::class);
+        $result
+            ->expects($this->once())
+            ->method('getRemaining')
+            ->willReturn([]);
+
+        $parser = $this->createMock(ParserInterface::class);
+        $parser
+            ->expects($this->once())
+            ->method('parse')
+            ->willReturn($result);
+
+        /**
+         * @var DescriptorInterface $descriptor
+         * @var SuggesterInterface  $suggester
+         * @var ParserInterface     $parser
+         */
+        $shell = new Shell($descriptor, $suggester, $parser);
+        $result = $shell->process(...[
+            '--help',
+        ]);
+
+        $this->assertNull($result);
     }
 
     /**
+     * Command not found.
+     *
+     * Test if the descriptor is called to describe an exception and shell when no command can be found.
+     *
      * @covers \ExtendsFramework\Console\Shell\Shell::__construct()
-     * @covers \ExtendsFramework\Console\Shell\Shell::addCommand()
      * @covers \ExtendsFramework\Console\Shell\Shell::process()
-     * @covers \ExtendsFramework\Console\Shell\Shell::getDescriptor()
      * @covers \ExtendsFramework\Console\Shell\Shell::getDefinition()
+     * @covers \ExtendsFramework\Console\Shell\Shell::getCommand()
+     * @covers \ExtendsFramework\Console\Shell\Exception\CommandNotFound::__construct()
      */
-    public function testCanCatchParserExceptionAndDescribeCommand(): void
+    public function testCommandNotFound(): void
     {
+        $suggester = $this->createMock(SuggesterInterface::class);
+
+        $descriptor = $this->createMock(DescriptorInterface::class);
+        $descriptor
+            ->expects($this->once())
+            ->method('exception')
+            ->with(
+                $this->isInstanceOf(CommandNotFound::class)
+            )
+            ->willReturnSelf();
+
+        $descriptor
+            ->expects($this->once())
+            ->method('suggest')
+            ->with(null)
+            ->willReturnSelf();
+
+        $descriptor
+            ->expects($this->once())
+            ->method('shell')
+            ->with(
+                $this->isInstanceOf(DefinitionInterface::class),
+                [],
+                true
+            )
+            ->willReturnSelf();
+
+        $result = $this->createMock(ParseResultInterface::class);
+        $result
+            ->expects($this->once())
+            ->method('getRemaining')
+            ->willReturn([
+                'do.task',
+            ]);
+
+        $parser = $this->createMock(ParserInterface::class);
+        $parser
+            ->expects($this->once())
+            ->method('parse')
+            ->willReturn($result);
+
+        /**
+         * @var DescriptorInterface $descriptor
+         * @var SuggesterInterface  $suggester
+         * @var ParserInterface     $parser
+         */
+        $shell = new Shell($descriptor, $suggester, $parser);
+        $result = $shell->process(...[
+            'do.task',
+        ]);
+
+        $this->assertNull($result);
     }
 
     /**
+     * Help for command.
+     *
+     * Test if the descriptor is called to describe the given command.
+     *
      * @covers \ExtendsFramework\Console\Shell\Shell::__construct()
      * @covers \ExtendsFramework\Console\Shell\Shell::addCommand()
      * @covers \ExtendsFramework\Console\Shell\Shell::process()
-     * @covers \ExtendsFramework\Console\Shell\Shell::getDescriptor()
      * @covers \ExtendsFramework\Console\Shell\Shell::getDefinition()
+     * @covers \ExtendsFramework\Console\Shell\Shell::getCommand()
      */
-    public function testCanNotMatchCommandAndDescribeShell(): void
+    public function testHelpForCommand(): void
     {
+        $suggester = $this->createMock(SuggesterInterface::class);
+
+        $command = $this->createMock(CommandInterface::class);
+        $command
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn('do.task');
+
+        $descriptor = $this->createMock(DescriptorInterface::class);
+        $descriptor
+            ->expects($this->once())
+            ->method('command')
+            ->with($command)
+            ->willReturnSelf();
+
+        $result = $this->createMock(ParseResultInterface::class);
+        $result
+            ->expects($this->once())
+            ->method('getRemaining')
+            ->willReturn([
+                'do.task',
+            ]);
+
+        $result
+            ->expects($this->once())
+            ->method('getParsed')
+            ->willReturn([
+                'help' => true,
+            ]);
+
+        $parser = $this->createMock(ParserInterface::class);
+        $parser
+            ->expects($this->once())
+            ->method('parse')
+            ->willReturn($result);
+
+        /**
+         * @var DescriptorInterface $descriptor
+         * @var SuggesterInterface  $suggester
+         * @var ParserInterface     $parser
+         * @var CommandInterface    $command
+         */
+        $shell = new Shell($descriptor, $suggester, $parser);
+        $result = $shell
+            ->addCommand($command)
+            ->process(...[
+                'do.task',
+                '--help',
+            ]);
+
+        $this->assertNull($result);
+    }
+
+    /**
+     * Matched command.
+     *
+     * Test that a command can be matched and the result is returned.
+     *
+     * @covers \ExtendsFramework\Console\Shell\Shell::__construct()
+     * @covers \ExtendsFramework\Console\Shell\Shell::addCommand()
+     * @covers \ExtendsFramework\Console\Shell\Shell::process()
+     * @covers \ExtendsFramework\Console\Shell\Shell::getDefinition()
+     * @covers \ExtendsFramework\Console\Shell\Shell::getCommand()
+     */
+    public function testMatchedCommand(): void
+    {
+        $suggester = $this->createMock(SuggesterInterface::class);
+        $definition = $this->createMock(DefinitionInterface::class);
+        $descriptor = $this->createMock(DescriptorInterface::class);
+
+        $command = $this->createMock(CommandInterface::class);
+        $command
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn('do.task');
+
+        $command
+            ->expects($this->once())
+            ->method('getDefinition')
+            ->willReturnOnConsecutiveCalls($definition);
+
+        $defaults = $this->createMock(ParseResultInterface::class);
+        $defaults
+            ->expects($this->once())
+            ->method('getRemaining')
+            ->willReturn([
+                'do.task',
+                'John Doe',
+            ]);
+
+        $defaults
+            ->expects($this->once())
+            ->method('getParsed')
+            ->willReturn([]);
+
+        $result = $this->createMock(ParseResultInterface::class);
+        $result
+            ->expects($this->once())
+            ->method('getParsed')
+            ->willReturn([
+                'name' => 'John Doe',
+            ]);
+
+        $parser = $this->createMock(ParserInterface::class);
+        $parser
+            ->expects($this->exactly(2))
+            ->method('parse')
+            ->withConsecutive(
+                [
+                    $this->isInstanceOf(DefinitionInterface::class),
+                    [
+                        'do.task',
+                        'John Doe',
+                    ],
+                    false,
+                ],
+                [
+                    $definition,
+                    [
+                        'John Doe',
+                    ],
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $defaults,
+                $result
+            );
+
+        /**
+         * @var DescriptorInterface $descriptor
+         * @var SuggesterInterface  $suggester
+         * @var ParserInterface     $parser
+         * @var CommandInterface    $command
+         */
+        $shell = new Shell($descriptor, $suggester, $parser);
+        $result = $shell
+            ->addCommand($command)
+            ->process(...[
+                'do.task',
+                'John Doe',
+            ]);
+
+        $this->assertSame([
+            'name' => 'John Doe',
+        ], $result);
+    }
+
+    /**
+     * Failed command.
+     *
+     * Test if the descriptor is called to describe an exception and shell when parsing the command fails.
+     *
+     * @covers \ExtendsFramework\Console\Shell\Shell::__construct()
+     * @covers \ExtendsFramework\Console\Shell\Shell::addCommand()
+     * @covers \ExtendsFramework\Console\Shell\Shell::process()
+     * @covers \ExtendsFramework\Console\Shell\Shell::getDefinition()
+     * @covers \ExtendsFramework\Console\Shell\Shell::getCommand()
+     */
+    public function testFailedCommand(): void
+    {
+        $suggester = $this->createMock(SuggesterInterface::class);
+        $definition = $this->createMock(DefinitionInterface::class);
+        $exception = $this->createMock(ArgumentNotAllowed::class);
+
+        $command = $this->createMock(CommandInterface::class);
+        $command
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn('do.task');
+
+        $command
+            ->expects($this->once())
+            ->method('getDefinition')
+            ->willReturnOnConsecutiveCalls($definition);
+
+        $descriptor = $this->createMock(DescriptorInterface::class);
+        $descriptor
+            ->expects($this->once())
+            ->method('exception')
+            ->with($exception)
+            ->willReturnSelf();
+
+        $descriptor
+            ->expects($this->once())
+            ->method('command')
+            ->with($command, true)
+            ->willReturnSelf();
+
+        $defaults = $this->createMock(ParseResultInterface::class);
+        $defaults
+            ->expects($this->once())
+            ->method('getRemaining')
+            ->willReturn([
+                'do.task',
+                'John Doe',
+            ]);
+
+        $defaults
+            ->expects($this->once())
+            ->method('getParsed')
+            ->willReturn([]);
+
+        /**
+         * @var ArgumentNotAllowed $exception
+         */
+        $parser = $this->createMock(ParserInterface::class);
+        $parser
+            ->expects($this->exactly(2))
+            ->method('parse')
+            ->withConsecutive(
+                [
+                    $this->isInstanceOf(DefinitionInterface::class),
+                    [
+                        'do.task',
+                        'John Doe',
+                    ],
+                    false,
+                ],
+                [
+                    $definition,
+                    [
+                        'John Doe',
+                    ],
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $defaults,
+                $this->throwException($exception)
+            );
+
+        /**
+         * @var DescriptorInterface $descriptor
+         * @var SuggesterInterface  $suggester
+         * @var ParserInterface     $parser
+         * @var CommandInterface    $command
+         */
+        $shell = new Shell($descriptor, $suggester, $parser);
+        $result = $shell
+            ->addCommand($command)
+            ->process(...[
+                'do.task',
+                'John Doe',
+            ]);
+
+        $this->assertNull($result);
     }
 }

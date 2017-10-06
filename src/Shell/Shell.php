@@ -7,47 +7,15 @@ use ExtendsFramework\Console\Definition\Definition;
 use ExtendsFramework\Console\Definition\DefinitionException;
 use ExtendsFramework\Console\Definition\DefinitionInterface;
 use ExtendsFramework\Console\Definition\Option\Option;
-use ExtendsFramework\Console\Output\OutputInterface;
 use ExtendsFramework\Console\Parser\ParserException;
 use ExtendsFramework\Console\Parser\ParserInterface;
 use ExtendsFramework\Console\Shell\Command\CommandInterface;
-use ExtendsFramework\Console\Shell\Command\Suggester\SimilarText\SimilarTextSuggester;
 use ExtendsFramework\Console\Shell\Command\Suggester\SuggesterInterface;
-use ExtendsFramework\Console\Shell\Descriptor\Descriptor;
 use ExtendsFramework\Console\Shell\Descriptor\DescriptorInterface;
 use ExtendsFramework\Console\Shell\Exception\CommandNotFound;
-use ExtendsFramework\Container\ContainerInterface;
 
 class Shell implements ShellInterface
 {
-    /**
-     * Output to use for descriptor.
-     *
-     * @var OutputInterface
-     */
-    protected $output;
-
-    /**
-     * Parser to use for arguments.
-     *
-     * @var ParserInterface
-     */
-    protected $parser;
-
-    /**
-     * Commands to iterate.
-     *
-     * @var CommandInterface[]
-     */
-    protected $commands;
-
-    /**
-     * Shell definition for global options.
-     *
-     * @var DefinitionInterface
-     */
-    protected $definition;
-
     /**
      * Shell and command descriptor.
      *
@@ -63,14 +31,37 @@ class Shell implements ShellInterface
     protected $suggester;
 
     /**
+     * Parser to use for arguments.
+     *
+     * @var ParserInterface
+     */
+    protected $parser;
+
+    /**
+     * Shell definition for global options.
+     *
+     * @var DefinitionInterface
+     */
+    protected $definition;
+
+    /**
+     * Commands to iterate.
+     *
+     * @var CommandInterface[]
+     */
+    protected $commands;
+
+    /**
      * Create a new Shell.
      *
-     * @param OutputInterface $output
-     * @param ParserInterface $parser
+     * @param DescriptorInterface $descriptor
+     * @param SuggesterInterface  $suggester
+     * @param ParserInterface     $parser
      */
-    public function __construct(OutputInterface $output, ParserInterface $parser)
+    public function __construct(DescriptorInterface $descriptor, SuggesterInterface $suggester, ParserInterface $parser)
     {
-        $this->output = $output;
+        $this->descriptor = $descriptor;
+        $this->suggester = $suggester;
         $this->parser = $parser;
         $this->commands = [];
     }
@@ -78,26 +69,26 @@ class Shell implements ShellInterface
     /**
      * @inheritDoc
      */
-    public function process(string ...$arguments): ?ContainerInterface
+    public function process(string ...$arguments): ?array
     {
         $definition = $this->getDefinition();
-        $descriptor = $this->getDescriptor();
-        $suggester = $this->getSuggester();
 
         try {
             $defaults = $this->parser->parse($definition, $arguments, false);
         } catch (ParserException | DefinitionException $exception) {
-            $descriptor
+            $this->descriptor
                 ->exception($exception)
                 ->shell($definition, $this->commands, true);
 
             return null;
         }
 
-        $remaining = $defaults->getRemaining()->extract();
+        $remaining = $defaults->getRemaining();
+        $parsed = $defaults->getParsed();
+
         $name = array_shift($remaining);
         if ($name === null) {
-            $descriptor->shell($definition, $this->commands);
+            $this->descriptor->shell($definition, $this->commands);
 
             return null;
         }
@@ -105,17 +96,17 @@ class Shell implements ShellInterface
         try {
             $command = $this->getCommand($name);
         } catch (CommandNotFound $exception) {
-            $descriptor
+            $this->descriptor
                 ->exception($exception)
-                ->suggest($suggester->suggest($name, ...$this->commands))
+                ->suggest($this->suggester->suggest($name, ...$this->commands))
                 ->shell($definition, $this->commands, true);
 
             return null;
         }
 
-        $help = $defaults->getParsed()->find('help', false);
+        $help = $parsed['help'] ?? false;
         if ($help === true) {
-            $descriptor->command($command);
+            $this->descriptor->command($command);
 
             return null;
         }
@@ -128,7 +119,7 @@ class Shell implements ShellInterface
 
             return $result->getParsed();
         } catch (ParserException | DefinitionException $exception) {
-            $descriptor
+            $this->descriptor
                 ->exception($exception)
                 ->command($command, true);
 
@@ -180,45 +171,9 @@ class Shell implements ShellInterface
     {
         if ($this->definition === null) {
             $this->definition = (new Definition())
-                ->addOption(new Option('verbose', 'Be more verbose.', 'v', null, true, true))
-                ->addOption(new Option('quit', 'Only output exception.', null, 'quit', false))
-                ->addOption(new Option('silent', 'Sstt.. don\'t output anything.', null, 'silent'))
                 ->addOption(new Option('help', 'Show help about shell or command.', 'h', 'help'));
         }
 
         return $this->definition;
-    }
-
-    /**
-     * Get descriptor.
-     *
-     * @return DescriptorInterface
-     */
-    protected function getDescriptor(): DescriptorInterface
-    {
-        if ($this->descriptor === null) {
-            $this->descriptor = new Descriptor(
-                $this->output,
-                'Extends Framework Console',
-                'extends',
-                '0.1'
-            );
-        }
-
-        return $this->descriptor;
-    }
-
-    /**
-     * Get command suggester.
-     *
-     * @return SuggesterInterface
-     */
-    protected function getSuggester(): SuggesterInterface
-    {
-        if ($this->suggester === null) {
-            $this->suggester = new SimilarTextSuggester();
-        }
-
-        return $this->suggester;
     }
 }
