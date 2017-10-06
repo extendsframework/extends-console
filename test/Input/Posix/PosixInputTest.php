@@ -8,9 +8,13 @@ use PHPUnit\Framework\TestCase;
 class PosixInputTest extends TestCase
 {
     /**
+     * Line.
+     *
+     * Test that line (Hello world! How are you doing?) can be read from input and is returned.
+     *
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::line()
      */
-    public function testCanReadLineFromInput(): void
+    public function testLine(): void
     {
         Buffer::set('Hello world! How are you doing?');
 
@@ -21,11 +25,16 @@ class PosixInputTest extends TestCase
     }
 
     /**
+     * Line with length.
+     *
+     * Test that line (Hello world!  How are you doing?) with max length (13) can be read from input and is returned
+     * as shortened text (Hello world!).
+     *
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::line()
      */
-    public function testCanReadLineFromInputWithLength(): void
+    public function testLineWithLength(): void
     {
-        Buffer::set('Hello world!');
+        Buffer::set('Hello world! How are you doing?');
 
         $input = new PosixInput();
         $line = $input->line(13);
@@ -34,9 +43,13 @@ class PosixInputTest extends TestCase
     }
 
     /**
+     * Line with return.
+     *
+     * Test that null will be returned on newline.
+     *
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::line()
      */
-    public function testWillReturnNullOnEmptyLine(): void
+    public function testLineWithReturn(): void
     {
         Buffer::set("\n\r");
 
@@ -47,9 +60,13 @@ class PosixInputTest extends TestCase
     }
 
     /**
+     * Character.
+     *
+     * Test that character (b) can be read from input and is returned.
+     *
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::character()
      */
-    public function testCanReadCharacterFromInput(): void
+    public function testCharacter(): void
     {
         Buffer::set('b');
 
@@ -60,11 +77,31 @@ class PosixInputTest extends TestCase
     }
 
     /**
+     * Character with return.
+     *
+     * Test that null will be returned on newline.
+     *
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::character()
      */
-    public function testCanReadCharacterFromInputWithAllowed(): void
+    public function testCharacterWithReturn(): void
     {
+        Buffer::set("\r\n");
 
+        $input = new PosixInput();
+        $character = $input->character();
+
+        static::assertNull($character);
+    }
+
+    /**
+     * Allowed character.
+     *
+     * Test that only the allowed character (a) is read and (b) is ignored.
+     *
+     * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::character()
+     */
+    public function testAllowedCharacter(): void
+    {
         $input = new PosixInput();
 
         Buffer::set('a');
@@ -75,19 +112,6 @@ class PosixInputTest extends TestCase
 
         static::assertNull($first);
         static::assertEquals('a', $second);
-    }
-
-    /**
-     * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::character()
-     */
-    public function testWillReturnNullOnEmptyCharacter(): void
-    {
-        Buffer::set("\r\n");
-
-        $input = new PosixInput();
-        $character = $input->character();
-
-        static::assertNull($character);
     }
 }
 
@@ -113,7 +137,14 @@ class Buffer
 
 function fgets(): string
 {
-    return Buffer::get();
+    $buffer = Buffer::get();
+
+    $length = func_get_arg(1);
+    if ($length) {
+        $buffer = substr($buffer, 0, $length - 1);
+    }
+
+    return $buffer;
 }
 
 function fgetc(): string
