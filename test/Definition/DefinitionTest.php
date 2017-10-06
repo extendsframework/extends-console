@@ -66,7 +66,7 @@ class DefinitionTest extends TestCase
     /**
      * Short option not found.
      *
-     * Test that short option (f) can not be found and an exception will be thrown.
+     * Test that short option ('f') can not be found and an exception will be thrown.
      *
      * @covers                   \ExtendsFramework\Console\Definition\Definition::getOption()
      * @covers                   \ExtendsFramework\Console\Definition\Exception\OptionNotFound::__construct()
@@ -82,7 +82,7 @@ class DefinitionTest extends TestCase
     /**
      * Long option not found.
      *
-     * Test that long option (force) can not be found and an exception will be thrown.
+     * Test that long option ('force') can not be found and an exception will be thrown.
      *
      * @covers                   \ExtendsFramework\Console\Definition\Definition::getOption()
      * @covers                   \ExtendsFramework\Console\Definition\Exception\OptionNotFound::__construct()

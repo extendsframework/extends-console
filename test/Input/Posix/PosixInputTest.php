@@ -10,7 +10,7 @@ class PosixInputTest extends TestCase
     /**
      * Line.
      *
-     * Test that line (Hello world! How are you doing?) can be read from input and is returned.
+     * Test that line ('Hello world! How are you doing?') can be read from input and is returned.
      *
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::line()
      */
@@ -27,8 +27,8 @@ class PosixInputTest extends TestCase
     /**
      * Line with length.
      *
-     * Test that line (Hello world!  How are you doing?) with max length (13) can be read from input and is returned
-     * as shortened text (Hello world!).
+     * Test that line ('Hello world!  How are you doing?') with max length (13) can be read from input and is returned
+     * as shortened text ('Hello world!').
      *
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::line()
      */
@@ -62,7 +62,7 @@ class PosixInputTest extends TestCase
     /**
      * Character.
      *
-     * Test that character (b) can be read from input and is returned.
+     * Test that character ('b') can be read from input and is returned.
      *
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::character()
      */
@@ -96,7 +96,7 @@ class PosixInputTest extends TestCase
     /**
      * Allowed character.
      *
-     * Test that only the allowed character (a) is read and (b) is ignored.
+     * Test that only the allowed character ('a') is read and ('b') is ignored.
      *
      * @covers \ExtendsFramework\Console\Input\Posix\PosixInput::character()
      */

@@ -16,7 +16,7 @@ class PosixParserTest extends TestCase
     /**
      * Short option with combined argument.
      *
-     * Test that short options with combined arguments (-fJohn and -l=Doe) will be parsed.
+     * Test that short options with combined arguments ('-fJohn' and '-l=Doe') will be parsed.
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -69,7 +69,7 @@ class PosixParserTest extends TestCase
     /**
      * Short option with separate argument.
      *
-     * Test that short option with separate (-n "John Doe") argument will be parsed.
+     * Test that short option with separate ('-n John Doe') argument will be parsed.
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -115,8 +115,8 @@ class PosixParserTest extends TestCase
     /**
      * Short option flag.
      *
-     * Test that short options (-f, -b and -b) will be parsed as flags and will contain true value. If a flag exists
-     * more then once, it still must be true.
+     * Test that short options ('-f', '-b' and '-b') will be parsed as flags and will contain true value. If a flag
+     * exists more then once, it still must be true.
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -172,8 +172,8 @@ class PosixParserTest extends TestCase
     /**
      * Short option multiple flag.
      *
-     * Test that short option (-v, -v and -v) will be parsed as multiple flag and will contain the amount (3) of given
-     * flags as value.
+     * Test that short option ('-v', '-v' and '-v') will be parsed as multiple flag and will contain the amount (3) of
+     * given flags as value.
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -279,8 +279,8 @@ class PosixParserTest extends TestCase
     /**
      * Combined short options.
      *
-     * Test that combined options (-fpq) will be parsed a separate options. Options -f and -b must be true. Option -q
-     * must contain the next argument as value (quux).
+     * Test that combined options ('-fpq') will be parsed a separate options. Options '-f' and '-b' must be true. Option
+     * '-q' must contain the next argument as value ('quux').
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -340,7 +340,7 @@ class PosixParserTest extends TestCase
     /**
      * Long option with combined argument.
      *
-     * Test that long option (--name="John Doe") will be be parsed.
+     * Test that long option ('--name=John Doe') will be be parsed.
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -385,7 +385,7 @@ class PosixParserTest extends TestCase
     /**
      * Long option with separate argument.
      *
-     * Test that long option (--name) will be parsed and contain the next argument (John Doe).
+     * Test that long option ('--name') will be parsed and contain the next argument ('John Doe').
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -431,7 +431,7 @@ class PosixParserTest extends TestCase
     /**
      * Long option flag.
      *
-     * Test that long option flag (--force) will be parsed and will contain true.
+     * Test that long option flag ('--force') will be parsed and will contain true.
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -476,8 +476,8 @@ class PosixParserTest extends TestCase
     /**
      * Long option multiple flag.
      *
-     * Test that long option (--verbose and --verbose) will be parsed as multiple flag and will contain the amount (2)
-     * of given flags as value.
+     * Test that long option ('--verbose' and '--verbose') will be parsed as multiple flag and will contain the amount
+     * (2) of given flags as value.
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -528,7 +528,7 @@ class PosixParserTest extends TestCase
     /**
      * Long option flag with argument.
      *
-     * Test that long option flag (--name="John Doe") can not be parsed and an exception will be thrown.
+     * Test that long option flag ('--name=John Doe') can not be parsed and an exception will be thrown.
      *
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -569,7 +569,7 @@ class PosixParserTest extends TestCase
     /**
      * Long option without argument.
      *
-     * Test that long option (--name) without required argument will throw an exception.
+     * Test that long option ('--name') without required argument will throw an exception.
      *
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers                   \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -610,7 +610,7 @@ class PosixParserTest extends TestCase
     /**
      * Operand.
      *
-     * Test that operand (name.first) will contain the given value (John Doe).
+     * Test that operand ('name.first') will contain the given value ('John Doe').
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -657,8 +657,8 @@ class PosixParserTest extends TestCase
     /**
      * Non strict mode.
      *
-     * Test that parsing in non strict mode will only return options (-f and --quite) and operand ("John Doe") from
-     * definition. Other options (-xf, -ab and --help) and operand ("Jane Doe") must remain.
+     * Test that parsing in non strict mode will only return options ('-f' and '--quite') and operand ('John Doe') from
+     * definition. Other options ('-xf', '-ab' and '--help') and operand ('Jane Doe') must remain.
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()
@@ -868,7 +868,7 @@ class PosixParserTest extends TestCase
     /**
      * Terminator.
      *
-     * Test that the terminator (--) will terminate further parsing and return everything as an operand.
+     * Test that the terminator ('--') will terminate further parsing and return everything as an operand.
      *
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parse()
      * @covers \ExtendsFramework\Console\Parser\Posix\PosixParser::parseArguments()

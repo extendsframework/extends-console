@@ -13,7 +13,7 @@ class PosixOutputTest extends TestCase
     /**
      * Text.
      *
-     * Test that text (Hello world!) will be sent to output.
+     * Test that text ('Hello world!') will be sent to output.
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
@@ -33,7 +33,7 @@ class PosixOutputTest extends TestCase
     /**
      * Formatted text.
      *
-     * Text that text (1234567890) with format (fixed with of 5) will be sent to output (12345).
+     * Text that text ('1234567890') with format (fixed with of 5) will be sent to output ('12345').
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
@@ -54,7 +54,7 @@ class PosixOutputTest extends TestCase
     /**
      * Line.
      *
-     * Test that text (Hello world!) will be sent to output with newline character.
+     * Test that text ('Hello world!') will be sent to output with newline character.
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
@@ -76,7 +76,7 @@ class PosixOutputTest extends TestCase
     /**
      * New line.
      *
-     * Test that new line (\n\r) will be sent to output.
+     * Test that new line ("\n\r") will be sent to output.
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()

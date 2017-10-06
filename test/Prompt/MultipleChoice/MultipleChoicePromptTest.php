@@ -10,12 +10,16 @@ use PHPUnit\Framework\TestCase;
 class MultipleChoicePromptTest extends TestCase
 {
     /**
+     * Prompt.
+     *
+     * Test that multiple choice prompt ('Continue?' with option 'y' and 'n') will be prompted ('Continue? [y,n]: ').
+     *
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::__construct()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::prompt()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isValidOption()
      */
-    public function testCanPromptMultipleChoice(): void
+    public function testPrompt(): void
     {
         $input = $this->createMock(InputInterface::class);
         $input
@@ -45,12 +49,16 @@ class MultipleChoicePromptTest extends TestCase
     }
 
     /**
+     * Required.
+     *
+     * Test that prompt will show again after not allowed answer (null) until valid answer ('y').
+     *
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::__construct()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::prompt()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isValidOption()
      */
-    public function testWillPromptMultipleChoiceUntilValidAnswer(): void
+    public function testRequired(): void
     {
         $input = $this->createMock(InputInterface::class);
         $input
@@ -83,12 +91,16 @@ class MultipleChoicePromptTest extends TestCase
     }
 
     /**
+     * Not required.
+     *
+     * Test that prompt answer can be skipped (null) when not required.
+     *
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::__construct()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::prompt()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isValidOption()
      */
-    public function testCanReturnEmptyAnswerWhenNotRequired(): void
+    public function testNotRequired(): void
     {
         $input = $this->createMock(InputInterface::class);
         $input

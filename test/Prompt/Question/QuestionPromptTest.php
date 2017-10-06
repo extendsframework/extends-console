@@ -10,6 +10,10 @@ use PHPUnit\Framework\TestCase;
 class QuestionPromptTest extends TestCase
 {
     /**
+     * Prompt.
+     *
+     * Test that question prompt ('How are you doing?') will be prompted ('How are you doing?: ').
+     *
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
@@ -40,11 +44,15 @@ class QuestionPromptTest extends TestCase
     }
 
     /**
+     * Required.
+     *
+     * Test that prompt will show again after not allowed answer (null) until valid answer ('Very good!').
+     *
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
      */
-    public function testWillPromptQuestionUntilValidAnswer(): void
+    public function testRequired(): void
     {
         $input = $this->createMock(InputInterface::class);
         $input
@@ -70,11 +78,15 @@ class QuestionPromptTest extends TestCase
     }
 
     /**
+     * Not required.
+     *
+     * Test that prompt answer can be skipped (null) when not required.
+     *
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
      */
-    public function testCanReturnEmptyAnswerWhenNotRequired(): void
+    public function testNotRequired(): void
     {
         $input = $this->createMock(InputInterface::class);
         $input
