@@ -9,10 +9,14 @@ use PHPUnit\Framework\TestCase;
 class SimilarTextSuggesterTest extends TestCase
 {
     /**
+     * Best match.
+     *
+     * Test that suggester can suggest command ('do.task') for phrase ('d_task').
+     *
      * @covers \ExtendsFramework\Console\Shell\Command\Suggester\SimilarText\SimilarTextSuggester::__construct()
      * @covers \ExtendsFramework\Console\Shell\Command\Suggester\SimilarText\SimilarTextSuggester::suggest()
      */
-    public function testCanSuggestBestMatch(): void
+    public function testBestMatch(): void
     {
         $command1 = $this->createMock(CommandInterface::class);
         $command1
@@ -36,10 +40,14 @@ class SimilarTextSuggesterTest extends TestCase
     }
 
     /**
+     * Exact match.
+     *
+     * Test that suggester can suggest command ('some.task') for phrase ('some.task').
+     *
      * @covers \ExtendsFramework\Console\Shell\Command\Suggester\SimilarText\SimilarTextSuggester::__construct()
      * @covers \ExtendsFramework\Console\Shell\Command\Suggester\SimilarText\SimilarTextSuggester::suggest()
      */
-    public function testCanSuggestExactMatch(): void
+    public function testExactMatch(): void
     {
         $command1 = $this->createMock(CommandInterface::class);
         $command1
@@ -62,10 +70,14 @@ class SimilarTextSuggesterTest extends TestCase
     }
 
     /**
+     * No match.
+     *
+     * Test that suggester can not suggest a command for phrase ('foo.bar').
+     *
      * @covers \ExtendsFramework\Console\Shell\Command\Suggester\SimilarText\SimilarTextSuggester::__construct()
      * @covers \ExtendsFramework\Console\Shell\Command\Suggester\SimilarText\SimilarTextSuggester::suggest()
      */
-    public function testCanNotSuggestBestMatch(): void
+    public function testNoMatch(): void
     {
         $command1 = $this->createMock(CommandInterface::class);
         $command1

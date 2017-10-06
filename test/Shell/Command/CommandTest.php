@@ -9,12 +9,16 @@ use PHPUnit\Framework\TestCase;
 class CommandTest extends TestCase
 {
     /**
+     * Get parameters.
+     *
+     * Test if all the get parameters return the given construct values.
+     *
      * @covers \ExtendsFramework\Console\Shell\Command\Command::__construct()
      * @covers \ExtendsFramework\Console\Shell\Command\Command::getName()
      * @covers \ExtendsFramework\Console\Shell\Command\Command::getDescription()
      * @covers \ExtendsFramework\Console\Shell\Command\Command::getDefinition()
      */
-    public function testCanGetParameters(): void
+    public function testGetParameters(): void
     {
         $definition = $this->createMock(DefinitionInterface::class);
 

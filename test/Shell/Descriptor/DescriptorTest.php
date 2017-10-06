@@ -16,10 +16,14 @@ use Throwable;
 class DescriptorTest extends TestCase
 {
     /**
+     * Shell short.
+     *
+     * Test that descriptor can describe shell (short).
+     *
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::__construct()
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::shell()
      */
-    public function testCanDescribeShellShort(): void
+    public function testShellShort(): void
     {
         $index = 0;
 
@@ -48,11 +52,15 @@ class DescriptorTest extends TestCase
     }
 
     /**
+     * Shell long.
+     *
+     * Test that descriptor can describe shell (long).
+     *
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::__construct()
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::shell()
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::getOptionNotation()
      */
-    public function testCanDescribeShellLong(): void
+    public function testShellLong(): void
     {
         $index = 0;
 
@@ -220,10 +228,14 @@ class DescriptorTest extends TestCase
     }
 
     /**
+     * Command short.
+     *
+     * Test that descriptor can describe command (short).
+     *
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::__construct()
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::command()
      */
-    public function testCanDescribeCommandShort(): void
+    public function testCommandShort(): void
     {
         $index = 0;
 
@@ -256,11 +268,15 @@ class DescriptorTest extends TestCase
     }
 
     /**
+     * Command long.
+     *
+     * Test that descriptor can describe command (long).
+     *
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::__construct()
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::command()
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::getOptionNotation
      */
-    public function testCanDescribeCommandLong(): void
+    public function testCommandLong(): void
     {
         $index = 0;
 
@@ -425,10 +441,14 @@ class DescriptorTest extends TestCase
     }
 
     /**
+     * Suggest.
+     *
+     * Test that descriptor can suggest.
+     *
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::__construct()
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::suggest()
      */
-    public function testCanDescribeSuggest(): void
+    public function testSuggest(): void
     {
         $index = 0;
 
@@ -476,10 +496,14 @@ class DescriptorTest extends TestCase
     }
 
     /**
+     * Exception.
+     *
+     * Test that descriptor can describe exception.
+     *
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::__construct()
      * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::exception()
      */
-    public function testCanDescribeException(): void
+    public function testException(): void
     {
         $index = 0;
 
