@@ -69,7 +69,7 @@ class Shell implements ShellInterface
     /**
      * @inheritDoc
      */
-    public function process(array $arguments): ?array
+    public function process(array $arguments): ?ShellResultInterface
     {
         $definition = $this->getDefinition();
 
@@ -119,7 +119,10 @@ class Shell implements ShellInterface
                 $remaining
             );
 
-            return $result->getParsed();
+            return new ShellResult(
+                $command,
+                $result->getParsed()
+            );
         } catch (ParserException | DefinitionException $exception) {
             $this->descriptor
                 ->exception($exception)

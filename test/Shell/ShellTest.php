@@ -388,9 +388,13 @@ class ShellTest extends TestCase
                 'John Doe',
             ]);
 
-        $this->assertSame([
-            'name' => 'John Doe',
-        ], $result);
+        $this->assertInstanceOf(ShellResultInterface::class, $result);
+        if ($result instanceof ShellResultInterface) {
+            $this->assertSame($command, $result->getCommand());
+            $this->assertSame([
+                'name' => 'John Doe',
+            ], $result->getData());
+        }
     }
 
     /**
