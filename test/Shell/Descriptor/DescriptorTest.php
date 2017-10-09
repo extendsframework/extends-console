@@ -25,30 +25,21 @@ class DescriptorTest extends TestCase
      */
     public function testShellShort(): void
     {
-        $index = 0;
-
-        $output = $this->createMock(OutputInterface::class);
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('See \'extends --help\' for more information about available commands and options.')
-            ->willReturnSelf();
+        $output = new OutputStub();
 
         $definition = $this->createMock(DefinitionInterface::class);
 
         /**
-         * @var OutputInterface     $output
          * @var DefinitionInterface $definition
          */
         $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
         $instance = $descriptor->shell($definition, [], true);
 
         $this->assertSame($descriptor, $instance);
+        $this->assertSame([
+            '',
+            'See \'extends --help\' for more information about available commands and options.',
+        ], $output->getBuffer());
     }
 
     /**
@@ -62,118 +53,7 @@ class DescriptorTest extends TestCase
      */
     public function testShellLong(): void
     {
-        $index = 0;
-
-        $output = $this->createMock(OutputInterface::class);
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('Extends Framework Console (version 0.1)')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('Usage:')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('text')
-            ->with(
-                'extends',
-                $this->isInstanceOf(FormatterInterface::class)
-            )
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('<command> [<arguments>] [<options>]')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('Commands:')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('text')
-            ->with(
-                'do.task',
-                $this->isInstanceOf(FormatterInterface::class)
-            )
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('Do some fancy task!')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('Options:')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('text')
-            ->with(
-                '-o=|--option=',
-                $this->isInstanceOf(FormatterInterface::class)
-            )
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('Show help.')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('See \'extends <command> --help\' for more information about a command.')
-            ->willReturnSelf();
+        $output = new OutputStub();
 
         $option = $this->createMock(OptionInterface::class);
         $option
@@ -216,7 +96,6 @@ class DescriptorTest extends TestCase
             ->willReturn('Do some fancy task!');
 
         /**
-         * @var OutputInterface     $output
          * @var DefinitionInterface $definition
          */
         $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
@@ -225,6 +104,23 @@ class DescriptorTest extends TestCase
         ]);
 
         $this->assertSame($descriptor, $instance);
+        $this->assertSame([
+            0 => 'Extends Framework Console (version 0.1)',
+            1 => '',
+            2 => 'Usage:',
+            3 => '',
+            4 => 'extends<command> [<arguments>] [<options>]',
+            5 => '',
+            6 => 'Commands:',
+            7 => '',
+            8 => 'do.taskDo some fancy task!',
+            9 => '',
+            10 => 'Options:',
+            11 => '',
+            12 => '-o=|--option=Show help.',
+            13 => '',
+            14 => 'See \'extends <command> --help\' for more information about a command.',
+        ], $output->getBuffer());
     }
 
     /**
@@ -237,19 +133,7 @@ class DescriptorTest extends TestCase
      */
     public function testCommandShort(): void
     {
-        $index = 0;
-
-        $output = $this->createMock(OutputInterface::class);
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('See \'extends do.task --help\' for more information about the command.')
-            ->willReturnSelf();
+        $output = new OutputStub();
 
         $command = $this->createMock(CommandInterface::class);
         $command
@@ -258,13 +142,16 @@ class DescriptorTest extends TestCase
             ->willReturn('do.task');
 
         /**
-         * @var OutputInterface  $output
          * @var CommandInterface $command
          */
         $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
         $instance = $descriptor->command($command, true);
 
         $this->assertSame($descriptor, $instance);
+        $this->assertSame([
+            0 => '',
+            1 => 'See \'extends do.task --help\' for more information about the command.',
+        ], $output->getBuffer());
     }
 
     /**
@@ -278,99 +165,7 @@ class DescriptorTest extends TestCase
      */
     public function testCommandLong(): void
     {
-        $index = 0;
-
-        $output = $this->createMock(OutputInterface::class);
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('Extends Framework Console (version 0.1)')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('Usage:')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('text')
-            ->with(
-                'extends',
-                $this->isInstanceOf(FormatterInterface::class)
-            )
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('text')
-            ->with('do.task ')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('text')
-            ->with('<name> ')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('[<options>] ')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('Options:')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('text')
-            ->with(
-                '-o+|--option+',
-                $this->isInstanceOf(FormatterInterface::class)
-            )
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('Show option.')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('See \'extends --help\' for more information about this shell and default options.')
-            ->willReturnSelf();
+        $output = new OutputStub();
 
         $operand = $this->createMock(OperandInterface::class);
         $operand
@@ -431,13 +226,25 @@ class DescriptorTest extends TestCase
             ->willReturn($definition);
 
         /**
-         * @var OutputInterface  $output
          * @var CommandInterface $command
          */
         $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
         $instance = $descriptor->command($command);
 
         $this->assertSame($descriptor, $instance);
+        $this->assertSame([
+            0 => 'Extends Framework Console (version 0.1)',
+            1 => '',
+            2 => 'Usage:',
+            3 => '',
+            4 => 'extendsdo.task <name> [<options>] ',
+            5 => '',
+            6 => 'Options:',
+            7 => '',
+            8 => '-o+|--option+Show option.',
+            9 => '',
+            10 => 'See \'extends --help\' for more information about this shell and default options.',
+        ], $output->getBuffer());
     }
 
     /**
@@ -450,34 +257,7 @@ class DescriptorTest extends TestCase
      */
     public function testSuggest(): void
     {
-        $index = 0;
-
-        $output = $this->createMock(OutputInterface::class);
-        $output
-            ->expects($this->at(++$index))
-            ->method('newLine')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('text')
-            ->with('Did you mean "')
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('text')
-            ->with(
-                'do.task',
-                $this->isInstanceOf(FormatterInterface::class)
-            )
-            ->willReturnSelf();
-
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with('"?')
-            ->willReturnSelf();
+        $output = new OutputStub();
 
         $command = $this->createMock(CommandInterface::class);
         $command
@@ -493,6 +273,10 @@ class DescriptorTest extends TestCase
         $instance = $descriptor->suggest($command);
 
         $this->assertSame($descriptor, $instance);
+        $this->assertSame([
+            0 => '',
+            1 => 'Did you mean "do.task"?',
+        ], $output->getBuffer());
     }
 
     /**
@@ -505,16 +289,7 @@ class DescriptorTest extends TestCase
      */
     public function testException(): void
     {
-        $index = 0;
-
-        $output = $this->createMock(OutputInterface::class);
-        $output
-            ->expects($this->at(++$index))
-            ->method('line')
-            ->with(
-                'Random exception message!',
-                $this->isInstanceOf(FormatterInterface::class)
-            );
+        $output = new OutputStub();
 
         /**
          * @var OutputInterface $output
@@ -524,6 +299,9 @@ class DescriptorTest extends TestCase
         $instance = $descriptor->exception(new Exception('Random exception message!'));
 
         $this->assertSame($descriptor, $instance);
+        $this->assertSame([
+            0 => 'Random exception message!',
+        ], $output->getBuffer());
     }
 
     /**
@@ -551,5 +329,120 @@ class DescriptorTest extends TestCase
         $instance = $descriptor->setVerbosity(3);
 
         $this->assertSame($descriptor, $instance);
+    }
+}
+
+class OutputStub extends TestCase implements OutputInterface
+{
+    /**
+     * Buffer with output strings.
+     *
+     * @var array
+     */
+    protected $output = [];
+
+    /**
+     * Output line index.
+     *
+     * @var int
+     */
+    protected $index = 0;
+
+    /**
+     * @inheritDoc
+     */
+    public function text(string $text, FormatterInterface $formatter = null, int $verbosity = null): OutputInterface
+    {
+        if (array_key_exists($this->index, $this->output) === false) {
+            $this->output[$this->index] = '';
+        }
+
+        $this->output[$this->index] .= $text;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function line(string $text, FormatterInterface $formatter = null, int $verbosity = null): OutputInterface
+    {
+        $this->text($text);
+        $this->index++;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function newLine(int $verbosity = null): OutputInterface
+    {
+        $this->output[] = '';
+        $this->index++;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function clear(): OutputInterface
+    {
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getColumns(): int
+    {
+        return 80;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLines(): int
+    {
+        return 120;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFormatter(): FormatterInterface
+    {
+        $formatter = $this->createMock(FormatterInterface::class);
+        $formatter
+            ->method($this->anything())
+            ->willReturnSelf();
+
+        $formatter
+            ->method('create')
+            ->willReturn($this->callback(function (string $text) {
+                return $text;
+            }));
+
+        /** @var FormatterInterface $formatter */
+        return $formatter;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setVerbosity(int $verbosity): OutputInterface
+    {
+        return $this;
+    }
+
+    /**
+     * Return buffered output.
+     *
+     * @return array
+     */
+    public function getBuffer(): array
+    {
+        return $this->output;
     }
 }
