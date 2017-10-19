@@ -9,6 +9,7 @@ use ExtendsFramework\Console\Definition\DefinitionInterface;
 use ExtendsFramework\Console\Definition\Option\Option;
 use ExtendsFramework\Console\Parser\ParserException;
 use ExtendsFramework\Console\Parser\ParserInterface;
+use ExtendsFramework\Console\Shell\About\AboutInterface;
 use ExtendsFramework\Console\Shell\Command\CommandInterface;
 use ExtendsFramework\Console\Shell\Descriptor\DescriptorInterface;
 use ExtendsFramework\Console\Shell\Exception\CommandNotFound;
@@ -38,6 +39,13 @@ class Shell implements ShellInterface
     protected $parser;
 
     /**
+     * Shell about information.
+     *
+     * @var string
+     */
+    protected $about;
+
+    /**
      * Shell definition for global options.
      *
      * @var DefinitionInterface
@@ -57,12 +65,18 @@ class Shell implements ShellInterface
      * @param DescriptorInterface $descriptor
      * @param SuggesterInterface  $suggester
      * @param ParserInterface     $parser
+     * @param AboutInterface      $about
      */
-    public function __construct(DescriptorInterface $descriptor, SuggesterInterface $suggester, ParserInterface $parser)
-    {
+    public function __construct(
+        DescriptorInterface $descriptor,
+        SuggesterInterface $suggester,
+        ParserInterface $parser,
+        AboutInterface $about
+    ) {
         $this->descriptor = $descriptor;
         $this->suggester = $suggester;
         $this->parser = $parser;
+        $this->about = $about;
         $this->commands = [];
     }
 
@@ -78,7 +92,7 @@ class Shell implements ShellInterface
         } catch (ParserException | DefinitionException $exception) {
             $this->descriptor
                 ->exception($exception)
-                ->shell($definition, $this->commands, true);
+                ->shell($this->about, $definition, $this->commands, true);
 
             return null;
         }
@@ -90,7 +104,7 @@ class Shell implements ShellInterface
 
         $name = array_shift($remaining);
         if ($name === null) {
-            $this->descriptor->shell($definition, $this->commands);
+            $this->descriptor->shell($this->about, $definition, $this->commands);
 
             return null;
         }
@@ -101,14 +115,14 @@ class Shell implements ShellInterface
             $this->descriptor
                 ->exception($exception)
                 ->suggest($this->suggester->suggest($name, ...$this->commands))
-                ->shell($definition, $this->commands, true);
+                ->shell($this->about, $definition, $this->commands, true);
 
             return null;
         }
 
         $help = $parsed['help'] ?? false;
         if ($help === true) {
-            $this->descriptor->command($command);
+            $this->descriptor->command($this->about, $command);
 
             return null;
         }
@@ -126,7 +140,7 @@ class Shell implements ShellInterface
         } catch (ParserException | DefinitionException $exception) {
             $this->descriptor
                 ->exception($exception)
-                ->command($command, true);
+                ->command($this->about, $command, true);
 
             return null;
         }

@@ -9,6 +9,7 @@ use ExtendsFramework\Console\Definition\Operand\OperandInterface;
 use ExtendsFramework\Console\Definition\Option\OptionInterface;
 use ExtendsFramework\Console\Formatter\FormatterInterface;
 use ExtendsFramework\Console\Output\OutputInterface;
+use ExtendsFramework\Console\Shell\About\AboutInterface;
 use ExtendsFramework\Console\Shell\Command\CommandInterface;
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -29,11 +30,25 @@ class DescriptorTest extends TestCase
 
         $definition = $this->createMock(DefinitionInterface::class);
 
+        $about = $this->createMock(AboutInterface::class);
+        $about
+            ->method('getName')
+            ->willReturn('Extends Framework Console');
+
+        $about
+            ->method('getProgram')
+            ->willReturn('extends');
+
+        $about
+            ->method('getVersion')
+            ->willReturn('0.1');
+
         /**
          * @var DefinitionInterface $definition
+         * @var AboutInterface      $about
          */
-        $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
-        $instance = $descriptor->shell($definition, [], true);
+        $descriptor = new Descriptor($output);
+        $instance = $descriptor->shell($about, $definition, [], true);
 
         $this->assertSame($descriptor, $instance);
         $this->assertSame([
@@ -95,11 +110,25 @@ class DescriptorTest extends TestCase
             ->method('getDescription')
             ->willReturn('Do some fancy task!');
 
+        $about = $this->createMock(AboutInterface::class);
+        $about
+            ->method('getName')
+            ->willReturn('Extends Framework Console');
+
+        $about
+            ->method('getProgram')
+            ->willReturn('extends');
+
+        $about
+            ->method('getVersion')
+            ->willReturn('0.1');
+
         /**
          * @var DefinitionInterface $definition
+         * @var AboutInterface      $about
          */
-        $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
-        $instance = $descriptor->shell($definition, [
+        $descriptor = new Descriptor($output);
+        $instance = $descriptor->shell($about, $definition, [
             $command,
         ]);
 
@@ -141,11 +170,25 @@ class DescriptorTest extends TestCase
             ->method('getName')
             ->willReturn('do.task');
 
+        $about = $this->createMock(AboutInterface::class);
+        $about
+            ->method('getName')
+            ->willReturn('Extends Framework Console');
+
+        $about
+            ->method('getProgram')
+            ->willReturn('extends');
+
+        $about
+            ->method('getVersion')
+            ->willReturn('0.1');
+
         /**
          * @var CommandInterface $command
+         * @var AboutInterface   $about
          */
-        $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
-        $instance = $descriptor->command($command, true);
+        $descriptor = new Descriptor($output);
+        $instance = $descriptor->command($about, $command, true);
 
         $this->assertSame($descriptor, $instance);
         $this->assertSame([
@@ -225,11 +268,25 @@ class DescriptorTest extends TestCase
             ->method('getDefinition')
             ->willReturn($definition);
 
+        $about = $this->createMock(AboutInterface::class);
+        $about
+            ->method('getName')
+            ->willReturn('Extends Framework Console');
+
+        $about
+            ->method('getProgram')
+            ->willReturn('extends');
+
+        $about
+            ->method('getVersion')
+            ->willReturn('0.1');
+
         /**
          * @var CommandInterface $command
+         * @var AboutInterface   $about
          */
-        $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
-        $instance = $descriptor->command($command);
+        $descriptor = new Descriptor($output);
+        $instance = $descriptor->command($about, $command);
 
         $this->assertSame($descriptor, $instance);
         $this->assertSame([
@@ -269,7 +326,7 @@ class DescriptorTest extends TestCase
          * @var OutputInterface  $output
          * @var CommandInterface $command
          */
-        $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
+        $descriptor = new Descriptor($output);
         $instance = $descriptor->suggest($command);
 
         $this->assertSame($descriptor, $instance);
@@ -295,7 +352,7 @@ class DescriptorTest extends TestCase
          * @var OutputInterface $output
          * @var Throwable       $exception
          */
-        $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
+        $descriptor = new Descriptor($output);
         $instance = $descriptor->exception(new Exception('Random exception message!'));
 
         $this->assertSame($descriptor, $instance);
@@ -325,7 +382,7 @@ class DescriptorTest extends TestCase
          * @var OutputInterface     $output
          * @var DefinitionInterface $definition
          */
-        $descriptor = new Descriptor($output, 'Extends Framework Console', 'extends', '0.1');
+        $descriptor = new Descriptor($output);
         $instance = $descriptor->setVerbosity(3);
 
         $this->assertSame($descriptor, $instance);

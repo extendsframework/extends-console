@@ -8,6 +8,7 @@ use ExtendsFramework\Console\Definition\Option\OptionInterface;
 use ExtendsFramework\Console\Formatter\Color\Red\Red;
 use ExtendsFramework\Console\Formatter\Color\Yellow\Yellow;
 use ExtendsFramework\Console\Output\OutputInterface;
+use ExtendsFramework\Console\Shell\About\AboutInterface;
 use ExtendsFramework\Console\Shell\Command\CommandInterface;
 use Throwable;
 
@@ -21,46 +22,19 @@ class Descriptor implements DescriptorInterface
     protected $output;
 
     /**
-     * Full shell name.
-     *
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * Program name to run this shell.
-     *
-     * @var string
-     */
-    protected $program;
-
-    /**
-     * Shell version.
-     *
-     * @var string
-     */
-    protected $version;
-
-    /**
      * Create a new descriptor.
      *
      * @param OutputInterface $output
-     * @param string          $name
-     * @param string          $program
-     * @param string          $version
      */
-    public function __construct(OutputInterface $output, string $name, string $program, string $version)
+    public function __construct(OutputInterface $output)
     {
         $this->output = $output;
-        $this->name = $name;
-        $this->program = $program;
-        $this->version = $version;
     }
 
     /**
      * @inheritDoc
      */
-    public function shell(DefinitionInterface $definition, array $commands, bool $short = null): DescriptorInterface
+    public function shell(AboutInterface $about, DefinitionInterface $definition, array $commands, bool $short = null): DescriptorInterface
     {
         $output = $this->output;
         $formatter = $output->getFormatter();
@@ -70,7 +44,7 @@ class Descriptor implements DescriptorInterface
                 ->newLine()
                 ->line(sprintf(
                     'See \'%s --help\' for more information about available commands and options.',
-                    $this->program
+                    $about->getProgram()
                 ));
 
             return $this;
@@ -79,17 +53,17 @@ class Descriptor implements DescriptorInterface
         $output
             ->line(sprintf(
                 '%s (version %s)',
-                $this->name,
-                $this->version
+                $about->getName(),
+                $about->getVersion()
             ))
             ->newLine()
             ->line('Usage:')
             ->newLine()
             ->text(
-                $this->program,
+                $about->getProgram(),
                 $formatter
                     ->setForeground(new Yellow())
-                    ->setFixedWidth(strlen($this->program) + 1)
+                    ->setFixedWidth(strlen($about->getProgram()) + 1)
                     ->setTextIndent(2)
             )
             ->line('<command> [<arguments>] [<options>]')
@@ -135,7 +109,7 @@ class Descriptor implements DescriptorInterface
             ->newLine()
             ->line(sprintf(
                 'See \'%s <command> --help\' for more information about a command.',
-                $this->program
+                $about->getProgram()
             ));
 
         return $this;
@@ -144,7 +118,7 @@ class Descriptor implements DescriptorInterface
     /**
      * @inheritDoc
      */
-    public function command(CommandInterface $command, bool $short = null): DescriptorInterface
+    public function command(AboutInterface $about, CommandInterface $command, bool $short = null): DescriptorInterface
     {
         $short = $short ?? false;
         $output = $this->output;
@@ -156,7 +130,7 @@ class Descriptor implements DescriptorInterface
                 ->newLine()
                 ->line(sprintf(
                     'See \'%s %s --help\' for more information about the command.',
-                    $this->program,
+                    $about->getProgram(),
                     $command->getName()
                 ));
 
@@ -166,17 +140,17 @@ class Descriptor implements DescriptorInterface
         $output
             ->line(sprintf(
                 '%s (version %s)',
-                $this->name,
-                $this->version
+                $about->getName(),
+                $about->getVersion()
             ))
             ->newLine()
             ->line('Usage:')
             ->newLine()
             ->text(
-                $this->program,
+                $about->getProgram(),
                 $formatter
                     ->setForeground(new Yellow())
-                    ->setFixedWidth(strlen($this->program) + 1)
+                    ->setFixedWidth(strlen($about->getProgram()) + 1)
                     ->setTextIndent(2)
             )
             ->text(sprintf(
@@ -222,7 +196,7 @@ class Descriptor implements DescriptorInterface
             ->newLine()
             ->line(sprintf(
                 'See \'%s --help\' for more information about this shell and default options.',
-                $this->program
+                $about->getProgram()
             ));
 
         return $this;

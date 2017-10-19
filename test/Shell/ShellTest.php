@@ -7,6 +7,7 @@ use ExtendsFramework\Console\Definition\DefinitionInterface;
 use ExtendsFramework\Console\Parser\ParseResultInterface;
 use ExtendsFramework\Console\Parser\ParserInterface;
 use ExtendsFramework\Console\Parser\Posix\Exception\ArgumentNotAllowed;
+use ExtendsFramework\Console\Shell\About\AboutInterface;
 use ExtendsFramework\Console\Shell\Command\CommandInterface;
 use ExtendsFramework\Console\Shell\Descriptor\DescriptorInterface;
 use ExtendsFramework\Console\Shell\Exception\CommandNotFound;
@@ -27,6 +28,7 @@ class ShellTest extends TestCase
      */
     public function testInvalidDefaultParameter(): void
     {
+        $about = $this->createMock(AboutInterface::class);
         $suggester = $this->createMock(SuggesterInterface::class);
         $exception = $this->createMock(ArgumentNotAllowed::class);
 
@@ -55,8 +57,9 @@ class ShellTest extends TestCase
          * @var DescriptorInterface $descriptor
          * @var SuggesterInterface  $suggester
          * @var ParserInterface     $parser
+         * @var AboutInterface      $about
          */
-        $shell = new Shell($descriptor, $suggester, $parser);
+        $shell = new Shell($descriptor, $suggester, $parser, $about);
         $result = $shell->process([
             '--help=true',
         ]);
@@ -75,6 +78,7 @@ class ShellTest extends TestCase
      */
     public function testNoRemainingArguments(): void
     {
+        $about = $this->createMock(AboutInterface::class);
         $suggester = $this->createMock(SuggesterInterface::class);
 
         $descriptor = $this->createMock(DescriptorInterface::class);
@@ -82,6 +86,7 @@ class ShellTest extends TestCase
             ->expects($this->once())
             ->method('shell')
             ->with(
+                $about,
                 $this->isInstanceOf(DefinitionInterface::class),
                 []
             )
@@ -103,8 +108,9 @@ class ShellTest extends TestCase
          * @var DescriptorInterface $descriptor
          * @var SuggesterInterface  $suggester
          * @var ParserInterface     $parser
+         * @var AboutInterface      $about
          */
-        $shell = new Shell($descriptor, $suggester, $parser);
+        $shell = new Shell($descriptor, $suggester, $parser, $about);
         $result = $shell->process([
             '--help',
         ]);
@@ -123,6 +129,7 @@ class ShellTest extends TestCase
      */
     public function testVerbosity(): void
     {
+        $about = $this->createMock(AboutInterface::class);
         $suggester = $this->createMock(SuggesterInterface::class);
 
         $descriptor = $this->createMock(DescriptorInterface::class);
@@ -155,8 +162,9 @@ class ShellTest extends TestCase
          * @var DescriptorInterface $descriptor
          * @var SuggesterInterface  $suggester
          * @var ParserInterface     $parser
+         * @var AboutInterface      $about
          */
-        $shell = new Shell($descriptor, $suggester, $parser);
+        $shell = new Shell($descriptor, $suggester, $parser, $about);
         $result = $shell->process([
             '-v',
             '-v',
@@ -179,6 +187,7 @@ class ShellTest extends TestCase
      */
     public function testCommandNotFound(): void
     {
+        $about = $this->createMock(AboutInterface::class);
         $suggester = $this->createMock(SuggesterInterface::class);
 
         $descriptor = $this->createMock(DescriptorInterface::class);
@@ -200,6 +209,7 @@ class ShellTest extends TestCase
             ->expects($this->once())
             ->method('shell')
             ->with(
+                $about,
                 $this->isInstanceOf(DefinitionInterface::class),
                 [],
                 true
@@ -224,8 +234,9 @@ class ShellTest extends TestCase
          * @var DescriptorInterface $descriptor
          * @var SuggesterInterface  $suggester
          * @var ParserInterface     $parser
+         * @var AboutInterface      $about
          */
-        $shell = new Shell($descriptor, $suggester, $parser);
+        $shell = new Shell($descriptor, $suggester, $parser, $about);
         $result = $shell->process([
             'do.task',
         ]);
@@ -246,6 +257,7 @@ class ShellTest extends TestCase
      */
     public function testHelpForCommand(): void
     {
+        $about = $this->createMock(AboutInterface::class);
         $suggester = $this->createMock(SuggesterInterface::class);
 
         $command = $this->createMock(CommandInterface::class);
@@ -258,7 +270,7 @@ class ShellTest extends TestCase
         $descriptor
             ->expects($this->once())
             ->method('command')
-            ->with($command)
+            ->with($about, $command)
             ->willReturnSelf();
 
         $result = $this->createMock(ParseResultInterface::class);
@@ -287,8 +299,9 @@ class ShellTest extends TestCase
          * @var SuggesterInterface  $suggester
          * @var ParserInterface     $parser
          * @var CommandInterface    $command
+         * @var AboutInterface      $about
          */
-        $shell = new Shell($descriptor, $suggester, $parser);
+        $shell = new Shell($descriptor, $suggester, $parser, $about);
         $result = $shell
             ->addCommand($command)
             ->process([
@@ -312,6 +325,7 @@ class ShellTest extends TestCase
      */
     public function testMatchedCommand(): void
     {
+        $about = $this->createMock(AboutInterface::class);
         $suggester = $this->createMock(SuggesterInterface::class);
         $definition = $this->createMock(DefinitionInterface::class);
         $descriptor = $this->createMock(DescriptorInterface::class);
@@ -379,8 +393,9 @@ class ShellTest extends TestCase
          * @var SuggesterInterface  $suggester
          * @var ParserInterface     $parser
          * @var CommandInterface    $command
+         * @var AboutInterface      $about
          */
-        $shell = new Shell($descriptor, $suggester, $parser);
+        $shell = new Shell($descriptor, $suggester, $parser, $about);
         $result = $shell
             ->addCommand($command)
             ->process([
@@ -410,6 +425,7 @@ class ShellTest extends TestCase
      */
     public function testFailedCommand(): void
     {
+        $about = $this->createMock(AboutInterface::class);
         $suggester = $this->createMock(SuggesterInterface::class);
         $definition = $this->createMock(DefinitionInterface::class);
         $exception = $this->createMock(ArgumentNotAllowed::class);
@@ -435,7 +451,7 @@ class ShellTest extends TestCase
         $descriptor
             ->expects($this->once())
             ->method('command')
-            ->with($command, true)
+            ->with($about, $command, true)
             ->willReturnSelf();
 
         $defaults = $this->createMock(ParseResultInterface::class);
@@ -485,8 +501,9 @@ class ShellTest extends TestCase
          * @var SuggesterInterface  $suggester
          * @var ParserInterface     $parser
          * @var CommandInterface    $command
+         * @var AboutInterface      $about
          */
-        $shell = new Shell($descriptor, $suggester, $parser);
+        $shell = new Shell($descriptor, $suggester, $parser, $about);
         $result = $shell
             ->addCommand($command)
             ->process([
