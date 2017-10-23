@@ -19,16 +19,10 @@ class ShellFactoryTest extends TestCase
     public function testCreateService(): void
     {
         $serviceLocator = $this->createMock(ServiceLocatorInterface::class);
-        /*$serviceLocator
-            ->expects($this->at(1))
-            ->method('getService')
-            ->with(OutputInterface::class)
-            ->willReturn($this->createMock(OutputInterface::class));*/
-
         $serviceLocator
             ->method('getConfig')
             ->willReturn([
-                'shell' => [
+                ShellInterface::class => [
                     'name' => 'Fancy shell name.',
                     'program' => 'run',
                     'version' => '1.3',

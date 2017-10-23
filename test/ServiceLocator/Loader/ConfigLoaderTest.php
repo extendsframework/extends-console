@@ -5,6 +5,8 @@ namespace ExtendsFramework\Console\ServiceLocator\Loader;
 
 use ExtendsFramework\Console\ServiceLocator\Factory\ShellFactory;
 use ExtendsFramework\Console\Shell\ShellInterface;
+use ExtendsFramework\ServiceLocator\Resolver\Factory\FactoryResolver;
+use ExtendsFramework\ServiceLocator\ServiceLocatorInterface;
 use PHPUnit\Framework\TestCase;
 
 class ConfigLoaderTest extends TestCase
@@ -21,10 +23,16 @@ class ConfigLoaderTest extends TestCase
         $loader = new ConfigLoader();
 
         $this->assertSame([
-            'service_locator' => [
-                'factories' => [
+            ServiceLocatorInterface::class => [
+                FactoryResolver::class => [
                     ShellInterface::class => ShellFactory::class,
                 ],
+            ],
+            ShellInterface::class => [
+                'name' => 'Extends Framework Console',
+                'program' => 'extends',
+                'version' => '0.1',
+                'commands' => [],
             ],
         ], $loader->load());
     }

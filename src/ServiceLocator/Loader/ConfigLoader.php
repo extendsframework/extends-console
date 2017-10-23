@@ -6,6 +6,8 @@ namespace ExtendsFramework\Console\ServiceLocator\Loader;
 use ExtendsFramework\Console\ServiceLocator\Factory\ShellFactory;
 use ExtendsFramework\Console\Shell\ShellInterface;
 use ExtendsFramework\ServiceLocator\Config\Loader\LoaderInterface;
+use ExtendsFramework\ServiceLocator\Resolver\Factory\FactoryResolver;
+use ExtendsFramework\ServiceLocator\ServiceLocatorInterface;
 
 class ConfigLoader implements LoaderInterface
 {
@@ -15,10 +17,16 @@ class ConfigLoader implements LoaderInterface
     public function load(): array
     {
         return [
-            'service_locator' => [
-                'factories' => [
+            ServiceLocatorInterface::class => [
+                FactoryResolver::class => [
                     ShellInterface::class => ShellFactory::class,
                 ],
+            ],
+            ShellInterface::class => [
+                'name' => 'Extends Framework Console',
+                'program' => 'extends',
+                'version' => '0.1',
+                'commands' => [],
             ],
         ];
     }

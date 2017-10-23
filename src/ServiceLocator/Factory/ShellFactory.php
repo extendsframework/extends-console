@@ -16,7 +16,7 @@ class ShellFactory implements ServiceFactoryInterface
     public function createService(string $key, ServiceLocatorInterface $serviceLocator, array $extra = null): ShellInterface
     {
         $config = $serviceLocator->getConfig();
-        $config = $config['shell'] ?? [];
+        $config = $config[ShellInterface::class] ?? [];
 
         $builder = (new ShellBuilder())
             ->setName($config['name'] ?? null)
