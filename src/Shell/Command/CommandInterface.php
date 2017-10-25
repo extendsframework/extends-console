@@ -27,4 +27,11 @@ interface CommandInterface
      * @return DefinitionInterface
      */
     public function getDefinition(): DefinitionInterface;
+
+    /**
+     * Get parameters.
+     *
+     * @return array
+     */
+    public function getParameters(): array;
 }

@@ -7,6 +7,7 @@ use ExtendsFramework\Console\Parser\ParserInterface;
 use ExtendsFramework\Console\Shell\Descriptor\DescriptorInterface;
 use ExtendsFramework\Console\Shell\Suggester\SuggesterInterface;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class ShellBuilderTest extends TestCase
 {
@@ -61,6 +62,8 @@ class ShellBuilderTest extends TestCase
                     'description' => 'Force things!',
                     'short' => 'f',
                 ],
+            ], [
+                'task' => stdClass::class,
             ])
             ->build();
 

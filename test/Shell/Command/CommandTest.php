@@ -17,6 +17,7 @@ class CommandTest extends TestCase
      * @covers \ExtendsFramework\Console\Shell\Command\Command::getName()
      * @covers \ExtendsFramework\Console\Shell\Command\Command::getDescription()
      * @covers \ExtendsFramework\Console\Shell\Command\Command::getDefinition()
+     * @covers \ExtendsFramework\Console\Shell\Command\Command::getParameters()
      */
     public function testGetParameters(): void
     {
@@ -25,10 +26,11 @@ class CommandTest extends TestCase
         /**
          * @var DefinitionInterface $definition
          */
-        $command = new Command('do.task', 'Some fancy task!', $definition);
+        $command = new Command('do.task', 'Some fancy task!', $definition, ['foo' => 'bar']);
 
         $this->assertSame('do.task', $command->getName());
         $this->assertSame('Some fancy task!', $command->getDescription());
         $this->assertSame($definition, $command->getDefinition());
+        $this->assertSame(['foo' => 'bar'], $command->getParameters());
     }
 }

@@ -29,17 +29,26 @@ class Command implements CommandInterface
     protected $definition;
 
     /**
+     * Extra command parameters.
+     *
+     * @var array
+     */
+    protected $parameters;
+
+    /**
      * Create new command for $name with $description and $definition.
      *
      * @param string              $name
      * @param string              $description
      * @param DefinitionInterface $definition
+     * @param array|null          $parameters
      */
-    public function __construct(string $name, string $description, DefinitionInterface $definition)
+    public function __construct(string $name, string $description, DefinitionInterface $definition, array $parameters = null)
     {
         $this->name = $name;
         $this->description = $description;
         $this->definition = $definition;
+        $this->parameters = $parameters ?: [];
     }
 
     /**
@@ -67,4 +76,11 @@ class Command implements CommandInterface
         return $this->definition;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
 }

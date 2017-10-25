@@ -28,7 +28,8 @@ class ShellFactory implements ServiceFactoryInterface
                 $command['name'],
                 $command['description'],
                 $command['operands'] ?? [],
-                $command['options'] ?? []
+                $command['options'] ?? [],
+                $command['parameters'] ?? []
             );
         }
 
