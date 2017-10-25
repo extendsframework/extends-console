@@ -25,12 +25,6 @@ class ConfigLoader implements LoaderInterface
                     TerminalInterface::class => TerminalFactory::class,
                 ],
             ],
-            ShellInterface::class => [
-                'name' => 'Extends Framework Console',
-                'program' => 'extends',
-                'version' => '0.1',
-                'commands' => [],
-            ],
         ];
     }
 }

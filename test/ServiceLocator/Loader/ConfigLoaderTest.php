@@ -31,12 +31,6 @@ class ConfigLoaderTest extends TestCase
                     TerminalInterface::class => TerminalFactory::class,
                 ],
             ],
-            ShellInterface::class => [
-                'name' => 'Extends Framework Console',
-                'program' => 'extends',
-                'version' => '0.1',
-                'commands' => [],
-            ],
         ], $loader->load());
     }
 }
