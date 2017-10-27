@@ -7,24 +7,30 @@ use ExtendsFramework\Console\Framework\ServiceLocator\Factory\ShellFactory;
 use ExtendsFramework\Console\Framework\ServiceLocator\Factory\TerminalFactory;
 use ExtendsFramework\Console\Shell\ShellInterface;
 use ExtendsFramework\Console\Terminal\TerminalInterface;
-use ExtendsFramework\ServiceLocator\Config\Loader\LoaderInterface;
 use ExtendsFramework\ServiceLocator\Resolver\Factory\FactoryResolver;
 use ExtendsFramework\ServiceLocator\ServiceLocatorInterface;
+use PHPUnit\Framework\TestCase;
 
-class ConfigLoader implements LoaderInterface
+class ConsoleConfigLoaderTest extends TestCase
 {
     /**
-     * @inheritDoc
+     * Load.
+     *
+     * Test that loader returns correct array.
+     *
+     * @covers \ExtendsFramework\Console\Framework\ServiceLocator\Loader\ConsoleConfigLoader::load()
      */
-    public function load(): array
+    public function testLoad(): void
     {
-        return [
+        $loader = new ConsoleConfigLoader();
+
+        $this->assertSame([
             ServiceLocatorInterface::class => [
                 FactoryResolver::class => [
                     ShellInterface::class => ShellFactory::class,
                     TerminalInterface::class => TerminalFactory::class,
                 ],
             ],
-        ];
+        ], $loader->load());
     }
 }
