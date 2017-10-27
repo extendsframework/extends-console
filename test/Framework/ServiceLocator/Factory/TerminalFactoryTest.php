@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ExtendsFramework\Console\ServiceLocator\Factory;
+namespace ExtendsFramework\Console\Framework\ServiceLocator\Factory;
 
 use ExtendsFramework\Console\Shell\ShellInterface;
 use ExtendsFramework\Console\Terminal\TerminalInterface;
@@ -16,7 +16,7 @@ class TerminalFactoryTest extends TestCase
      *
      * Test that factory will return an TerminalInterface instance.
      *
-     * @covers \ExtendsFramework\Console\ServiceLocator\Factory\TerminalFactory::createService()
+     * @covers \ExtendsFramework\Console\Framework\ServiceLocator\Factory\TerminalFactory::createService()
      */
     public function testCreateService(): void
     {

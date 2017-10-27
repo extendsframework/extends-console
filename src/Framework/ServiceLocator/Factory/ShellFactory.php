@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ExtendsFramework\Console\ServiceLocator\Factory;
+namespace ExtendsFramework\Console\Framework\ServiceLocator\Factory;
 
 use ExtendsFramework\Console\Shell\ShellBuilder;
 use ExtendsFramework\Console\Shell\ShellInterface;

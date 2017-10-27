@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ExtendsFramework\Console\ServiceLocator\Factory;
+namespace ExtendsFramework\Console\Framework\ServiceLocator\Factory;
 
 use ExtendsFramework\Console\Shell\ShellInterface;
 use ExtendsFramework\ServiceLocator\ServiceLocatorInterface;
@@ -14,7 +14,7 @@ class ShellFactoryTest extends TestCase
      *
      * Test that factory will return an ShellInterface instance.
      *
-     * @covers \ExtendsFramework\Console\ServiceLocator\Factory\ShellFactory::createService()
+     * @covers \ExtendsFramework\Console\Framework\ServiceLocator\Factory\ShellFactory::createService()
      */
     public function testCreateService(): void
     {

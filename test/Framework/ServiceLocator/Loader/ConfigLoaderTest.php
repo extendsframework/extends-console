@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace ExtendsFramework\Console\ServiceLocator\Loader;
+namespace ExtendsFramework\Console\Framework\ServiceLocator\Loader;
 
-use ExtendsFramework\Console\ServiceLocator\Factory\ShellFactory;
-use ExtendsFramework\Console\ServiceLocator\Factory\TerminalFactory;
+use ExtendsFramework\Console\Framework\ServiceLocator\Factory\ShellFactory;
+use ExtendsFramework\Console\Framework\ServiceLocator\Factory\TerminalFactory;
 use ExtendsFramework\Console\Shell\ShellInterface;
 use ExtendsFramework\Console\Terminal\TerminalInterface;
 use ExtendsFramework\ServiceLocator\Resolver\Factory\FactoryResolver;
@@ -18,7 +18,7 @@ class ConfigLoaderTest extends TestCase
      *
      * Test that loader returns correct array.
      *
-     * @covers \ExtendsFramework\Console\ServiceLocator\Loader\ConfigLoader::load()
+     * @covers \ExtendsFramework\Console\Framework\ServiceLocator\Loader\ConfigLoader::load()
      */
     public function testLoad(): void
     {
