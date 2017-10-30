@@ -50,13 +50,6 @@ class Option implements OptionInterface
     protected $isMultiple;
 
     /**
-     * If this option is required.
-     *
-     * @var bool
-     */
-    protected $isRequired;
-
-    /**
      * Create new option.
      *
      * @param string      $name
