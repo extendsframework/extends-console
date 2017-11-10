@@ -72,7 +72,12 @@ class Descriptor implements DescriptorInterface
             ->newLine();
 
         if (empty($commands) === true) {
-            $output->line('-');
+            $output->line(
+                'No commands defined.',
+                $formatter
+                    ->setForeground(new Yellow())
+                    ->setTextIndent(2)
+            );
         } else {
             foreach ($commands as $command) {
                 if ($command instanceof CommandInterface) {

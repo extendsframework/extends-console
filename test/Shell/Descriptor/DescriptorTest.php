@@ -224,7 +224,7 @@ class DescriptorTest extends TestCase
             5 => '',
             6 => 'Commands:',
             7 => '',
-            8 => '-',
+            8 => 'No commands defined.',
             9 => '',
             10 => 'Options:',
             11 => '',
