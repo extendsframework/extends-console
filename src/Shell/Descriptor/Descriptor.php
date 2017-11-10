@@ -71,17 +71,21 @@ class Descriptor implements DescriptorInterface
             ->line('Commands:')
             ->newLine();
 
-        foreach ($commands as $command) {
-            if ($command instanceof CommandInterface) {
-                $output
-                    ->text(
-                        $command->getName(),
-                        $formatter
-                            ->setForeground(new Yellow())
-                            ->setFixedWidth(22)
-                            ->setTextIndent(2)
-                    )
-                    ->line($command->getDescription());
+        if (empty($commands) === true) {
+            $output->line('-');
+        } else {
+            foreach ($commands as $command) {
+                if ($command instanceof CommandInterface) {
+                    $output
+                        ->text(
+                            $command->getName(),
+                            $formatter
+                                ->setForeground(new Yellow())
+                                ->setFixedWidth(22)
+                                ->setTextIndent(2)
+                        )
+                        ->line($command->getDescription());
+                }
             }
         }
 

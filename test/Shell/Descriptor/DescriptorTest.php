@@ -74,12 +74,12 @@ class DescriptorTest extends TestCase
         $option
             ->expects($this->once())
             ->method('getShort')
-            ->willReturn('o');
+            ->willReturn('h');
 
         $option
             ->expects($this->once())
             ->method('getLong')
-            ->willReturn('option');
+            ->willReturn('help');
 
         $option
             ->expects($this->once())
@@ -146,7 +146,89 @@ class DescriptorTest extends TestCase
             9 => '',
             10 => 'Options:',
             11 => '',
-            12 => '-o=|--option=Show help.',
+            12 => '-h=|--help=Show help.',
+            13 => '',
+            14 => 'See \'extends <command> --help\' for more information about a command.',
+        ], $output->getBuffer());
+    }
+
+    /**
+     * Shell long without commands.
+     *
+     * Test that descriptor can describe shell (long) and will show a dash when no commands are defined.
+     *
+     * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::__construct()
+     * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::shell()
+     * @covers \ExtendsFramework\Console\Shell\Descriptor\Descriptor::getOptionNotation()
+     */
+    public function testShellLongWithoutCommands(): void
+    {
+        $output = new OutputStub();
+
+        $option = $this->createMock(OptionInterface::class);
+        $option
+            ->expects($this->once())
+            ->method('getShort')
+            ->willReturn('h');
+
+        $option
+            ->expects($this->once())
+            ->method('getLong')
+            ->willReturn('help');
+
+        $option
+            ->expects($this->once())
+            ->method('isFlag')
+            ->willReturn(false);
+
+        $option
+            ->expects($this->once())
+            ->method('getDescription')
+            ->willReturn('Show help.');
+
+        $definition = $this->createMock(DefinitionInterface::class);
+        $definition
+            ->expects($this->once())
+            ->method('getOptions')
+            ->willReturn([
+                $option,
+            ]);
+
+        $about = $this->createMock(AboutInterface::class);
+        $about
+            ->method('getName')
+            ->willReturn('Extends Framework Console');
+
+        $about
+            ->method('getProgram')
+            ->willReturn('extends');
+
+        $about
+            ->method('getVersion')
+            ->willReturn('0.1');
+
+        /**
+         * @var DefinitionInterface $definition
+         * @var AboutInterface      $about
+         */
+        $descriptor = new Descriptor($output);
+        $instance = $descriptor->shell($about, $definition, []);
+
+        $this->assertSame($descriptor, $instance);
+        $this->assertSame([
+            0 => 'Extends Framework Console (version 0.1)',
+            1 => '',
+            2 => 'Usage:',
+            3 => '',
+            4 => 'extends<command> [<arguments>] [<options>]',
+            5 => '',
+            6 => 'Commands:',
+            7 => '',
+            8 => '-',
+            9 => '',
+            10 => 'Options:',
+            11 => '',
+            12 => '-h=|--help=Show help.',
             13 => '',
             14 => 'See \'extends <command> --help\' for more information about a command.',
         ], $output->getBuffer());
