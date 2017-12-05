@@ -12,9 +12,6 @@
     ],
     "require": {
         "php": ">=7.1",
-        "extendsframework/extends-shell": "dev-master",
-        "extendsframework/extends-logger": "dev-master",
-        "extendsframework/extends-terminal": "dev-master",
         "extendsframework/extends-servicelocator": "dev-master"
     },
     "require-dev": {
