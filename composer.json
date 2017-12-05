@@ -11,14 +11,15 @@
         }
     ],
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.1",
+        "extendsframework/extends-shell": "dev-master",
+        "extendsframework/extends-logger": "dev-master",
+        "extendsframework/extends-terminal": "dev-master",
+        "extendsframework/extends-servicelocator": "dev-master"
     },
     "require-dev": {
         "php": ">=7.1",
-        "phpunit/phpunit": "6.*",
-        "extendsframework/extends-shell": "dev-master",
-        "extendsframework/extends-logger": "dev-master",
-        "extendsframework/extends-servicelocator": "dev-master"
+        "phpunit/phpunit": "6.*"
     },
     "autoload": {
         "psr-4": {

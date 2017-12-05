@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace ExtendsFramework\Console\Framework\ServiceLocator\Factory;
 
 use ExtendsFramework\Shell\ShellInterface;
-use ExtendsFramework\Console\Terminal\TerminalInterface;
+use ExtendsFramework\Terminal\TerminalInterface;
 use ExtendsFramework\Logger\LoggerInterface;
 use ExtendsFramework\ServiceLocator\ServiceLocatorInterface;
 use PHPUnit\Framework\TestCase;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace ExtendsFramework\Console\Framework\ServiceLocator\Factory;
 
 use ExtendsFramework\Shell\ShellInterface;
-use ExtendsFramework\Console\Terminal\Terminal;
-use ExtendsFramework\Console\Terminal\TerminalInterface;
+use ExtendsFramework\Terminal\Terminal;
+use ExtendsFramework\Terminal\TerminalInterface;
 use ExtendsFramework\Logger\LoggerInterface;
 use ExtendsFramework\ServiceLocator\Resolver\Factory\ServiceFactoryInterface;
 use ExtendsFramework\ServiceLocator\ServiceLocatorInterface;

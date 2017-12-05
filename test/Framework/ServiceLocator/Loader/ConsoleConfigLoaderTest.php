@@ -10,7 +10,7 @@ use ExtendsFramework\Console\Input\Posix\PosixInput;
 use ExtendsFramework\Console\Output\OutputInterface;
 use ExtendsFramework\Console\Output\Posix\PosixOutput;
 use ExtendsFramework\Shell\ShellInterface;
-use ExtendsFramework\Console\Terminal\TerminalInterface;
+use ExtendsFramework\Terminal\TerminalInterface;
 use ExtendsFramework\ServiceLocator\Resolver\Factory\FactoryResolver;
 use ExtendsFramework\ServiceLocator\Resolver\Invokable\InvokableResolver;
 use ExtendsFramework\ServiceLocator\ServiceLocatorInterface;
