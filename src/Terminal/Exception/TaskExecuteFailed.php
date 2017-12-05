@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Terminal\Exception;
 
-use ExtendsFramework\Console\Shell\Command\CommandInterface;
+use ExtendsFramework\Shell\Command\CommandInterface;
 use ExtendsFramework\Console\Task\TaskException;
 use ExtendsFramework\Console\Terminal\TerminalException;
 use InvalidArgumentException;

@@ -9,7 +9,7 @@ use ExtendsFramework\Console\Input\InputInterface;
 use ExtendsFramework\Console\Input\Posix\PosixInput;
 use ExtendsFramework\Console\Output\OutputInterface;
 use ExtendsFramework\Console\Output\Posix\PosixOutput;
-use ExtendsFramework\Console\Shell\ShellInterface;
+use ExtendsFramework\Shell\ShellInterface;
 use ExtendsFramework\Console\Terminal\TerminalInterface;
 use ExtendsFramework\ServiceLocator\Config\Loader\LoaderInterface;
 use ExtendsFramework\ServiceLocator\Resolver\Factory\FactoryResolver;

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Framework\ServiceLocator\Factory;
 
-use ExtendsFramework\Console\Shell\ShellInterface;
+use ExtendsFramework\Shell\ShellInterface;
 use ExtendsFramework\Console\Terminal\Terminal;
 use ExtendsFramework\Console\Terminal\TerminalInterface;
 use ExtendsFramework\Logger\LoggerInterface;

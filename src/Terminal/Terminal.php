@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Terminal;
 
-use ExtendsFramework\Console\Shell\ShellInterface;
-use ExtendsFramework\Console\Shell\ShellResultInterface;
+use ExtendsFramework\Shell\ShellInterface;
+use ExtendsFramework\Shell\ShellResultInterface;
 use ExtendsFramework\Console\Task\TaskException;
 use ExtendsFramework\Console\Task\TaskInterface;
 use ExtendsFramework\Console\Terminal\Exception\TaskExecuteFailed;

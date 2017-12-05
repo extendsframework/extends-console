@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace ExtendsFramework\Console\Terminal;
 
 use Exception;
-use ExtendsFramework\Console\Shell\Command\CommandInterface;
-use ExtendsFramework\Console\Shell\ShellInterface;
-use ExtendsFramework\Console\Shell\ShellResultInterface;
+use ExtendsFramework\Shell\Command\CommandInterface;
+use ExtendsFramework\Shell\ShellInterface;
+use ExtendsFramework\Shell\ShellResultInterface;
 use ExtendsFramework\Console\Task\TaskException;
 use ExtendsFramework\Console\Task\TaskInterface;
 use ExtendsFramework\Logger\LoggerInterface;
