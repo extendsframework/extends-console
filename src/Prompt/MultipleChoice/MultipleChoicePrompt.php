@@ -52,9 +52,9 @@ class MultipleChoicePrompt implements PromptInterface
     {
         do {
             $output
-                ->text($this->question . ' ')
+                ->text($this->getQuestion() . ' ')
                 ->text(
-                    sprintf('[%s]', implode(',', $this->options)),
+                    sprintf('[%s]', implode(',', $this->getOptions())),
                     $output
                         ->getFormatter()
                         ->setForeground(new Yellow())
@@ -90,6 +90,37 @@ class MultipleChoicePrompt implements PromptInterface
      */
     protected function isValidOption(?string $option): bool
     {
-        return in_array($option, $this->options, true) === true || ($this->required === false && $option === null);
+        return in_array($option, $this->getOptions(), true) === true
+            || ($this->isRequired() === false && $option === null);
+    }
+
+    /**
+     * Get question.
+     *
+     * @return string
+     */
+    protected function getQuestion(): string
+    {
+        return $this->question;
+    }
+
+    /**
+     * Get options.
+     *
+     * @return array
+     */
+    protected function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    /**
+     * Get required.
+     *
+     * @return bool
+     */
+    protected function isRequired(): bool
+    {
+        return $this->required;
     }
 }

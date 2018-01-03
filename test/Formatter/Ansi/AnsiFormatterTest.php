@@ -22,6 +22,13 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setForeground()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setColor()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getIndent()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormats()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColors()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getForeground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getBackground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getWidth()
      */
     public function testForegroundColor(): void
     {
@@ -43,6 +50,13 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setBackground()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setColor()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getIndent()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormats()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColors()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getForeground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getBackground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getWidth()
      */
     public function testBackgroundColor(): void
     {
@@ -64,6 +78,13 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getIndent()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormats()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColors()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getForeground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getBackground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getWidth()
      */
     public function testAddFormat(): void
     {
@@ -86,6 +107,13 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::removeFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getIndent()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormats()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColors()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getForeground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getBackground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getWidth()
      */
     public function testRemoveFormat(): void
     {
@@ -108,6 +136,13 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getIndent()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormats()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColors()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getForeground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getBackground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getWidth()
      */
     public function testAddMultipleFormats(): void
     {
@@ -130,6 +165,13 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFixedWidth()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getIndent()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormats()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColors()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getForeground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getBackground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getWidth()
      */
     public function testFixedWidth(): void
     {
@@ -155,6 +197,13 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setTextIndent()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getIndent()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormats()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColors()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getForeground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getBackground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getWidth()
      */
     public function testTextIndent(): void
     {
@@ -177,6 +226,13 @@ class AnsiFormatterTest extends TestCase
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
      * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::create()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getIndent()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getFormats()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getColors()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getForeground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getBackground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::getWidth()
      */
     public function testReset(): void
     {

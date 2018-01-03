@@ -17,6 +17,8 @@ class QuestionPromptTest extends TestCase
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
+     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::getQuestion()
+     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::isRequired()
      */
     public function testCanPromptQuestion(): void
     {
@@ -51,6 +53,8 @@ class QuestionPromptTest extends TestCase
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
+     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::getQuestion()
+     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::isRequired()
      */
     public function testRequired(): void
     {
@@ -85,6 +89,8 @@ class QuestionPromptTest extends TestCase
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
+     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::getQuestion()
+     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::isRequired()
      */
     public function testNotRequired(): void
     {

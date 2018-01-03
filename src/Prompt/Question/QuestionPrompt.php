@@ -41,9 +41,9 @@ class QuestionPrompt implements PromptInterface
     public function prompt(InputInterface $input, OutputInterface $output): ?string
     {
         do {
-            $output->text($this->question . ': ');
+            $output->text($this->getQuestion() . ': ');
             $answer = $input->line();
-        } while ($this->required === true && $answer === null);
+        } while ($this->isRequired() === true && $answer === null);
 
         return $answer;
     }
@@ -61,5 +61,25 @@ class QuestionPrompt implements PromptInterface
         $this->required = $flag ?? true;
 
         return $this;
+    }
+
+    /**
+     * Get question.
+     *
+     * @return string
+     */
+    protected function getQuestion(): string
+    {
+        return $this->question;
+    }
+
+    /**
+     * Get required.
+     *
+     * @return bool
+     */
+    protected function isRequired(): bool
+    {
+        return $this->required;
     }
 }

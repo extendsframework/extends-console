@@ -18,6 +18,9 @@ class MultipleChoicePromptTest extends TestCase
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::prompt()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isValidOption()
+     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getQuestion()
+     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getOptions()
+     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isRequired()
      */
     public function testPrompt(): void
     {
@@ -57,6 +60,9 @@ class MultipleChoicePromptTest extends TestCase
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::prompt()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isValidOption()
+     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getQuestion()
+     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getOptions()
+     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isRequired()
      */
     public function testRequired(): void
     {
@@ -99,6 +105,9 @@ class MultipleChoicePromptTest extends TestCase
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::prompt()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isValidOption()
+     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getQuestion()
+     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getOptions()
+     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isRequired()
      */
     public function testNotRequired(): void
     {
