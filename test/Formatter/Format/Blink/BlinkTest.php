@@ -19,6 +19,6 @@ class BlinkTest extends TestCase
         $format = new Blink();
         $name = $format->getName();
 
-        static::assertSame('Blink', $name);
+        $this->assertSame('Blink', $name);
     }
 }

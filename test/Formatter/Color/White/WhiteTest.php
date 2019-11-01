@@ -19,6 +19,6 @@ class WhiteTest extends TestCase
         $format = new White();
         $name = $format->getName();
 
-        static::assertSame('White', $name);
+        $this->assertSame('White', $name);
     }
 }

@@ -43,7 +43,7 @@ class MultipleChoicePromptTest extends TestCase
         $multipleChoice = new MultipleChoicePrompt('Continue?', ['y', 'n']);
         $continue = $multipleChoice->prompt($input, $output);
 
-        static::assertSame('y', $continue);
+        $this->assertSame('y', $continue);
     }
 
     /**
@@ -83,7 +83,7 @@ class MultipleChoicePromptTest extends TestCase
         $multipleChoice = new MultipleChoicePrompt('Continue?', ['y', 'n']);
         $continue = $multipleChoice->prompt($input, $output);
 
-        static::assertSame('y', $continue);
+        $this->assertSame('y', $continue);
     }
 
     /**
@@ -120,6 +120,6 @@ class MultipleChoicePromptTest extends TestCase
         $multipleChoice = new MultipleChoicePrompt('Continue?', ['y', 'n'], false);
         $continue = $multipleChoice->prompt($input, $output);
 
-        static::assertNull($continue);
+        $this->assertNull($continue);
     }
 }

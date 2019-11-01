@@ -19,6 +19,6 @@ class BlueTest extends TestCase
         $format = new Blue();
         $name = $format->getName();
 
-        static::assertSame('Blue', $name);
+        $this->assertSame('Blue', $name);
     }
 }

@@ -19,6 +19,6 @@ class DarkGrayTest extends TestCase
         $format = new DarkGray();
         $name = $format->getName();
 
-        static::assertSame('DarkGray', $name);
+        $this->assertSame('DarkGray', $name);
     }
 }

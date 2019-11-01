@@ -19,6 +19,6 @@ class MagentaTest extends TestCase
         $format = new Magenta();
         $name = $format->getName();
 
-        static::assertSame('Magenta', $name);
+        $this->assertSame('Magenta', $name);
     }
 }

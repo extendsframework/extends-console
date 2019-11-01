@@ -19,6 +19,6 @@ class UnderlinedTest extends TestCase
         $format = new Underlined();
         $name = $format->getName();
 
-        static::assertSame('Underlined', $name);
+        $this->assertSame('Underlined', $name);
     }
 }

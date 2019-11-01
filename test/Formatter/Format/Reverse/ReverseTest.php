@@ -19,6 +19,6 @@ class ReverseTest extends TestCase
         $format = new Reverse();
         $name = $format->getName();
 
-        static::assertSame('Reverse', $name);
+        $this->assertSame('Reverse', $name);
     }
 }

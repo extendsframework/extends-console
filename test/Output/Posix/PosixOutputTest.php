@@ -5,7 +5,6 @@ namespace ExtendsFramework\Console\Output\Posix;
 
 use ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter;
 use ExtendsFramework\Console\Formatter\FormatterInterface;
-use ExtendsFramework\Console\Output\OutputInterface;
 use PHPUnit\Framework\TestCase;
 
 class PosixOutputTest extends TestCase
@@ -26,7 +25,7 @@ class PosixOutputTest extends TestCase
 
         $text = Buffer::get();
 
-        static::assertEquals('Hello world!', $text);
+        $this->assertEquals('Hello world!', $text);
     }
 
     /**
@@ -46,8 +45,8 @@ class PosixOutputTest extends TestCase
 
         $text = Buffer::get();
 
-        static::assertContains('12345', $text);
-        static::assertNotContains('67890', $text);
+        $this->assertStringContainsString('12345', $text);
+        $this->assertStringNotContainsString('67890', $text);
     }
 
     /**
@@ -68,7 +67,7 @@ class PosixOutputTest extends TestCase
 
         $text = Buffer::get();
 
-        static::assertEquals('Hello world!' . "\n\r", $text);
+        $this->assertEquals('Hello world!' . "\n\r", $text);
     }
 
     /**
@@ -88,7 +87,7 @@ class PosixOutputTest extends TestCase
 
         $text = Buffer::get();
 
-        static::assertEquals("\n\r", $text);
+        $this->assertEquals("\n\r", $text);
     }
 
     /**
@@ -105,7 +104,7 @@ class PosixOutputTest extends TestCase
         $output = new PosixOutput();
         $instance = $output->clear();
 
-        static::assertInstanceOf(OutputInterface::class, $instance);
+        $this->assertIsObject($instance);
     }
 
     /**
@@ -123,7 +122,7 @@ class PosixOutputTest extends TestCase
         $output = new PosixOutput();
         $columns = $output->getColumns();
 
-        static::assertSame(80, $columns);
+        $this->assertSame(80, $columns);
     }
 
     /**
@@ -141,7 +140,7 @@ class PosixOutputTest extends TestCase
         $output = new PosixOutput();
         $lines = $output->getLines();
 
-        static::assertSame(120, $lines);
+        $this->assertSame(120, $lines);
     }
 
     /**
@@ -156,7 +155,7 @@ class PosixOutputTest extends TestCase
         $output = new PosixOutput();
         $formatter = $output->getFormatter();
 
-        static::assertInstanceOf(AnsiFormatter::class, $formatter);
+        $this->assertInstanceOf(AnsiFormatter::class, $formatter);
     }
 
     /**
@@ -177,7 +176,7 @@ class PosixOutputTest extends TestCase
         $output = new PosixOutput();
         $output->setFormatter($formatter);
 
-        static::assertSame($formatter, $output->getFormatter());
+        $this->assertSame($formatter, $output->getFormatter());
     }
 
     /**
@@ -199,7 +198,7 @@ class PosixOutputTest extends TestCase
 
         $text = Buffer::get();
 
-        static::assertEquals('Hello world!', $text);
+        $this->assertEquals('Hello world!', $text);
     }
 
     /**
@@ -221,7 +220,7 @@ class PosixOutputTest extends TestCase
 
         $text = Buffer::get();
 
-        static::assertNull($text);
+        $this->assertNull($text);
     }
 }
 

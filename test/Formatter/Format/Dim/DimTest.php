@@ -19,6 +19,6 @@ class DimTest extends TestCase
         $format = new Dim();
         $name = $format->getName();
 
-        static::assertSame('Dim', $name);
+        $this->assertSame('Dim', $name);
     }
 }

@@ -19,6 +19,6 @@ class RedTest extends TestCase
         $format = new Red();
         $name = $format->getName();
 
-        static::assertSame('Red', $name);
+        $this->assertSame('Red', $name);
     }
 }

@@ -19,6 +19,6 @@ class HiddenTest extends TestCase
         $format = new Hidden();
         $name = $format->getName();
 
-        static::assertSame('Hidden', $name);
+        $this->assertSame('Hidden', $name);
     }
 }

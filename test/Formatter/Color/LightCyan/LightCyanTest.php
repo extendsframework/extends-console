@@ -19,6 +19,6 @@ class LightCyanTest extends TestCase
         $format = new LightCyan();
         $name = $format->getName();
 
-        static::assertSame('LightCyan', $name);
+        $this->assertSame('LightCyan', $name);
     }
 }

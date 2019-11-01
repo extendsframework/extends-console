@@ -19,6 +19,6 @@ class BlackTest extends TestCase
         $format = new Black();
         $name = $format->getName();
 
-        static::assertSame('Black', $name);
+        $this->assertSame('Black', $name);
     }
 }

@@ -19,6 +19,6 @@ class BoldTest extends TestCase
         $format = new Bold();
         $name = $format->getName();
 
-        static::assertSame('Bold', $name);
+        $this->assertSame('Bold', $name);
     }
 }

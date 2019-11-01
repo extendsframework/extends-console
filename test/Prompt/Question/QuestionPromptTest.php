@@ -39,7 +39,7 @@ class QuestionPromptTest extends TestCase
         $question = new QuestionPrompt('How are you doing?');
         $answer = $question->prompt($input, $output);
 
-        static::assertSame('Very good!', $answer);
+        $this->assertSame('Very good!', $answer);
     }
 
     /**
@@ -72,7 +72,7 @@ class QuestionPromptTest extends TestCase
         $question = new QuestionPrompt('How are you doing?');
         $answer = $question->prompt($input, $output);
 
-        static::assertSame('Very good!', $answer);
+        $this->assertSame('Very good!', $answer);
     }
 
     /**
@@ -105,6 +105,6 @@ class QuestionPromptTest extends TestCase
         $question = new QuestionPrompt('How are you doing?', false);
         $answer = $question->prompt($input, $output);
 
-        static::assertNull($answer);
+        $this->assertNull($answer);
     }
 }

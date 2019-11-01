@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Console\Formatter\Ansi;
 
+use ExtendsFramework\Console\Formatter\Ansi\Exception\ColorNotSupported;
+use ExtendsFramework\Console\Formatter\Ansi\Exception\FormatNotSupported;
 use ExtendsFramework\Console\Formatter\Color\ColorInterface;
 use ExtendsFramework\Console\Formatter\Color\Red\Red;
 use ExtendsFramework\Console\Formatter\Format\Bold\Bold;
@@ -197,16 +199,17 @@ class AnsiFormatterTest extends TestCase
      *
      * Test that an exception will be thrown when a unknown color is given.
      *
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setForeground()
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setColor()
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\Exception\ColorNotSupported::__construct()
-     * @expectedException        \ExtendsFramework\Console\Formatter\Ansi\Exception\ColorNotSupported
-     * @expectedExceptionMessage Color "Brown" is not supported.
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setForeground()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setColor()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\Exception\ColorNotSupported::__construct()
      */
     public function testUnknownColor(): void
     {
+        $this->expectException(ColorNotSupported::class);
+        $this->expectExceptionMessage('Color "Brown" is not supported.');
+
         $color = new class implements ColorInterface
         {
             /**
@@ -227,16 +230,17 @@ class AnsiFormatterTest extends TestCase
      *
      * Test that an exception will be thrown when a unknown format is given.
      *
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
-     * @covers                   \ExtendsFramework\Console\Formatter\Ansi\Exception\FormatNotSupported::__construct()
-     * @expectedException        \ExtendsFramework\Console\Formatter\Ansi\Exception\FormatNotSupported
-     * @expectedExceptionMessage Format "StrikeThrough" is not supported.
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::__construct()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::resetBuilder()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::addFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter::setFormat()
+     * @covers \ExtendsFramework\Console\Formatter\Ansi\Exception\FormatNotSupported::__construct()
      */
     public function testUnknownFormat(): void
     {
+        $this->expectException(FormatNotSupported::class);
+        $this->expectExceptionMessage('Format "StrikeThrough" is not supported.');
+
         $format = new class implements FormatInterface
         {
             /**

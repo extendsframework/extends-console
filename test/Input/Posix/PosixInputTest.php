@@ -21,7 +21,7 @@ class PosixInputTest extends TestCase
         $input = new PosixInput();
         $line = $input->line();
 
-        static::assertEquals('Hello world! How are you doing?', $line);
+        $this->assertEquals('Hello world! How are you doing?', $line);
     }
 
     /**
@@ -39,7 +39,7 @@ class PosixInputTest extends TestCase
         $input = new PosixInput();
         $line = $input->line(13);
 
-        static::assertEquals('Hello world!', $line);
+        $this->assertEquals('Hello world!', $line);
     }
 
     /**
@@ -56,7 +56,7 @@ class PosixInputTest extends TestCase
         $input = new PosixInput();
         $character = $input->line();
 
-        static::assertNull($character);
+        $this->assertNull($character);
     }
 
     /**
@@ -73,7 +73,7 @@ class PosixInputTest extends TestCase
         $input = new PosixInput();
         $character = $input->character();
 
-        static::assertEquals('b', $character);
+        $this->assertEquals('b', $character);
     }
 
     /**
@@ -90,7 +90,7 @@ class PosixInputTest extends TestCase
         $input = new PosixInput();
         $character = $input->character();
 
-        static::assertNull($character);
+        $this->assertNull($character);
     }
 
     /**
@@ -110,8 +110,8 @@ class PosixInputTest extends TestCase
         Buffer::set('a');
         $second = $input->character('a');
 
-        static::assertNull($first);
-        static::assertEquals('a', $second);
+        $this->assertNull($first);
+        $this->assertEquals('a', $second);
     }
 }
 
