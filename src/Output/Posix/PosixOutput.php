@@ -24,6 +24,18 @@ class PosixOutput implements OutputInterface
     private $verbosity = 1;
 
     /**
+     * PosixOutput constructor.
+     *
+     * @param FormatterInterface|null $formatter
+     * @param int|null                $verbosity
+     */
+    public function __construct(FormatterInterface $formatter = null, int $verbosity = null)
+    {
+        $this->formatter = $formatter ?? new AnsiFormatter();
+        $this->verbosity = $verbosity ?? 1;
+    }
+
+    /**
      * @inheritDoc
      */
     public function text(string $text, FormatterInterface $formatter = null, int $verbosity = null): OutputInterface
@@ -88,10 +100,6 @@ class PosixOutput implements OutputInterface
      */
     public function getFormatter(): FormatterInterface
     {
-        if ($this->formatter === null) {
-            $this->formatter = new AnsiFormatter();
-        }
-
         return $this->formatter;
     }
 
@@ -101,19 +109,6 @@ class PosixOutput implements OutputInterface
     public function setVerbosity(int $verbosity): OutputInterface
     {
         $this->verbosity = $verbosity;
-
-        return $this;
-    }
-
-    /**
-     * Set formatter.
-     *
-     * @param FormatterInterface $formatter
-     * @return PosixOutput
-     */
-    public function setFormatter(FormatterInterface $formatter): PosixOutput
-    {
-        $this->formatter = $formatter;
 
         return $this;
     }

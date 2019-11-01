@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace ExtendsFramework\Console\Output\Posix;
 
 use ExtendsFramework\Console\Formatter\Ansi\AnsiFormatter;
-use ExtendsFramework\Console\Formatter\FormatterInterface;
 use PHPUnit\Framework\TestCase;
 
 class PosixOutputTest extends TestCase
@@ -14,6 +13,7 @@ class PosixOutputTest extends TestCase
      *
      * Test that text ('Hello world!') will be sent to output.
      *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      */
     public function testText(): void
@@ -33,6 +33,7 @@ class PosixOutputTest extends TestCase
      *
      * Text that text ('1234567890') with format (fixed with of 5) will be sent to output ('12345').
      *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      */
     public function testFormattedText(): void
@@ -54,6 +55,7 @@ class PosixOutputTest extends TestCase
      *
      * Test that text ('Hello world!') will be sent to output with newline character.
      *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
@@ -75,6 +77,7 @@ class PosixOutputTest extends TestCase
      *
      * Test that new line ("\n\r") will be sent to output.
      *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      */
@@ -95,6 +98,7 @@ class PosixOutputTest extends TestCase
      *
      * Test that output can be cleared.
      *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::clear()
      */
     public function testClearOutput(): void
@@ -112,6 +116,7 @@ class PosixOutputTest extends TestCase
      *
      * Test that columns (80) will be returned.
      *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getColumns()
      */
     public function testGetColumns(): void
@@ -130,6 +135,7 @@ class PosixOutputTest extends TestCase
      *
      * Test that lines (120) will be returned.
      *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getLines()
      */
     public function testGetLines(): void
@@ -148,6 +154,7 @@ class PosixOutputTest extends TestCase
      *
      * Test that the default formatter (AnsiFormatter) will be returned.
      *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
      */
     public function testGetFormatter(): void
@@ -159,31 +166,11 @@ class PosixOutputTest extends TestCase
     }
 
     /**
-     * Set formatter.
-     *
-     * Test that a custom formatter can be set and get.
-     *
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getFormatter()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setFormatter()
-     */
-    public function testSetFormatter(): void
-    {
-        $formatter = $this->createMock(FormatterInterface::class);
-
-        /**
-         * @var FormatterInterface $formatter
-         */
-        $output = new PosixOutput();
-        $output->setFormatter($formatter);
-
-        $this->assertSame($formatter, $output->getFormatter());
-    }
-
-    /**
      * Higher verbosity.
      *
      * Test that verbosity (3) can be set and still output text with lower verbosity (2).
      *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setVerbosity()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      */
@@ -206,6 +193,7 @@ class PosixOutputTest extends TestCase
      *
      * Test that verbosity (2) can be set and don't output text with higher verbosity (3).
      *
+     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::__construct()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setVerbosity()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
      */
