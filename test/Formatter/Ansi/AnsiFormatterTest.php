@@ -32,7 +32,7 @@ class AnsiFormatterTest extends TestCase
             ->setForeground(new Red())
             ->create('Hello world!');
 
-        self::assertSame("\e[0;31;49mHello world!\e[0m", $text);
+        $this->assertSame("\e[0;31;49mHello world!\e[0m", $text);
     }
 
     /**
@@ -53,7 +53,7 @@ class AnsiFormatterTest extends TestCase
             ->setBackground(new Red())
             ->create('Hello world!');
 
-        self::assertSame("\e[0;39;41mHello world!\e[0m", $text);
+        $this->assertSame("\e[0;39;41mHello world!\e[0m", $text);
     }
 
     /**
@@ -74,7 +74,7 @@ class AnsiFormatterTest extends TestCase
             ->addFormat(new Bold())
             ->create('Hello world!');
 
-        self::assertSame("\e[1;39;49mHello world!\e[0m", $text);
+        $this->assertSame("\e[1;39;49mHello world!\e[0m", $text);
     }
 
     /**
@@ -97,7 +97,7 @@ class AnsiFormatterTest extends TestCase
             ->removeFormat(new Bold())
             ->create('Hello world!');
 
-        self::assertSame("\e[0;39;49mHello world!\e[0m", $text);
+        $this->assertSame("\e[0;39;49mHello world!\e[0m", $text);
     }
 
     /**
@@ -119,7 +119,7 @@ class AnsiFormatterTest extends TestCase
             ->addFormat(new Dim())
             ->create('Hello world!');
 
-        self::assertSame("\e[1;2;39;49mHello world!\e[0m", $text);
+        $this->assertSame("\e[1;2;39;49mHello world!\e[0m", $text);
     }
 
     /**
@@ -144,8 +144,8 @@ class AnsiFormatterTest extends TestCase
             ->setFixedWidth(5)
             ->create('Hello world!');
 
-        self::assertSame("\e[0;39;49mHello world!        \e[0m", $long);
-        self::assertSame("\e[0;39;49mHello\e[0m", $short);
+        $this->assertSame("\e[0;39;49mHello world!        \e[0m", $long);
+        $this->assertSame("\e[0;39;49mHello\e[0m", $short);
     }
 
     /**
@@ -165,7 +165,7 @@ class AnsiFormatterTest extends TestCase
             ->setTextIndent(4)
             ->create('Hello world!');
 
-        self::assertSame("\e[0;39;49m    Hello world!\e[0m", $text);
+        $this->assertSame("\e[0;39;49m    Hello world!\e[0m", $text);
     }
 
     /**
@@ -190,8 +190,8 @@ class AnsiFormatterTest extends TestCase
 
         $default = $formatter->create('Hello world!');
 
-        self::assertSame("\e[1;31;49mHello world!\e[0m", $formatted);
-        self::assertSame("\e[0;39;49mHello world!\e[0m", $default);
+        $this->assertSame("\e[1;31;49mHello world!\e[0m", $formatted);
+        $this->assertSame("\e[0;39;49mHello world!\e[0m", $default);
     }
 
     /**
