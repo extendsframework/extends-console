@@ -43,7 +43,7 @@ class QuestionPrompt implements PromptInterface
         do {
             $output->text($this->question . ': ');
             $answer = $input->line();
-        } while ($this->required === true && $answer === null);
+        } while ($this->required && $answer === null);
 
         return $answer;
     }

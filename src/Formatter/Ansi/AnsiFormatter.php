@@ -171,17 +171,17 @@ class AnsiFormatter implements FormatterInterface
      */
     public function create(string $text): string
     {
-        if (empty($this->format) === false) {
+        if (!empty($this->format)) {
             $this->format = implode(';', $this->format);
         } else {
             $this->format = 0;
         }
 
-        if (is_int($this->width) === true) {
+        if (is_int($this->width)) {
             $text = str_pad(substr($text, 0, $this->width), $this->width);
         }
 
-        if (is_int($this->indent) === true) {
+        if (is_int($this->indent)) {
             $text = str_repeat(' ', $this->indent) . $text;
         }
 
@@ -223,12 +223,12 @@ class AnsiFormatter implements FormatterInterface
     private function setFormat(FormatInterface $format, bool $remove = null): FormatterInterface
     {
         $name = $format->getName();
-        if (array_key_exists($name, $this->formats) === false) {
+        if (!isset($this->formats[$name])) {
             throw new FormatNotSupported($format);
         }
 
         $code = $this->formats[$name];
-        if ($remove === true) {
+        if ($remove) {
             $this->format = array_diff($this->format, [$code]);
         } else {
             $this->format = array_merge($this->format, [$code]);
@@ -250,11 +250,11 @@ class AnsiFormatter implements FormatterInterface
     private function setColor(ColorInterface $color, bool $background = null): FormatterInterface
     {
         $name = $color->getName();
-        if (array_key_exists($name, $this->colors) === false) {
+        if (!isset($this->colors[$name])) {
             throw new ColorNotSupported($color);
         }
 
-        if ($background === true) {
+        if ($background) {
             $this->background = $this->colors[$name] + 10;
         } else {
             $this->foreground = $this->colors[$name];
