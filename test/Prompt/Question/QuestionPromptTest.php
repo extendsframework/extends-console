@@ -15,10 +15,7 @@ class QuestionPromptTest extends TestCase
      * Test that question prompt ('How are you doing?') will be prompted ('How are you doing?: ').
      *
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
-     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
-     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::getQuestion()
-     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::isRequired()
      */
     public function testCanPromptQuestion(): void
     {
@@ -51,10 +48,7 @@ class QuestionPromptTest extends TestCase
      * Test that prompt will show again after not allowed answer (null) until valid answer ('Very good!').
      *
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
-     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
-     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::getQuestion()
-     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::isRequired()
      */
     public function testRequired(): void
     {
@@ -87,10 +81,7 @@ class QuestionPromptTest extends TestCase
      * Test that prompt answer can be skipped (null) when not required.
      *
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::__construct()
-     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::prompt()
-     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::getQuestion()
-     * @covers \ExtendsFramework\Console\Prompt\Question\QuestionPrompt::isRequired()
      */
     public function testNotRequired(): void
     {
@@ -111,10 +102,8 @@ class QuestionPromptTest extends TestCase
          * @var InputInterface  $input
          * @var OutputInterface $output
          */
-        $question = new QuestionPrompt('How are you doing?');
-        $answer = $question
-            ->setRequired(false)
-            ->prompt($input, $output);
+        $question = new QuestionPrompt('How are you doing?', false);
+        $answer = $question->prompt($input, $output);
 
         static::assertNull($answer);
     }

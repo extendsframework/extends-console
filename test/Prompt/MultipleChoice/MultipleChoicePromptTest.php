@@ -15,12 +15,7 @@ class MultipleChoicePromptTest extends TestCase
      * Test that multiple choice prompt ('Continue?' with option 'y' and 'n') will be prompted ('Continue? [y,n]: ').
      *
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::__construct()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::prompt()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isValidOption()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getQuestion()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getOptions()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isRequired()
      */
     public function testPrompt(): void
     {
@@ -57,12 +52,7 @@ class MultipleChoicePromptTest extends TestCase
      * Test that prompt will show again after not allowed answer (null) until valid answer ('y').
      *
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::__construct()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::prompt()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isValidOption()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getQuestion()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getOptions()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isRequired()
      */
     public function testRequired(): void
     {
@@ -102,12 +92,7 @@ class MultipleChoicePromptTest extends TestCase
      * Test that prompt answer can be skipped (null) when not required.
      *
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::__construct()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::setRequired()
      * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::prompt()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isValidOption()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getQuestion()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::getOptions()
-     * @covers \ExtendsFramework\Console\Prompt\MultipleChoice\MultipleChoicePrompt::isRequired()
      */
     public function testNotRequired(): void
     {
@@ -132,10 +117,8 @@ class MultipleChoicePromptTest extends TestCase
          * @var InputInterface  $input
          * @var OutputInterface $output
          */
-        $multipleChoice = new MultipleChoicePrompt('Continue?', ['y', 'n']);
-        $continue = $multipleChoice
-            ->setRequired(false)
-            ->prompt($input, $output);
+        $multipleChoice = new MultipleChoicePrompt('Continue?', ['y', 'n'], false);
+        $continue = $multipleChoice->prompt($input, $output);
 
         static::assertNull($continue);
     }

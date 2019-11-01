@@ -10,7 +10,7 @@ class LightBlue implements ColorInterface
     /**
      * @const string
      */
-    const NAME = 'LightBlue';
+    public const NAME = 'LightBlue';
 
     /**
      * @inheritDoc

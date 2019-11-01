@@ -10,7 +10,7 @@ class Magenta implements ColorInterface
     /**
      * @const string
      */
-    const NAME = 'Magenta';
+    public const NAME = 'Magenta';
 
     /**
      * @inheritDoc

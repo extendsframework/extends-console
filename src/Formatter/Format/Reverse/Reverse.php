@@ -10,7 +10,7 @@ class Reverse implements FormatInterface
     /**
      * @const string
      */
-    const NAME = 'Reverse';
+    public const NAME = 'Reverse';
 
     /**
      * @inheritDoc

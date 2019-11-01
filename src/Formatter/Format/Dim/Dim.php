@@ -10,7 +10,7 @@ class Dim implements FormatInterface
     /**
      * @const string
      */
-    const NAME = 'Dim';
+    public const NAME = 'Dim';
 
     /**
      * @inheritDoc

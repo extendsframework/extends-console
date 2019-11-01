@@ -10,7 +10,7 @@ class Bold implements FormatInterface
     /**
      * @const string
      */
-    const NAME = 'Bold';
+    public const NAME = 'Bold';
 
     /**
      * @inheritDoc

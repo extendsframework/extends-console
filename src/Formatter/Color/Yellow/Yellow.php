@@ -10,7 +10,7 @@ class Yellow implements ColorInterface
     /**
      * @const string
      */
-    const NAME = 'Yellow';
+    public const NAME = 'Yellow';
 
     /**
      * @inheritDoc

@@ -115,26 +115,9 @@ class PosixInputTest extends TestCase
     }
 }
 
-class Buffer
-{
-    protected static $value;
-
-    public static function get(): string
-    {
-        return static::$value;
-    }
-
-    public static function set(string $value): void
-    {
-        static::$value = $value;
-    }
-
-    public static function reset(): void
-    {
-        static::$value = null;
-    }
-}
-
+/**
+ * @return string
+ */
 function fgets(): string
 {
     $buffer = Buffer::get();
@@ -147,6 +130,9 @@ function fgets(): string
     return $buffer;
 }
 
+/**
+ * @return string
+ */
 function fgetc(): string
 {
     return Buffer::get();

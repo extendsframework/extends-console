@@ -10,7 +10,7 @@ class Green implements ColorInterface
     /**
      * @const string
      */
-    const NAME = 'Green';
+    public const NAME = 'Green';
 
     /**
      * @inheritDoc

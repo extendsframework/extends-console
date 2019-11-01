@@ -10,7 +10,7 @@ class LightMagenta implements ColorInterface
     /**
      * @const string
      */
-    const NAME = 'LightMagenta';
+    public const NAME = 'LightMagenta';
 
     /**
      * @inheritDoc

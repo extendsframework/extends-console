@@ -23,7 +23,7 @@ class PosixInput implements InputInterface
     public function character(string $allowed = null): ?string
     {
         $character = fgetc(STDIN);
-        if ($allowed && strpos($allowed, $character) === false) {
+        if (is_string($allowed) && strpos($allowed, $character) === false) {
             $character = '';
         }
 

@@ -10,7 +10,7 @@ class DarkGray implements ColorInterface
     /**
      * @const string
      */
-    const NAME = 'DarkGray';
+    public const NAME = 'DarkGray';
 
     /**
      * @inheritDoc

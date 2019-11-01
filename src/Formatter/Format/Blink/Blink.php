@@ -10,7 +10,7 @@ class Blink implements FormatInterface
     /**
      * @const string
      */
-    const NAME = 'Blink';
+    public const NAME = 'Blink';
 
     /**
      * @inheritDoc

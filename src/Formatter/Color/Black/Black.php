@@ -10,7 +10,7 @@ class Black implements ColorInterface
     /**
      * @const string
      */
-    const NAME = 'Black';
+    public const NAME = 'Black';
 
     /**
      * @inheritDoc

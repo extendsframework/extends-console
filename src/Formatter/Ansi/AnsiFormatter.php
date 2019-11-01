@@ -38,42 +38,42 @@ class AnsiFormatter implements FormatterInterface
      *
      * @var int
      */
-    protected $foreground = 39;
+    private $foreground = 39;
 
     /**
      * Text background color.
      *
      * @var int
      */
-    protected $background = 49;
+    private $background = 49;
 
     /**
      * Text format.
      *
      * @var array
      */
-    protected $format = [];
+    private $format = [];
 
     /**
      * Maximum text width.
      *
-     * @var int
+     * @var int|null
      */
-    protected $width;
+    private $width;
 
     /**
      * Text indent.
      *
-     * @var int
+     * @var int|null
      */
-    protected $indent;
+    private $indent;
 
     /**
      * Color mapping.
      *
      * @var int[]
      */
-    protected $colors = [
+    private $colors = [
         Black::NAME => 30,
         Red::NAME => 31,
         Green::NAME => 32,
@@ -97,7 +97,7 @@ class AnsiFormatter implements FormatterInterface
      *
      * @var int[]
      */
-    protected $formats = [
+    private $formats = [
         Bold::NAME => 1,
         Dim::NAME => 2,
         Underlined::NAME => 4,
@@ -171,28 +171,25 @@ class AnsiFormatter implements FormatterInterface
      */
     public function create(string $text): string
     {
-        $format = $this->getFormat();
-        if (empty($format) === false) {
-            $format = implode(';', $format);
+        if (empty($this->format) === false) {
+            $this->format = implode(';', $this->format);
         } else {
-            $format = 0;
+            $this->format = 0;
         }
 
-        $width = $this->getWidth();
-        if (is_int($width) === true) {
-            $text = str_pad(substr($text, 0, $width), $width);
+        if (is_int($this->width) === true) {
+            $text = str_pad(substr($text, 0, $this->width), $this->width);
         }
 
-        $indent = $this->getIndent();
-        if (is_int($indent) === true) {
-            $text = str_repeat(' ', $indent) . $text;
+        if (is_int($this->indent) === true) {
+            $text = str_repeat(' ', $this->indent) . $text;
         }
 
         $formatted = sprintf(
             "\e[%s;%d;%dm%s\e[0m",
-            $format,
-            $this->getForeground(),
-            $this->getBackground(),
+            $this->format,
+            $this->foreground,
+            $this->background,
             $text
         );
 
@@ -204,7 +201,7 @@ class AnsiFormatter implements FormatterInterface
     /**
      * Reset builder with default values.
      */
-    protected function resetBuilder(): void
+    private function resetBuilder(): void
     {
         $this->foreground = 39;
         $this->background = 49;
@@ -223,20 +220,18 @@ class AnsiFormatter implements FormatterInterface
      * @return FormatterInterface
      * @throws FormatNotSupported
      */
-    protected function setFormat(FormatInterface $format, bool $remove = null): FormatterInterface
+    private function setFormat(FormatInterface $format, bool $remove = null): FormatterInterface
     {
         $name = $format->getName();
-        $formats = $this->getFormats();
-        if (array_key_exists($name, $formats) === false) {
+        if (array_key_exists($name, $this->formats) === false) {
             throw new FormatNotSupported($format);
         }
 
-        $code = $formats[$name];
-        $format = $this->getFormat();
+        $code = $this->formats[$name];
         if ($remove === true) {
-            $this->format = array_diff($format, [$code]);
+            $this->format = array_diff($this->format, [$code]);
         } else {
-            $this->format = array_merge($format, [$code]);
+            $this->format = array_merge($this->format, [$code]);
         }
 
         return $this;
@@ -252,90 +247,19 @@ class AnsiFormatter implements FormatterInterface
      * @return FormatterInterface
      * @throws ColorNotSupported
      */
-    protected function setColor(ColorInterface $color, bool $background = null): FormatterInterface
+    private function setColor(ColorInterface $color, bool $background = null): FormatterInterface
     {
         $name = $color->getName();
-        $colors = $this->getColors();
-        if (array_key_exists($name, $colors) === false) {
+        if (array_key_exists($name, $this->colors) === false) {
             throw new ColorNotSupported($color);
         }
 
         if ($background === true) {
-            $this->background = $colors[$name] + 10;
+            $this->background = $this->colors[$name] + 10;
         } else {
-            $this->foreground = $colors[$name];
+            $this->foreground = $this->colors[$name];
         }
 
         return $this;
-    }
-
-    /**
-     * Get foreground.
-     *
-     * @return int
-     */
-    protected function getForeground(): int
-    {
-        return $this->foreground;
-    }
-
-    /**
-     * Get background.
-     *
-     * @return int
-     */
-    protected function getBackground(): int
-    {
-        return $this->background;
-    }
-
-    /**
-     * Get format.
-     *
-     * @return array
-     */
-    protected function getFormat(): array
-    {
-        return $this->format;
-    }
-
-    /**
-     * Get width.
-     *
-     * @return int|null
-     */
-    protected function getWidth(): ?int
-    {
-        return $this->width;
-    }
-
-    /**
-     * Get indent.
-     *
-     * @return int|null
-     */
-    protected function getIndent(): ?int
-    {
-        return $this->indent;
-    }
-
-    /**
-     * Get colors.
-     *
-     * @return int[]
-     */
-    protected function getColors(): array
-    {
-        return $this->colors;
-    }
-
-    /**
-     * Get formats.
-     *
-     * @return int[]
-     */
-    protected function getFormats(): array
-    {
-        return $this->formats;
     }
 }

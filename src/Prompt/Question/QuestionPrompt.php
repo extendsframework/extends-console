@@ -14,25 +14,25 @@ class QuestionPrompt implements PromptInterface
      *
      * @var string
      */
-    protected $question;
+    private $question;
 
     /**
      * If an answer is required.
      *
      * @var bool
      */
-    protected $required;
+    private $required;
 
     /**
      * Create new question prompt.
      *
-     * @param string $question
+     * @param string    $question
+     * @param bool|null $required
      */
-    public function __construct(string $question)
+    public function __construct(string $question, bool $required = null)
     {
         $this->question = $question;
-
-        $this->setRequired();
+        $this->required = $required ?? true;
     }
 
     /**
@@ -41,45 +41,10 @@ class QuestionPrompt implements PromptInterface
     public function prompt(InputInterface $input, OutputInterface $output): ?string
     {
         do {
-            $output->text($this->getQuestion() . ': ');
+            $output->text($this->question . ': ');
             $answer = $input->line();
-        } while ($this->isRequired() === true && $answer === null);
+        } while ($this->required === true && $answer === null);
 
         return $answer;
-    }
-
-    /**
-     * Set required flag.
-     *
-     * When $required is true, the question must be answered. Default value is true.
-     *
-     * @param bool|null $flag
-     * @return QuestionPrompt
-     */
-    public function setRequired(bool $flag = null): QuestionPrompt
-    {
-        $this->required = $flag ?? true;
-
-        return $this;
-    }
-
-    /**
-     * Get question.
-     *
-     * @return string
-     */
-    protected function getQuestion(): string
-    {
-        return $this->question;
-    }
-
-    /**
-     * Get required.
-     *
-     * @return bool
-     */
-    protected function isRequired(): bool
-    {
-        return $this->required;
     }
 }

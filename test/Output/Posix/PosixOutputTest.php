@@ -16,7 +16,6 @@ class PosixOutputTest extends TestCase
      * Test that text ('Hello world!') will be sent to output.
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      */
     public function testText(): void
     {
@@ -36,14 +35,14 @@ class PosixOutputTest extends TestCase
      * Text that text ('1234567890') with format (fixed with of 5) will be sent to output ('12345').
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      */
     public function testFormattedText(): void
     {
         Buffer::reset();
 
         $output = new PosixOutput();
-        $output->text('1234567890', $output->getFormatter()->setFixedWidth(5));
+        $output->text('1234567890', $output->getFormatter()
+            ->setFixedWidth(5));
 
         $text = Buffer::get();
 
@@ -58,7 +57,6 @@ class PosixOutputTest extends TestCase
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::line()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      */
     public function testLine(): void
@@ -80,7 +78,6 @@ class PosixOutputTest extends TestCase
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::newLine()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      */
     public function testCanWriteNewLineToOutput(): void
     {
@@ -101,7 +98,7 @@ class PosixOutputTest extends TestCase
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::clear()
      */
-    public function testClearOutput()
+    public function testClearOutput(): void
     {
         Buffer::reset();
 
@@ -190,7 +187,6 @@ class PosixOutputTest extends TestCase
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setVerbosity()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      */
     public function testHigherVerbosity(): void
     {
@@ -213,7 +209,6 @@ class PosixOutputTest extends TestCase
      *
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::setVerbosity()
      * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::text()
-     * @covers \ExtendsFramework\Console\Output\Posix\PosixOutput::getVerbosity()
      */
     public function testLowerVerbosity(): void
     {
@@ -230,31 +225,14 @@ class PosixOutputTest extends TestCase
     }
 }
 
-class Buffer
-{
-    protected static $value;
-
-    public static function get(): ?string
-    {
-        return static::$value;
-    }
-
-    public static function set(string $value): void
-    {
-        static::$value .= $value;
-    }
-
-    public static function reset(): void
-    {
-        static::$value = null;
-    }
-}
-
 function fwrite(): void
 {
     Buffer::set(func_get_arg(1));
 }
 
+/**
+ * @return string
+ */
 function exec(): string
 {
     return Buffer::get();

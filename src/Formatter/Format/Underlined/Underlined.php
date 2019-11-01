@@ -10,7 +10,7 @@ class Underlined implements FormatInterface
     /**
      * @const string
      */
-    const NAME = 'Underlined';
+    public const NAME = 'Underlined';
 
     /**
      * @inheritDoc

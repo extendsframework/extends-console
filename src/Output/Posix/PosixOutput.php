@@ -14,22 +14,21 @@ class PosixOutput implements OutputInterface
      *
      * @var FormatterInterface
      */
-    protected $formatter;
+    private $formatter;
 
     /**
      * Output verbosity.
      *
      * @var int
      */
-    protected $verbosity;
+    private $verbosity = 1;
 
     /**
      * @inheritDoc
      */
     public function text(string $text, FormatterInterface $formatter = null, int $verbosity = null): OutputInterface
     {
-        $verbosity = $verbosity ?? 1;
-        if ($verbosity <= $this->getVerbosity()) {
+        if (($verbosity ?? 1) <= $this->verbosity) {
             if ($formatter) {
                 $text = $formatter->create($text);
             }
@@ -117,19 +116,5 @@ class PosixOutput implements OutputInterface
         $this->formatter = $formatter;
 
         return $this;
-    }
-
-    /**
-     * Get verbosity.
-     *
-     * @return int
-     */
-    protected function getVerbosity(): int
-    {
-        if ($this->verbosity === null) {
-            $this->verbosity = 1;
-        }
-
-        return $this->verbosity;
     }
 }
